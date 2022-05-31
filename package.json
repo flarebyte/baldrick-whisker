@@ -66,10 +66,10 @@
     "try": "node --loader ts-node/esm src/cli.mts"
   },
   "dependencies": {
-    "ajv": "^8.11.0",
     "commander": "^9.2.0",
     "fs-jetpack": "^4.3.1",
     "handlebars": "^4.7.7",
+    "type-fest": "^2.13.0",
     "yaml": "^2.1.0"
   },
   "devDependencies": {

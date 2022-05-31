@@ -1,122 +1,79 @@
-import path from "node:path";
-import jetpack from "fs-jetpack";
-import Mustache from "mustache";
-import { FunctionInfo, parseElmFunctions } from "./parse-elm-function.js";
-import {
-  FunctionMeta,
-  mergeWithExtendedMeta,
-  ExtendedFunctionInfo,
-  toFunctionMetaObject,
-  TemplateInfo,
-} from "./data/data-model.js";
-import { camelCaseUpper, firstUpper } from "./text-utils.js";
-import { formatDiagnostic } from "typescript";
-const elmSourceDir = "../src/Bubblegum/Entity";
-const generatedDir = "../generated";
-const templateDir = "../generator/template";
+import jetpack from 'fs-jetpack';
+import YAML from 'yaml';
+import { parseElmFunctions } from './parse-elm-function.js';
 
-/**
- *  Custom global config for Mustache
- */
-Mustache.escape = function (text: string) {
-  return text;
-};
+import { FileId, InputContent, JsonContent } from './model.js';
 
-export const readElmContent = async (name: string): Promise<string> => {
-  const filename = path.join(elmSourceDir, `${name}.elm`);
-  const content =
-    (await jetpack.readAsync(filename, "utf8")) || "// Snippet not found";
-  return content;
-};
-
-/**
- * Load a list of elm functions
- * @param name the elm file name
- */
-export const readElmFunctions = async (
-  name: string
-): Promise<FunctionInfo[]> => {
-  const content = await readElmContent(name);
-  return parseElmFunctions(content);
-};
-
-export const saveExtendedElmFunctions = async (
-  name: string,
-  extendedFunctions: ExtendedFunctionInfo[]
-): Promise<number> => {
-  const filename = path.join(generatedDir, `${name}.json`);
-  await jetpack.writeAsync(
+const readInputFile = async (fileId: FileId): Promise<InputContent> => {
+  const { fileType, filename } = fileId;
+  if (
+    fileType === 'unknown' ||
+    fileType === 'invalid' ||
+    fileType === 'console'
+  ) {
+    return {
+      fileType,
+      filename,
+    };
+  }
+  const content = await jetpack.readAsync(filename, 'utf8');
+  if (content === undefined) {
+    return {
+      fileType: 'invalid',
+      filename,
+    };
+  }
+  if (fileType === 'elm') {
+    return {
+      fileType,
+      filename,
+      content,
+      functionInfos: parseElmFunctions(content),
+    };
+  }
+  if (fileType === 'json') {
+    return {
+      fileType,
+      filename,
+      content,
+      json: JSON.parse(content),
+    };
+  }
+  if (fileType === 'yaml') {
+    return {
+      fileType,
+      filename,
+      content,
+      json: YAML.parse(content),
+    };
+  }
+  return {
+    fileType,
     filename,
-    JSON.stringify(extendedFunctions, null, 2)
-  );
-  return extendedFunctions.length;
-};
-
-export const readExtendedElmFunctions = async (
-  name: string
-): Promise<ExtendedFunctionInfo[]> => {
-  const filename = path.join(generatedDir, `${name}.json`);
-  const content = (await jetpack.readAsync(filename, "utf8")) || "[]";
-  const extendedFunctions: ExtendedFunctionInfo[] = JSON.parse(content);
-  return extendedFunctions;
-};
-
-/**
- * Delete previously generated folder
- */
-export const deleteGenerated = async () => {
-  console.log("Deleting generated folder");
-  await jetpack.removeAsync(generatedDir);
-};
-
-export const mergeElmFunctions = async (
-  name: string,
-  metas: FunctionMeta[]
-): Promise<ExtendedFunctionInfo[]> => {
-  const elmFunctions = await readElmFunctions(name);
-  const metaDict = toFunctionMetaObject(metas);
-  const extendedFunctions = elmFunctions.map((fn) =>
-    mergeWithExtendedMeta(fn, metaDict[fn.name])
-  );
-  await saveExtendedElmFunctions(name, extendedFunctions);
-  console.log(
-    `Generated extended model for ${name} with ${extendedFunctions.length} functions`
-  );
-  return extendedFunctions;
-};
-
-export const hydrateFunctionTemplate = async (templateInfo: TemplateInfo) => {
-  const filename = path.join(
-    templateDir,
-    `${templateInfo.templateName}.mustache`
-  );
-  const targetFilename = path.join(
-    templateInfo.targetDir,
-    `${templateInfo.targetName}.elm`
-  );
-  const template = (await jetpack.readAsync(filename, "utf8")) || "[]";
-  const functionsWithState = await (
-    await readExtendedElmFunctions(templateInfo.moduleName)
-  ).filter((f) => f.states.length > 0);
-  const functions = functionsWithState.map((fn) => ({
-    ...fn,
-    name: { text: fn.name, firstUpper: firstUpper(fn.name) },
-    states: fn.states.map((state) => ({
-      state: {
-        text: state.stateName,
-        camelCaseUpper: camelCaseUpper(state.stateName),
-      },
-    })),
-    has1Param: fn.params.length === 1,
-    has2Params: fn.params.length === 2,
-    has3Params: fn.params.length === 3,
-  }));
-  const enhancedTemplateInfo = {
-    ...templateInfo,
-    packageNameDot: templateInfo.packageName.replace(/\//, "."),
-    functions,
   };
-  console.log(JSON.stringify(enhancedTemplateInfo, null, 2));
-  const content = Mustache.render(template, enhancedTemplateInfo);
-  await jetpack.writeAsync(targetFilename, content);
+};
+
+export const readInputFiles = async (
+  fileIds: FileId[]
+): Promise<InputContent[]> => {
+  const files = fileIds.map(readInputFile);
+  return Promise.all(files);
+};
+
+export const saveObjectFile = async (
+  fileId: FileId,
+  content: JsonContent
+): Promise<void> => {
+  const { fileType, filename } = fileId;
+  const isSupportedType = fileType === 'json' || fileType === 'yaml';
+  if (!isSupportedType) {
+    throw new Error(
+      `The type ${fileType} is not supported for export as ${filename}`
+    );
+  }
+  const stringContent =
+    fileId.fileType === 'json'
+      ? JSON.stringify(content, null, 2)
+      : YAML.stringify(content);
+  await jetpack.writeAsync(filename, stringContent);
 };

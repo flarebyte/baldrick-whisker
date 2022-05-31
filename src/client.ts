@@ -12,11 +12,9 @@ program
   .description('Convert source files to JSON or YAML')
   .argument('<destination>', 'the path to the JSON or YAML destination file')
   .argument('<sources...>', 'the path to the input filenames (JSON, YAML, Elm)')
-  .option('-sc, --schema <schema>', 'JSON schema for the destination file')
-  .action((destinationPath: string, sourcePaths: string[], options: { [name: string]: string }) => {
+  .action((destinationPath: string, sourcePaths: string[]) => {
     console.log('destination', destinationPath);
     console.log('sources', sourcePaths);
-    console.log('options', options);
   });
 
 program
@@ -24,10 +22,12 @@ program
   .description('Convert a JSON or YAML source to Elm')
   .argument('<source>', 'the path to source file in JSON or YAML')
   .argument('<template>', 'the path to the Handlebars template')
-  .argument('<destination>', 'the path to the Elm destination file (File.elm, console)')
+  .argument(
+    '<destination>',
+    'the path to the Elm destination file'
+  )
   .option('--diff', 'Only display the difference in the console')
   .option('-cfg, --config <config>', 'Configuration as a JSON line')
-  .option('-sc, --schema <schema>', 'JSON schema for the source file') 
   .action(
     (
       sourcePath: string,

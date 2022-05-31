@@ -1,57 +1,45 @@
-export interface MetaState {
-  stateName: string;
+import { JsonValue } from 'type-fest';
+
+export type FileType =
+  | 'elm'
+  | 'json'
+  | 'yaml'
+  | 'console'
+  | 'unknown'
+  | 'invalid';
+
+export interface FileId {
+  fileType: FileType;
+  filename: string;
 }
-export interface FunctionMeta {
+
+export interface FunctionInfo {
   name: string;
-  states: MetaState[];
-  ok: string;
+  params: [string, string][];
+  returned: string;
 }
 
-export interface ExtendedFunctionInfo extends FunctionInfo, FunctionMeta {}
+export type InputContent =
+  | {
+      fileType: 'elm';
+      filename: string;
+      content: string;
+      functionInfos: FunctionInfo[];
+    }
+  | {
+      fileType: 'json' | 'yaml';
+      filename: string;
+      content: string;
+      json: JsonValue;
+    }
+  | {
+      fileType: 'unknown' | 'invalid';
+      filename: string;
+    }
+  | {
+      fileType: 'console';
+    };
 
-export interface TextValue {
-  text: string;
-  camelCaseUpper: string;
-  camelCaseLower: string;
+export interface JsonContent {
+  [k: string]: JsonValue | FunctionInfo[];
 }
-
-export interface MustacheParam {
-  paramName: TextValue;
-  paramType: TextValue;
-}
-
-export interface MustacheState {
-  stateName: TextValue;
-}
-
-export interface MustacheFunctionInfo {
-  functionName: TextValue;
-  params: MustacheParam[];
-  returned: TextValue;
-  states: MustacheState[];
-  ok: TextValue;
-}
-
-export interface TemplateInfo {
-  templateName: string;
-  targetDir: string;
-  targetName: string;
-  packageName: string;
-  moduleName: string;
-}
-
-export const toFunctionMetaObject = (
-  metaArray: FunctionMeta[]
-): { [name: string]: FunctionMeta } =>
-  Object.fromEntries(metaArray.map((m) => [m.name, m]));
-
-export const mergeWithExtendedMeta = (
-  functionInfo: FunctionInfo,
-  meta?: FunctionMeta
-): ExtendedFunctionInfo =>
-  meta
-    ? {
-        ...functionInfo,
-        ...meta,
-      }
-    : { ...functionInfo, states: [], ok: "" };
