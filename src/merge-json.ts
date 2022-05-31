@@ -1,18 +1,38 @@
-import { InputContent, JsonContent } from "./model";
+import { JsonArray, JsonObject, JsonPrimitive } from 'type-fest';
+import { FunctionInfo, InputContent } from './model';
 
-const mergeTwoContents = (a: JsonContent, b: JsonContent): JsonContent => {
-    const tupleAList = Object.entries(a)
-    const tupleBList = Object.entries(b)
-    const results = [...tupleAList]
+
+const mergePrimitives = (a: JsonPrimitive, b?: JsonPrimitive): JsonPrimitive =>
+  b !== undefined ? b : a;
+
+  
+  const mergeJsonArrays = (a: JsonArray, b?: JsonArray): JsonArray =>
+  b !== undefined ? [...a, ...b] : [...a];
+  
+  const mergeJsonObjects = (a: JsonObject, b?: JsonObject): JsonObject =>
+    b !== undefined ? { ...a, ...b } : { ...a };
     
-    return Object.fromEntries(results);
-
+const fromFunctionInfos = (functionInfos: FunctionInfo[]): JsonObject {
+    const content= JSON.stringify({ functions: functionInfos});
+    return JSON.parse(content);
 }
-
-export const mergeContents = (inputContents: InputContent[]): JsonContent => {
-    let result: JsonContent = {};
-    for (const content of inputContents) {
-        
+const toJsonObject = (inputContent: InputContent): JsonObject => {
+    const {fileType} = inputContent;
+    if (fileType === 'elm') {
+        return fromFunctionInfos(inputContent.functionInfos);
     }
-    return result;
+    if (fileType === 'json' ||fileType === 'yaml' ) {
+
+        return inputContent.json;
+    }
+    return { message: 'invalid'};
 }
+
+export const mergeContents = (inputContents: InputContent[]): JsonObject => {
+  const jsonContents = inputContents.map(toJsonObject) ;
+    let result: JsonObject = {};
+  for (const content of jsonContents) {
+    result = mergeJsonObjects(result, content);
+  }
+  return result;
+};

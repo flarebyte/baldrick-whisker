@@ -1,10 +1,9 @@
-import { JsonValue } from 'type-fest';
+import { JsonObject } from 'type-fest';
 
 export type FileType =
   | 'elm'
   | 'json'
   | 'yaml'
-  | 'console'
   | 'unknown'
   | 'invalid';
 
@@ -30,16 +29,10 @@ export type InputContent =
       fileType: 'json' | 'yaml';
       filename: string;
       content: string;
-      json: JsonValue;
+      json: JsonObject;
     }
   | {
       fileType: 'unknown' | 'invalid';
       filename: string;
-    }
-  | {
-      fileType: 'console';
     };
 
-export interface JsonContent {
-  [k: string]: JsonValue | FunctionInfo[];
-}
