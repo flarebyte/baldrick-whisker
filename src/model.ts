@@ -18,6 +18,10 @@ export interface FunctionInfo {
   returned: string;
 }
 
+export interface MergingMeta {
+  primaryKey: string;
+}
+
 export type InputContent =
   | {
       fileType: 'elm';
