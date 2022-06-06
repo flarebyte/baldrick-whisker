@@ -2,15 +2,12 @@ import jetpack from 'fs-jetpack';
 import YAML from 'yaml';
 import { parseElmFunctions } from './parse-elm-function.js';
 
-import { FileId, InputContent, JsonContent } from './model.js';
+import { FileId, InputContent } from './model.js';
+import { JsonObject } from 'type-fest';
 
 const readInputFile = async (fileId: FileId): Promise<InputContent> => {
   const { fileType, filename } = fileId;
-  if (
-    fileType === 'unknown' ||
-    fileType === 'invalid' ||
-    fileType === 'console'
-  ) {
+  if (fileType === 'unknown' || fileType === 'invalid') {
     return {
       fileType,
       filename,
@@ -62,7 +59,7 @@ export const readInputFiles = async (
 
 export const saveObjectFile = async (
   fileId: FileId,
-  content: JsonContent
+  content: JsonObject
 ): Promise<void> => {
   const { fileType, filename } = fileId;
   const isSupportedType = fileType === 'json' || fileType === 'yaml';
