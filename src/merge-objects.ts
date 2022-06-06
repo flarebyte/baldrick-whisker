@@ -84,10 +84,10 @@ const toJsonObject = (inputContent: InputContent): JsonObject => {
   if (fileType === 'json' || fileType === 'yaml') {
     return inputContent.json;
   }
-  return { message: 'invalid' };
+  return { messages: [`invalid file ${inputContent.filename}`] };
 };
 
-export const mergeContents = (inputContents: InputContent[]): JsonObject => {
+export const mergeObjects = (inputContents: InputContent[]): JsonObject => {
   const jsonContents = inputContents.map(toJsonObject);
   let result: JsonObject = {};
   for (const content of jsonContents) {
