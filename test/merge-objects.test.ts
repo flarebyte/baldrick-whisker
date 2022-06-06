@@ -9,12 +9,12 @@ const alpha = {
   secondArrayOfString: ['un'],
   arrayOfObjs: [
     {
-      primitive: 8,
+      primitive: 'eight',
       arrayOfString: ['one', 'two'],
       someObject: { label: 'first' },
     },
     {
-      primitive: 9,
+      primitive: 'nine',
       arrayOfString: ['ten', 'eleven'],
       someObject: { label: 'second' },
     },
@@ -30,11 +30,32 @@ const beta = {
   arrayOfString: ['quatre'],
   arrayOfObjs: [
     {
-      primitive: 8,
+      primitive: 'eight',
       arrayOfString: ['ten-one', 'ten-two'],
       someObject: { label: 'first' },
     },
   ],
+};
+
+const betaWithPrimary = {
+  singlePrimitive: 8,
+  secondPrimitive: 2,
+  anyObject: {
+    title: 'beta-root',
+  },
+  arrayOfString: ['quatre'],
+  arrayOfObjs: {
+    eight: {
+      primitive: 'eight',
+      arrayOfString: ['ten-one', 'ten-two'],
+      someObject: { label: 'first' },
+    },
+    ten: {
+      primitive: 'ten',
+      arrayOfString: ['ten-one', 'ten-two'],
+      someObject: { label: 'third' },
+    },
+  },
 };
 
 describe('merge-objects', () => {
@@ -94,7 +115,7 @@ describe('merge-objects', () => {
               "one",
               "two",
             ],
-            "primitive": 8,
+            "primitive": "eight",
             "someObject": Object {
               "label": "first",
             },
@@ -104,7 +125,7 @@ describe('merge-objects', () => {
               "ten",
               "eleven",
             ],
-            "primitive": 9,
+            "primitive": "nine",
             "someObject": Object {
               "label": "second",
             },
@@ -114,9 +135,65 @@ describe('merge-objects', () => {
               "ten-one",
               "ten-two",
             ],
-            "primitive": 8,
+            "primitive": "eight",
             "someObject": Object {
               "label": "first",
+            },
+          },
+        ],
+        "arrayOfString": Array [
+          "un",
+          "deux",
+          "trois",
+          "quatre",
+        ],
+        "secondArrayOfString": Array [
+          "un",
+        ],
+        "secondPrimitive": 2,
+        "singlePrimitive": 8,
+      }
+    `);
+  });
+  it('should merge two files with a primary key', () => {
+    const actual = mergeObjects([
+      {
+        fileType: 'json',
+        json: alpha,
+        content: JSON.stringify(alpha),
+        filename: 'file1.json',
+      },
+      {
+        fileType: 'yaml',
+        json: betaWithPrimary,
+        content: JSON.stringify(betaWithPrimary),
+        filename: 'file2.yaml',
+      },
+    ]);
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "anyObject": Object {
+          "title": "beta-root",
+        },
+        "arrayOfObjs": Array [
+          Object {
+            "arrayOfString": Array [
+              "one",
+              "two",
+            ],
+            "primitive": "eight",
+            "someObject": Object {
+              "label": "first",
+            },
+          },
+          Object {
+            "arrayOfString": Array [
+              "ten",
+              "eleven",
+            ],
+            "primitive": "nine",
+            "someObject": Object {
+              "label": "second",
             },
           },
         ],
