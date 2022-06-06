@@ -34,16 +34,6 @@ const beta = {
       arrayOfString: ['ten-one', 'ten-two'],
       someObject: { label: 'first' },
     },
-    {
-      primitive: 9,
-      arrayOfString: ['ten-ten', 'ten-eleven'],
-      someObject: { label: 'second' },
-    },
-    {
-      primitive: 11,
-      arrayOfString: ['hundred'],
-      someObject: { label: 'third' },
-    },
   ],
 };
 
@@ -78,7 +68,7 @@ describe('merge-objects', () => {
     ]);
     expect(actual).toHaveProperty('messages');
   });
-  it('should merge two files', () => {
+  it('should merge two files without primary key', () => {
     const actual = mergeObjects([
       {
         fileType: 'json',
@@ -127,25 +117,6 @@ describe('merge-objects', () => {
             "primitive": 8,
             "someObject": Object {
               "label": "first",
-            },
-          },
-          Object {
-            "arrayOfString": Array [
-              "ten-ten",
-              "ten-eleven",
-            ],
-            "primitive": 9,
-            "someObject": Object {
-              "label": "second",
-            },
-          },
-          Object {
-            "arrayOfString": Array [
-              "hundred",
-            ],
-            "primitive": 11,
-            "someObject": Object {
-              "label": "third",
             },
           },
         ],
