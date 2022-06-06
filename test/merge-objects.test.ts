@@ -45,6 +45,7 @@ const betaWithPrimary = {
   },
   arrayOfString: ['quatre'],
   arrayOfObjs: {
+    __merging_primary_key: 'primitive',
     eight: {
       primitive: 'eight',
       arrayOfString: ['ten-one', 'ten-two'],
