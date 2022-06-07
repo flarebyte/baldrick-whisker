@@ -181,6 +181,8 @@ describe('merge-objects', () => {
             "arrayOfString": Array [
               "one",
               "two",
+              "ten-one",
+              "ten-two",
             ],
             "primitive": "eight",
             "someObject": Object {

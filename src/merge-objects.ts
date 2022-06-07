@@ -20,10 +20,14 @@ const isArray = (value: unknown): value is JsonArray =>
 const mergeArrayValues =
   (primaryKey: string, moreMetadata: JsonObject) =>
   (arrayObj: JsonValue): JsonObject => {
-    const metaObject = moreMetadata[primaryKey];
     if (!isObject(arrayObj)) {
       return { error: 'The element in the array should be an object' };
     }
+    const primaryKeyValue = arrayObj[primaryKey];
+    if (!isString(primaryKeyValue)) {
+      return { error: 'The primaryKeyValue should be a string' };
+    }
+    const metaObject = moreMetadata[primaryKeyValue];
     if (isNullOrUndefined(metaObject)) {
       return arrayObj;
     }
