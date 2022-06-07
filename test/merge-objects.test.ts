@@ -215,6 +215,15 @@ describe('merge-objects', () => {
     `);
   });
   it('should merge a elm file with a json file', () => {
+    const betaWithFunctionMod = {
+      ...beta,
+      functions: {
+        __merging_primary_key: 'functionName',
+        setKey: {
+          decorator: 'blue',
+        },
+      },
+    };
     const actual = mergeObjects([
       {
         fileType: 'elm',
@@ -241,8 +250,8 @@ describe('merge-objects', () => {
       },
       {
         fileType: 'yaml',
-        json: beta,
-        content: JSON.stringify(beta),
+        json: betaWithFunctionMod,
+        content: JSON.stringify(betaWithFunctionMod),
         filename: 'file2.yaml',
       },
     ]);
@@ -282,6 +291,7 @@ describe('merge-objects', () => {
             "returned": "Model",
           },
           Object {
+            "decorator": "blue",
             "functionName": "setKey",
             "params": Array [
               Object {
