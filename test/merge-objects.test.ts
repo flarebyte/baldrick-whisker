@@ -239,9 +239,33 @@ describe('merge-objects', () => {
         ],
         filename: 'file1.elm',
       },
+      {
+        fileType: 'yaml',
+        json: beta,
+        content: JSON.stringify(beta),
+        filename: 'file2.yaml',
+      },
     ]);
     expect(actual).toMatchInlineSnapshot(`
       Object {
+        "anyObject": Object {
+          "title": "beta-root",
+        },
+        "arrayOfObjs": Array [
+          Object {
+            "arrayOfString": Array [
+              "ten-one",
+              "ten-two",
+            ],
+            "primitive": "eight",
+            "someObject": Object {
+              "label": "first",
+            },
+          },
+        ],
+        "arrayOfString": Array [
+          "quatre",
+        ],
         "functions": Array [
           Object {
             "functionName": "setId",
@@ -272,6 +296,8 @@ describe('merge-objects', () => {
             "returned": "Model",
           },
         ],
+        "secondPrimitive": 2,
+        "singlePrimitive": 8,
       }
     `);
   });
