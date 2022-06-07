@@ -13,7 +13,7 @@ export interface ParamInfo {
 }
 
 export interface FunctionInfo {
-  name: string;
+  functionName: string;
   params: ParamInfo[];
   returned: string;
 }

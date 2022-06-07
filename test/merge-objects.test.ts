@@ -221,7 +221,7 @@ describe('merge-objects', () => {
         content: '{-| a elm file content -}',
         functionInfos: [
           {
-            name: 'setId',
+            functionName: 'setId',
             params: [
               { paramName: 'id', paramType: 'Maybe String' },
               { paramName: 'model', paramType: 'Model' },
@@ -229,7 +229,7 @@ describe('merge-objects', () => {
             returned: 'Model',
           },
           {
-            name: 'setKey',
+            functionName: 'setKey',
             params: [
               { paramName: 'key', paramType: 'Maybe String' },
               { paramName: 'model', paramType: 'Model' },
@@ -244,7 +244,7 @@ describe('merge-objects', () => {
       Object {
         "functions": Array [
           Object {
-            "name": "setId",
+            "functionName": "setId",
             "params": Array [
               Object {
                 "paramName": "id",
@@ -258,7 +258,7 @@ describe('merge-objects', () => {
             "returned": "Model",
           },
           Object {
-            "name": "setKey",
+            "functionName": "setKey",
             "params": Array [
               Object {
                 "paramName": "key",

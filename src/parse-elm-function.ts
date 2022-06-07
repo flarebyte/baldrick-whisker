@@ -103,7 +103,7 @@ export const parseElmFunction = (
     paramType: signatureParams[idx] || '',
   }));
   return {
-    name,
+    functionName: name,
     params,
     returned,
   };

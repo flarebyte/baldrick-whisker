@@ -10,7 +10,7 @@ describe('parse-elm', () => {
       ]);
       expect(actual).toMatchInlineSnapshot(`
         Object {
-          "name": "setId",
+          "functionName": "setId",
           "params": Array [
             Object {
               "paramName": "id",
@@ -32,7 +32,7 @@ describe('parse-elm', () => {
       ]);
       expect(actual).toMatchInlineSnapshot(`
         Object {
-          "name": "setId",
+          "functionName": "setId",
           "params": Array [
             Object {
               "paramName": "id",
@@ -50,7 +50,7 @@ describe('parse-elm', () => {
       ]);
       expect(actual).toMatchInlineSnapshot(`
         Object {
-          "name": "setId",
+          "functionName": "setId",
           "params": Array [
             Object {
               "paramName": "id",
@@ -71,7 +71,7 @@ describe('parse-elm', () => {
     expect(actual).toMatchInlineSnapshot(`
       Array [
         Object {
-          "name": "setId",
+          "functionName": "setId",
           "params": Array [
             Object {
               "paramName": "id",
@@ -85,7 +85,7 @@ describe('parse-elm', () => {
           "returned": "Model",
         },
         Object {
-          "name": "setKey",
+          "functionName": "setKey",
           "params": Array [
             Object {
               "paramName": "key",
