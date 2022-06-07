@@ -214,4 +214,65 @@ describe('merge-objects', () => {
       }
     `);
   });
+  it('should merge a elm file with a json file', () => {
+    const actual = mergeObjects([
+      {
+        fileType: 'elm',
+        content: '{-| a elm file content -}',
+        functionInfos: [
+          {
+            name: 'setId',
+            params: [
+              ['id', 'Maybe String'],
+              ['model', 'Model'],
+            ],
+            returned: 'Model',
+          },
+          {
+            name: 'setKey',
+            params: [
+              ['key', 'Maybe String'],
+              ['model', 'Model'],
+            ],
+            returned: 'Model',
+          },
+        ],
+        filename: 'file1.elm',
+      },
+    ]);
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "functions": Array [
+          Object {
+            "name": "setId",
+            "params": Array [
+              Array [
+                "id",
+                "Maybe String",
+              ],
+              Array [
+                "model",
+                "Model",
+              ],
+            ],
+            "returned": "Model",
+          },
+          Object {
+            "name": "setKey",
+            "params": Array [
+              Array [
+                "key",
+                "Maybe String",
+              ],
+              Array [
+                "model",
+                "Model",
+              ],
+            ],
+            "returned": "Model",
+          },
+        ],
+      }
+    `);
+  });
 });
