@@ -1,4 +1,4 @@
-import { FunctionInfo } from './model.js';
+import { FunctionInfo, ParamInfo } from './model.js';
 
 const isFunctionInfo = (value: unknown): value is FunctionInfo =>
   typeof value === 'object' && value !== null;
@@ -98,10 +98,10 @@ export const parseElmFunction = (
   if (signatureParams.length !== parameters.length || !returned) {
     return false;
   }
-  const params: [string, string][] = parameters.map((param, idx) => [
-    param,
-    signatureParams[idx] || '',
-  ]);
+  const params: ParamInfo[] = parameters.map((param, idx) => ({
+    paramName: param,
+    paramType: signatureParams[idx] || '',
+  }));
   return {
     name,
     params,

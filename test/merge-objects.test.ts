@@ -223,16 +223,16 @@ describe('merge-objects', () => {
           {
             name: 'setId',
             params: [
-              ['id', 'Maybe String'],
-              ['model', 'Model'],
+              { paramName: 'id', paramType: 'Maybe String' },
+              { paramName: 'model', paramType: 'Model' },
             ],
             returned: 'Model',
           },
           {
             name: 'setKey',
             params: [
-              ['key', 'Maybe String'],
-              ['model', 'Model'],
+              { paramName: 'key', paramType: 'Maybe String' },
+              { paramName: 'model', paramType: 'Model' },
             ],
             returned: 'Model',
           },
@@ -246,28 +246,28 @@ describe('merge-objects', () => {
           Object {
             "name": "setId",
             "params": Array [
-              Array [
-                "id",
-                "Maybe String",
-              ],
-              Array [
-                "model",
-                "Model",
-              ],
+              Object {
+                "paramName": "id",
+                "paramType": "Maybe String",
+              },
+              Object {
+                "paramName": "model",
+                "paramType": "Model",
+              },
             ],
             "returned": "Model",
           },
           Object {
             "name": "setKey",
             "params": Array [
-              Array [
-                "key",
-                "Maybe String",
-              ],
-              Array [
-                "model",
-                "Model",
-              ],
+              Object {
+                "paramName": "key",
+                "paramType": "Maybe String",
+              },
+              Object {
+                "paramName": "model",
+                "paramType": "Model",
+              },
             ],
             "returned": "Model",
           },

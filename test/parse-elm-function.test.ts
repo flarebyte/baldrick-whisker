@@ -12,14 +12,14 @@ describe('parse-elm', () => {
         Object {
           "name": "setId",
           "params": Array [
-            Array [
-              "id",
-              "Maybe String",
-            ],
-            Array [
-              "model",
-              "Model",
-            ],
+            Object {
+              "paramName": "id",
+              "paramType": "Maybe String",
+            },
+            Object {
+              "paramName": "model",
+              "paramType": "Model",
+            },
           ],
           "returned": "ReturnedModel",
         }
@@ -34,10 +34,10 @@ describe('parse-elm', () => {
         Object {
           "name": "setId",
           "params": Array [
-            Array [
-              "id",
-              "Maybe String",
-            ],
+            Object {
+              "paramName": "id",
+              "paramType": "Maybe String",
+            },
           ],
           "returned": "ReturnedModel",
         }
@@ -52,14 +52,14 @@ describe('parse-elm', () => {
         Object {
           "name": "setId",
           "params": Array [
-            Array [
-              "id",
-              "Maybe String",
-            ],
-            Array [
-              "formatter",
-              "( Int -> String )",
-            ],
+            Object {
+              "paramName": "id",
+              "paramType": "Maybe String",
+            },
+            Object {
+              "paramName": "formatter",
+              "paramType": "( Int -> String )",
+            },
           ],
           "returned": "ReturnedModel",
         }
@@ -73,28 +73,28 @@ describe('parse-elm', () => {
         Object {
           "name": "setId",
           "params": Array [
-            Array [
-              "id",
-              "Maybe String",
-            ],
-            Array [
-              "model",
-              "Model",
-            ],
+            Object {
+              "paramName": "id",
+              "paramType": "Maybe String",
+            },
+            Object {
+              "paramName": "model",
+              "paramType": "Model",
+            },
           ],
           "returned": "Model",
         },
         Object {
           "name": "setKey",
           "params": Array [
-            Array [
-              "key",
-              "String",
-            ],
-            Array [
-              "model",
-              "Model",
-            ],
+            Object {
+              "paramName": "key",
+              "paramType": "String",
+            },
+            Object {
+              "paramName": "model",
+              "paramType": "Model",
+            },
           ],
           "returned": "Model",
         },

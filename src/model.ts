@@ -7,9 +7,14 @@ export interface FileId {
   filename: string;
 }
 
+export interface ParamInfo {
+  paramName: string;
+  paramType: string;
+}
+
 export interface FunctionInfo {
   name: string;
-  params: [string, string][];
+  params: ParamInfo[];
   returned: string;
 }
 
