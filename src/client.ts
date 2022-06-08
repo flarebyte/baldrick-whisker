@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import { commandObject } from './command-object.js';
+import { commandRender } from './command-render.js';
 import { version } from './version.js';
 
 const program = new Command();
@@ -20,25 +21,10 @@ program
   .description('Render a template')
   .argument('<source>', 'the path to source file in JSON or YAML')
   .argument('<template>', 'the path to the Handlebars template')
-  .argument(
-    '<destination>',
-    'the path to the destination file (elm, ...)'
-  )
+  .argument('<destination>', 'the path to the destination file (elm, ...)')
   .option('--diff', 'Only display the difference in the console')
   .option('-cfg, --config <config>', 'Configuration as a JSON line')
-  .action(
-    (
-      sourcePath: string,
-      templatePath: string,
-      destinationPath: string,
-      options: { [name: string]: string }
-    ) => {
-      console.log('source', sourcePath);
-      console.log('template', templatePath);
-      console.log('destination', destinationPath);
-      console.log('options', options);
-    }
-  );
+  .action(commandRender);
 
 /**
  * This function may be merged in the future when the linter does a better job at recognizing .mts files

@@ -1,16 +1,8 @@
+import { checkFile } from './check-file.js';
 import { readInputFiles, saveObjectFile } from './file-io.js';
 import { mergeObjects } from './merge-objects.js';
-import { FileId } from './model.js';
 import { getFileIdentifier, getFileIdentifiers } from './text-utils.js';
 
-const checkFile = (someFile: FileId) => {
-  if (someFile.fileType === 'invalid' || someFile.fileType === 'unknown') {
-    console.error(
-      `The filename or content is unexpected: ${someFile.filename}`
-    );
-    process.exit(1);
-  }
-};
 export const commandObject = async (
   destinationPath: string,
   sourcePaths: string[]
