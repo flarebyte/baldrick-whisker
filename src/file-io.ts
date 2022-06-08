@@ -5,7 +5,7 @@ import { parseElmFunctions } from './parse-elm-function.js';
 import { FileId, InputContent } from './model.js';
 import { JsonObject } from 'type-fest';
 
-const readInputFile = async (fileId: FileId): Promise<InputContent> => {
+export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
   const { fileType, filename } = fileId;
   if (fileType === 'unknown' || fileType === 'invalid') {
     return {

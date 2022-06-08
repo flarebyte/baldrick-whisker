@@ -33,11 +33,14 @@ export const getFileType = (filename: string): FileType => {
     return 'json';
   } else if (filename.trimEnd().endsWith('.yaml')) {
     return 'yaml';
-  } else if (filename.trim() === 'console') {
-    return 'console';
   }
   return 'unknown';
 };
 
+export const getFileIdentifier = (filename: string): FileId => ({
+  filename,
+  fileType: getFileType(filename),
+});
+
 export const getFileIdentifiers = (filenames: string[]): FileId[] =>
-  filenames.map((filename) => ({ filename, fileType: getFileType(filename) }));
+  filenames.map(getFileIdentifier);

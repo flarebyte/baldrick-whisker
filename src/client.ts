@@ -1,4 +1,5 @@
 import { Command } from 'commander';
+import { commandObject } from './command-object.js';
 import { version } from './version.js';
 
 const program = new Command();
@@ -12,19 +13,16 @@ program
   .description('Convert source files to JSON or YAML')
   .argument('<destination>', 'the path to the JSON or YAML destination file')
   .argument('<sources...>', 'the path to the input filenames (JSON, YAML, Elm)')
-  .action((destinationPath: string, sourcePaths: string[]) => {
-    console.log('destination', destinationPath);
-    console.log('sources', sourcePaths);
-  });
+  .action(commandObject);
 
 program
-  .command('elm')
-  .description('Convert a JSON or YAML source to Elm')
+  .command('render')
+  .description('Render a template')
   .argument('<source>', 'the path to source file in JSON or YAML')
   .argument('<template>', 'the path to the Handlebars template')
   .argument(
     '<destination>',
-    'the path to the Elm destination file'
+    'the path to the destination file (elm, ...)'
   )
   .option('--diff', 'Only display the difference in the console')
   .option('-cfg, --config <config>', 'Configuration as a JSON line')
