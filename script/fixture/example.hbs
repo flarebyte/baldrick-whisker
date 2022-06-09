@@ -3,3 +3,14 @@
 > {{name}}
 
 * [{{author.name}}]({{author.url}})
+{{#each keywords}}
+* {{this}}
+{{/each}}
+
+{{#each functions}}
+## {{functionName}}
+{{#each params}}
+* {{paramName}} ==> {{paramType}}
+{{/each}}
+{{/each}}
+
