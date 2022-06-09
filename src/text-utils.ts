@@ -38,6 +38,8 @@ export const getFileType = (filename: string): FileType => {
     filename.trimEnd().endsWith('.hbs')
   ) {
     return 'handlebars';
+  } else if (filename.trimEnd().endsWith('.md')) {
+    return 'markdown';
   }
   return 'unknown';
 };

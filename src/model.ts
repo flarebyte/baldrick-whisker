@@ -5,6 +5,7 @@ export type FileType =
   | 'json'
   | 'yaml'
   | 'handlebars'
+  | 'markdown'
   | 'unknown'
   | 'invalid';
 

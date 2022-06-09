@@ -31,7 +31,7 @@ export const commandRender = async (
           },
         ]
       : [];
-  checkFile(destinationId, ['elm']);
+  checkFile(destinationId, ['elm', 'markdown']);
   const diff = !!options['diff'];
   const destinationAsSource: InputContent[] = diff
     ? [await readInputFile(destinationId)]
@@ -51,6 +51,4 @@ export const commandRender = async (
       await saveTextFile(destinationId, rendered);
     }
   }
-
-  console.log('diff', diff);
 };
