@@ -8,11 +8,11 @@ export const commandObject = async (
   sourcePaths: string[]
 ) => {
   const destinationId = getFileIdentifier(destinationPath);
-  checkFile(destinationId);
+  checkFile(destinationId, ['json', 'yaml']);
   const sourceIds = getFileIdentifiers(sourcePaths);
   const sources = await readInputFiles(sourceIds);
   for (const source of sources) {
-    checkFile(source);
+    checkFile(source, ['json', 'yaml', 'elm']);
   }
   const merged = mergeObjects(sources);
   await saveObjectFile(destinationId, merged);

@@ -1,6 +1,12 @@
 import { JsonObject } from 'type-fest';
 
-export type FileType = 'elm' | 'json' | 'yaml' | 'unknown' | 'invalid';
+export type FileType =
+  | 'elm'
+  | 'json'
+  | 'yaml'
+  | 'handlebars'
+  | 'unknown'
+  | 'invalid';
 
 export interface FileId {
   fileType: FileType;
@@ -18,6 +24,8 @@ export interface FunctionInfo {
   returned: string;
 }
 
+export type TemplateRenderer = (objData: JsonObject) => string;
+
 export type InputContent =
   | {
       fileType: 'elm';
@@ -30,6 +38,12 @@ export type InputContent =
       filename: string;
       content: string;
       json: JsonObject;
+    }
+  | {
+      fileType: 'handlebars';
+      filename: string;
+      content: string;
+      renderer: TemplateRenderer;
     }
   | {
       fileType: 'unknown' | 'invalid';

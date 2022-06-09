@@ -1,9 +1,10 @@
-import { FileId } from './model.js';
+import { FileId, FileType } from './model.js';
 
-export const checkFile = (someFile: FileId) => {
-  if (someFile.fileType === 'invalid' || someFile.fileType === 'unknown') {
+export const checkFile = (someFile: FileId, supportedFileTypes: FileType[]) => {
+  const isObjectCompatible = supportedFileTypes.includes(someFile.fileType);
+  if (!isObjectCompatible) {
     console.error(
-      `The filename or content is unexpected: ${someFile.filename}`
+      `The filename or content is not supported: ${someFile.filename}`
     );
     process.exit(1);
   }

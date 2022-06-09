@@ -1,9 +1,16 @@
 import jetpack from 'fs-jetpack';
 import YAML from 'yaml';
+import Handlebars from 'handlebars';
 import { parseElmFunctions } from './parse-elm-function.js';
 
-import { FileId, InputContent } from './model.js';
+import { FileId, InputContent, TemplateRenderer } from './model.js';
 import { JsonObject } from 'type-fest';
+import { checkFile } from './check-file.js';
+
+const compileTemplate = (templateContent: string): TemplateRenderer => {
+  const compiled = Handlebars.compile(templateContent, { noEscape: true });
+  return (objData: JsonObject) => compiled(objData);
+};
 
 export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
   const { fileType, filename } = fileId;
@@ -44,6 +51,14 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
       json: YAML.parse(content),
     };
   }
+  if (fileType === 'handlebars') {
+    return {
+      fileType,
+      filename,
+      content,
+      renderer: compileTemplate(content),
+    };
+  }
   return {
     fileType,
     filename,
@@ -61,16 +76,19 @@ export const saveObjectFile = async (
   fileId: FileId,
   content: JsonObject
 ): Promise<void> => {
-  const { fileType, filename } = fileId;
-  const isSupportedType = fileType === 'json' || fileType === 'yaml';
-  if (!isSupportedType) {
-    throw new Error(
-      `The type ${fileType} is not supported for export as ${filename}`
-    );
-  }
+  const { filename } = fileId;
+  checkFile(fileId, ['json', 'yaml']);
   const stringContent =
     fileId.fileType === 'json'
       ? JSON.stringify(content, null, 2)
       : YAML.stringify(content);
   await jetpack.writeAsync(filename, stringContent);
+};
+
+export const saveTextFile = async (
+  fileId: FileId,
+  content: string
+): Promise<void> => {
+  const { filename } = fileId;
+  await jetpack.writeAsync(filename, content);
 };

@@ -63,11 +63,9 @@ const mergeKey =
       }
     }
     if (isObject(valueA)) {
-      if (isObject(valueB)) {
-        return [key, { ...valueA, ...valueB }];
-      } else {
-        return [key, { ...valueA }];
-      }
+      return isObject(valueB)
+        ? [key, { ...valueA, ...valueB }]
+        : [key, { ...valueA }];
     }
     return [key, { ...valueA }];
   };

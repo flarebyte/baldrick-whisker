@@ -1,5 +1,7 @@
 import { checkFile } from './check-file.js';
-import { readInputFile } from './file-io.js';
+import { readInputFile, saveTextFile } from './file-io.js';
+import { mergeObjects } from './merge-objects.js';
+import { InputContent } from './model.js';
 import { getFileIdentifier } from './text-utils.js';
 
 export const commandRender = async (
@@ -10,13 +12,45 @@ export const commandRender = async (
 ) => {
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
-  checkFile(source);
+  checkFile(source, ['json', 'yaml']);
   const templateId = getFileIdentifier(templatePath);
   const template = await readInputFile(templateId);
-  checkFile(template);
+  checkFile(template, ['handlebars']);
 
   const destinationId = getFileIdentifier(destinationPath);
-  checkFile(destinationId);
 
-  console.log('options', options);
+  const configText = options['config'];
+  const configSource: InputContent[] =
+    typeof configText === 'string'
+      ? [
+          {
+            fileType: 'json',
+            filename: 'inline',
+            content: configText,
+            json: JSON.parse(configText),
+          },
+        ]
+      : [];
+  checkFile(destinationId, ['elm']);
+  const diff = !!options['diff'];
+  const destinationAsSource: InputContent[] = diff
+    ? [await readInputFile(destinationId)]
+    : [];
+
+  const mergedSource = mergeObjects([
+    source,
+    ...configSource,
+    ...destinationAsSource,
+  ]);
+  const isRenderable = template.fileType === 'handlebars';
+  if (isRenderable) {
+    const rendered = template.renderer(mergedSource);
+    if (diff) {
+      console.log(rendered);
+    } else {
+      await saveTextFile(destinationId, rendered);
+    }
+  }
+
+  console.log('diff', diff);
 };

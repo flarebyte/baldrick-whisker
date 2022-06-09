@@ -33,6 +33,11 @@ export const getFileType = (filename: string): FileType => {
     return 'json';
   } else if (filename.trimEnd().endsWith('.yaml')) {
     return 'yaml';
+  } else if (
+    filename.trimEnd().endsWith('.handlebars') ||
+    filename.trimEnd().endsWith('.hbs')
+  ) {
+    return 'handlebars';
   }
   return 'unknown';
 };
