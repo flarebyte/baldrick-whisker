@@ -15,11 +15,6 @@ status](https://github.com/flarebyte/baldrick-whisker/actions/workflows/main.yml
 ### Options
 
 ```bash
-yarn run v1.22.17
-$ node --loader ts-node/esm src/cli.mts --help
-(node:5726) ExperimentalWarning: --experimental-loader is an experimental
-feature. This feature could change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
 Usage: baldrick-whisker [options] [command]
 
 CLI to generate code using templates
@@ -34,17 +29,11 @@ Commands:
   object <destination> <sources...>                   Convert source files to JSON or YAML
   render [options] <source> <template> <destination>  Render a template
   help [command]                                      display help for command
-✨  Done in 0.98s.
 ```
 
 Convert source files to JSON or YAML
 
 ```bash
-yarn run v1.22.17
-$ node --loader ts-node/esm src/cli.mts object --help
-(node:5728) ExperimentalWarning: --experimental-loader is an experimental
-feature. This feature could change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
 Usage: baldrick-whisker object [options] <destination> <sources...>
 
 Convert source files to JSON or YAML
@@ -55,17 +44,11 @@ Arguments:
 
 Options:
   - h, --help   display help for command
-✨  Done in 1.02s.
 ```
 
 Render a template
 
 ```bash
-yarn run v1.22.17
-$ node --loader ts-node/esm src/cli.mts render --help
-(node:5730) ExperimentalWarning: --experimental-loader is an experimental
-feature. This feature could change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
 Usage: baldrick-whisker render [options] <source> <template> <destination>
 
 Render a template
@@ -79,7 +62,6 @@ Options:
   - -diff                   Only display the difference in the console
   - cfg, --config <config>  Configuration as a JSON line
   - h, --help               display help for command
-✨  Done in 0.91s.
 ```
 
 ## Documentation and links
