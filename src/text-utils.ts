@@ -26,6 +26,10 @@ export const firstUpper = (text: string) => {
   return text.slice(0, 1).toUpperCase() + text.slice(1);
 };
 
+export const firstLower = (text: string) => {
+  return text.slice(0, 1).toLowerCase() + text.slice(1);
+};
+
 export const getFileType = (filename: string): FileType => {
   if (filename.trimEnd().endsWith('.elm')) {
     return 'elm';
