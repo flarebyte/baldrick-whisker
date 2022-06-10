@@ -6,7 +6,8 @@ import { parseElmFunctions } from './parse-elm-function.js';
 import { FileId, InputContent, TemplateRenderer } from './model.js';
 import { JsonObject } from 'type-fest';
 import { checkFile } from './check-file.js';
-import { dasherize, firstLower, firstUpper, ifHasString, lowerCamelCase, toTitle, upperCamelCase } from './text-utils.js';
+import { dasherize, firstLower, firstUpper, lowerCamelCase, toTitle, upperCamelCase } from './text-utils.js';
+import { ifHasString } from "./handlebars-helpers";
 
 Handlebars.registerHelper('lowerFirstChar', firstLower)
 Handlebars.registerHelper('upperFirstChar', firstUpper)
