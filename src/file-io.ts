@@ -6,6 +6,15 @@ import { parseElmFunctions } from './parse-elm-function.js';
 import { FileId, InputContent, TemplateRenderer } from './model.js';
 import { JsonObject } from 'type-fest';
 import { checkFile } from './check-file.js';
+import { dasherize, firstLower, firstUpper, ifHasString, lowerCamelCase, toTitle, upperCamelCase } from './text-utils.js';
+
+Handlebars.registerHelper('lowerFirstChar', firstLower)
+Handlebars.registerHelper('upperFirstChar', firstUpper)
+Handlebars.registerHelper('toTitle', toTitle)
+Handlebars.registerHelper('upperCamelCase', upperCamelCase)
+Handlebars.registerHelper('lowerCamelCase', lowerCamelCase)
+Handlebars.registerHelper('dasherize', dasherize)
+Handlebars.registerHelper('ifHasString', ifHasString)
 
 const compileTemplate = (templateContent: string): TemplateRenderer => {
   const compiled = Handlebars.compile(templateContent, { noEscape: true });

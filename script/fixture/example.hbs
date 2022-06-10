@@ -1,16 +1,29 @@
 # Generate to Markdown 
 
-> {{name}}
+> {{description}}
 
 * [{{author.name}}]({{author.url}})
 {{#each keywords}}
 * {{this}}
 {{/each}}
+{{#each keywords}}
+* {{#if @index}}First: {{this}}{{/if}}
+* {{@index}}: {{this}}
+{{/each}}
+
+* {{#ifHasString keywords 'mustache'}} Support has string for an array {{/ifHasString}}
+{{#ifHasString keywords 'blue'}}* Support has string for an array {{/ifHasString}}
+* {{#ifHasString description 'Elm'}} Support string matching {{/ifHasString}}
+* {{#ifHasString keywords 'green OR mustache'}} Support OR operator for array {{/ifHasString}}
+* {{#ifHasString description 'green OR Elm'}} Support OR operator for string {{/ifHasString}}
 
 {{#each functions}}
 ## {{functionName}}
+{{toTitle functionName}}
+* class {{upperFirstChar functionName}}
+* {{dasherize functionName}}.ts
 {{#each params}}
-* {{paramName}} ==> {{paramType}}
+* {{paramName}} ==> {{paramType}} ==> {{upperCamelCase paramType}}
 {{/each}}
 {{/each}}
 
