@@ -1,29 +1,28 @@
-# Generate to Markdown 
+# Generate to Markdown using a handlebars template
 
 > {{description}}
 
 * [{{author.name}}]({{author.url}})
 {{#each keywords}}
-* {{this}}
-{{/each}}
-{{#each keywords}}
-* {{#if @index}}First: {{this}}{{/if}}
 * {{@index}}: {{this}}
 {{/each}}
 
-* {{#ifHasString keywords 'mustache'}} Support has string for an array {{/ifHasString}}
-{{#ifHasString keywords 'blue'}}* Support has string for an array {{/ifHasString}}
-* {{#ifHasString description 'Elm'}} Support string matching {{/ifHasString}}
-* {{#ifHasString keywords 'green OR mustache'}} Support OR operator for array {{/ifHasString}}
-* {{#ifHasString description 'green OR Elm'}} Support OR operator for string {{/ifHasString}}
+* {{#ifSatisfy 'equals' keywords 'mustache'}} Support has string for an array {{/ifSatisfy}}
+{{#ifSatisfy 'equals' keywords 'blue'}}* Support has string for an array {{/ifSatisfy}}
+* {{#ifSatisfy 'contains' description 'Elm'}} Support string matching {{/ifSatisfy}}
+* {{#ifSatisfy 'equals' keywords 'green OR mustache'}} Support OR operator for array {{/ifSatisfy}}
+* {{#ifSatisfy 'contains' description 'green OR Elm'}} Support OR operator for string {{/ifSatisfy}}
+* {{#ifSatisfy 'contains ignore-case' description 'green OR elm'}} Support OR operator with ignore-case for string {{/ifSatisfy}}
+
+* |{{#listJoin '|' keywords }} {{this}} {{/listJoin}}|
+{{#listJoin ' and newline newline' keywords }}* {{this}}{{/listJoin}}
 
 {{#each functions}}
 ## {{functionName}}
 {{toTitle functionName}}
 * class {{upperFirstChar functionName}}
 * {{dasherize functionName}}.ts
-{{#each params}}
-* {{paramName}} ==> {{paramType}} ==> {{upperCamelCase paramType}}
-{{/each}}
+{{#listJoin ', newline' params}}
+* {{paramName}} ==> {{paramType}} ==> {{upperCamelCase paramType}}{{/listJoin}}
 {{/each}}
 

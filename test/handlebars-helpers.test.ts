@@ -1,8 +1,66 @@
-import { ifHasString } from '../src/handlebars-helpers';
+import { ifSatisfyHelper } from '../src/handlebars-helpers';
+
+interface TestToSatisfy {
+  flags: string;
+  value: unknown;
+  expected: string;
+}
+
+const createIfSatisfyHelper = (
+  flags: string,
+  value: unknown,
+  expected: string
+): TestToSatisfy => ({ flags, value, expected });
 
 describe('handlebars-helper', () => {
-  it('should provide', () => {
-    const actual = ifHasString('stuff', 'blue', '', options);
-    expect(actual).toBeDefined()
+  it.each([
+    createIfSatisfyHelper('equals', 'blue', 'blue'),
+    createIfSatisfyHelper('not equals', 'red', 'blue'),
+    createIfSatisfyHelper('equals', 'blue', 'red OR blue OR green'),
+    createIfSatisfyHelper('contains', 'deep-blue', 'blue'),
+    createIfSatisfyHelper('ends-with', 'deep-blue', 'blue'),
+    createIfSatisfyHelper('starts-with', 'blue-light', 'blue'),
+    createIfSatisfyHelper('equals ignore-case', 'BLUE', 'blue'),
+    createIfSatisfyHelper('equals ignore-space', 'code base', 'codebase'),
+    createIfSatisfyHelper('equals ignore-punctuation', 'code;base', 'codebase'),
+    createIfSatisfyHelper(
+      'equals ignore-case ignore-punctuation',
+      'code;base',
+      'Codebase'
+    ),
+    createIfSatisfyHelper('equals', ['green', 'blue'], 'blue'),
+    createIfSatisfyHelper('equals', ['green', 'blue'], 'red OR blue OR green'),
+    createIfSatisfyHelper('starts-with', ['blue-light', 'green-light'], 'blue'),
+    createIfSatisfyHelper('ends-with', ['deep-green', 'deep-blue'], 'blue'),
+    createIfSatisfyHelper(
+      'ends-with ignore-case',
+      ['deep-green', 'deep-blue'],
+      'BLUE'
+    ),
+    createIfSatisfyHelper(
+      'ends-with ignore-case',
+      ['deep-green', 'deep-blue'],
+      'BLUE OR red'
+    ),
+    createIfSatisfyHelper(
+      'not ends-with ignore-case',
+      ['deep-green', 'deep-blue'],
+      'yellow OR violet'
+    ),
+  ])('should satisfy the conditions %s', (given) => {
+    const actual = ifSatisfyHelper(given.flags, given.value, given.expected);
+    expect(actual).toBeTruthy();
+  });
+  it.each([
+    createIfSatisfyHelper('equals', 'orange', 'blue'),
+    createIfSatisfyHelper('equals', 'Blue', 'blue'),
+    createIfSatisfyHelper('equals', 'orange', 'red OR blue OR green'),
+    createIfSatisfyHelper('ends-with', 'deep-blue', 'bluetooth'),
+    createIfSatisfyHelper('starts-with', 'blue-light', 'bluetooth'),
+    createIfSatisfyHelper('contains', 'deep-orange', 'blue'),
+    createIfSatisfyHelper('ends-with', ['deep-green', 'deep-blue'], 'BLUE'),
+  ])('should not satisfy the conditions %s', (given) => {
+    const actual = ifSatisfyHelper(given.flags, given.value, given.expected);
+    expect(actual).toBeFalsy();
   });
 });

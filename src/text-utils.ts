@@ -71,5 +71,3 @@ export const getFileIdentifier = (filename: string): FileId => ({
 
 export const getFileIdentifiers = (filenames: string[]): FileId[] =>
   filenames.map(getFileIdentifier);
-
-

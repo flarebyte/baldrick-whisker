@@ -6,16 +6,24 @@ import { parseElmFunctions } from './parse-elm-function.js';
 import { FileId, InputContent, TemplateRenderer } from './model.js';
 import { JsonObject } from 'type-fest';
 import { checkFile } from './check-file.js';
-import { dasherize, firstLower, firstUpper, lowerCamelCase, toTitle, upperCamelCase } from './text-utils.js';
-import { ifHasString } from "./handlebars-helpers";
+import {
+  dasherize,
+  firstLower,
+  firstUpper,
+  lowerCamelCase,
+  toTitle,
+  upperCamelCase,
+} from './text-utils.js';
+import { ifSatisfy, listJoin } from './handlebars-helpers.js';
 
-Handlebars.registerHelper('lowerFirstChar', firstLower)
-Handlebars.registerHelper('upperFirstChar', firstUpper)
-Handlebars.registerHelper('toTitle', toTitle)
-Handlebars.registerHelper('upperCamelCase', upperCamelCase)
-Handlebars.registerHelper('lowerCamelCase', lowerCamelCase)
-Handlebars.registerHelper('dasherize', dasherize)
-Handlebars.registerHelper('ifHasString', ifHasString)
+Handlebars.registerHelper('lowerFirstChar', firstLower);
+Handlebars.registerHelper('upperFirstChar', firstUpper);
+Handlebars.registerHelper('toTitle', toTitle);
+Handlebars.registerHelper('upperCamelCase', upperCamelCase);
+Handlebars.registerHelper('lowerCamelCase', lowerCamelCase);
+Handlebars.registerHelper('dasherize', dasherize);
+Handlebars.registerHelper('ifSatisfy', ifSatisfy);
+Handlebars.registerHelper('listJoin', listJoin);
 
 const compileTemplate = (templateContent: string): TemplateRenderer => {
   const compiled = Handlebars.compile(templateContent, { noEscape: true });
