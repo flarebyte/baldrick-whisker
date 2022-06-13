@@ -4,6 +4,12 @@ import { mergeObjects } from './merge-objects.js';
 import { InputContent } from './model.js';
 import { getFileIdentifier } from './text-utils.js';
 
+const extractDestContent = (inputContent: InputContent): string => {
+  const hasDestContent =
+    inputContent.fileType === 'elm' || inputContent.fileType === 'markdown';
+  return hasDestContent ? inputContent.content : '';
+};
+
 export const commandRender = async (
   sourcePath: string,
   templatePath: string,
@@ -33,8 +39,20 @@ export const commandRender = async (
       : [];
   checkFile(destinationId, ['elm', 'markdown']);
   const diff = !!options['diff'];
+  const expectedOutput = diff
+    ? extractDestContent(await readInputFile(destinationId))
+    : '';
   const destinationAsSource: InputContent[] = diff
-    ? [await readInputFile(destinationId)]
+    ? [
+        {
+          fileType: 'json',
+          filename: 'inline',
+          content: expectedOutput,
+          json: {
+            output: expectedOutput,
+          },
+        },
+      ]
     : [];
 
   const mergedSource = mergeObjects([

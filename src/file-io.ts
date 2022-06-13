@@ -77,6 +77,13 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
       renderer: compileTemplate(content),
     };
   }
+  if (fileType === 'markdown') {
+    return {
+      fileType,
+      filename,
+      content,
+    };
+  }
   return {
     fileType,
     filename,

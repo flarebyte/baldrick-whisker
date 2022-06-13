@@ -4,16 +4,9 @@ const capitalizeWord = (text: string): string =>
   text.length > 0 ? text[0]?.toUpperCase() + text.slice(1).toLowerCase() : '';
 const wordToCamel = (text: string, index: number): string =>
   index === 0 ? text.toLowerCase() : capitalizeWord(text);
-/**
- * Split a string by Space
- * @param text the text to split
- */
+
 const splitBySpace = (text: string): string[] => text.split(' ');
 
-/**
- * split some text when a character changes case ( uppercase <-> lowercase)
- * @example camelCase camel Case
- */
 export const splitOnCaseChange = (text: string): string[] =>
   text.replace(/([\da-z])([A-Z])/g, '$1 $2').split(' ');
 

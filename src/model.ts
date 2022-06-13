@@ -47,6 +47,11 @@ export type InputContent =
       renderer: TemplateRenderer;
     }
   | {
+      fileType: 'markdown';
+      filename: string;
+      content: string;
+    }
+  | {
       fileType: 'unknown' | 'invalid';
       filename: string;
     };

@@ -72,10 +72,6 @@ const findElmFunctionBlocks = (content: string): [string, string][] => {
   return results;
 };
 
-/**
- * Parse am elm function
- * @param twoLines a tuple with the signature followed parameters
- */
 export const parseElmFunction = (
   twoLines: [string, string]
 ): FunctionInfo | false => {
@@ -109,10 +105,5 @@ export const parseElmFunction = (
   };
 };
 
-/**
- * Parse an elm script file
- * @param content the elm script
- * @returns a list of functions for that script
- */
 export const parseElmFunctions = (content: string): FunctionInfo[] =>
   findElmFunctionBlocks(content).map(parseElmFunction).filter(isFunctionInfo);

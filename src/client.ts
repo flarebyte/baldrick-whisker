@@ -26,9 +26,6 @@ program
   .option('-cfg, --config <config>', 'Configuration as a JSON line')
   .action(commandRender);
 
-/**
- * This function may be merged in the future when the linter does a better job at recognizing .mts files
- */
 export async function runClient() {
   try {
     program.parseAsync();

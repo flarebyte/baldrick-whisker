@@ -63,7 +63,7 @@
     "h": "cat commands.txt",
     "norm": "npx baldrick-ts generate -f cli -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix",
     "norm:g": "baldrick-ts generate -f cli -ga 'flarebyte' -ch 'Flarebyte.com' -cy 2022 -l MIT && yarn md:fix",
-    "try": "node --loader ts-node/esm src/cli.mts"
+    "cli": "node --loader ts-node/esm src/cli.mts"
   },
   "dependencies": {
     "commander": "^9.2.0",
