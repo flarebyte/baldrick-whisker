@@ -4,8 +4,8 @@ const isStringArray = (value: unknown): value is string[] =>
   typeof value === 'object' &&
   value !== null &&
   Array.isArray(value) &&
-  (value as any[]).length > 0 &&
-  typeof (value as any[])[0] === 'string';
+  (value as unknown[]).length > 0 &&
+  typeof (value as unknown[])[0] === 'string';
 
 const isString = (value: unknown): value is string => typeof value === 'string';
 
@@ -139,7 +139,7 @@ export const ifSatisfy = (
   return result ? options.fn(this) : options.inverse(this);
 };
 
-const isAnyArray = (value: unknown): value is any[] =>
+const isAnyArray = (value: unknown): value is unknown[] =>
   typeof value === 'object' && value !== null && Array.isArray(value);
 
 export const replaceAll =

@@ -1,10 +1,10 @@
 import jetpack from 'fs-jetpack';
 import YAML from 'yaml';
+import { JsonObject } from 'type-fest';
 import Handlebars from 'handlebars';
 import { parseElmFunctions } from './parse-elm-function.js';
 
 import { FileId, InputContent, TemplateRenderer } from './model.js';
-import { JsonObject } from 'type-fest';
 import { checkFile } from './check-file.js';
 import {
   dasherize,
@@ -101,11 +101,11 @@ export const saveObjectFile = async (
   fileId: FileId,
   content: JsonObject
 ): Promise<void> => {
-  const { filename } = fileId;
+  const { filename, fileType } = fileId;
   checkFile(fileId, ['json', 'yaml']);
   const stringContent =
-    fileId.fileType === 'json'
-      ? JSON.stringify(content, null, 2)
+    fileType === 'json'
+      ? JSON.stringify(content, undefined, 2)
       : YAML.stringify(content);
   await jetpack.writeAsync(filename, stringContent);
 };

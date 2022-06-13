@@ -9,7 +9,7 @@ const chompLast = (text: string): string => text.trim().slice(0, -1).trim();
 const replaceArrowWithinParenthesis = (text: string) => {
   let r = '';
   let inParen = false;
-  const chars = text.split('');
+  const chars = [...text];
   for (let letter of chars) {
     if (letter === '(') {
       inParen = true;

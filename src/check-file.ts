@@ -6,6 +6,7 @@ export const checkFile = (someFile: FileId, supportedFileTypes: FileType[]) => {
     console.error(
       `The filename or content is not supported: ${someFile.filename}`
     );
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit(1);
   }
 };

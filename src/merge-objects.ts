@@ -81,10 +81,12 @@ const fromFunctionInfos = (functionInfos: FunctionInfo[]): JsonObject => {
 const toJsonObject = (inputContent: InputContent): JsonObject => {
   const { fileType } = inputContent;
   if (fileType === 'elm') {
-    return fromFunctionInfos(inputContent.functionInfos);
+    const { functionInfos } = inputContent;
+    return fromFunctionInfos(functionInfos);
   }
   if (fileType === 'json' || fileType === 'yaml') {
-    return inputContent.json;
+    const { json } = inputContent;
+    return json;
   }
   return { messages: [`invalid file ${inputContent.filename}`] };
 };
