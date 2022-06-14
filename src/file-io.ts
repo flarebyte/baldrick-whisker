@@ -1,6 +1,6 @@
 import jetpack from 'fs-jetpack';
 import YAML from 'yaml';
-import { JsonObject } from 'type-fest';
+import type { JsonObject } from 'type-fest';
 import Handlebars from 'handlebars';
 import { parseElmFunctions } from './parse-elm-function.js';
 
@@ -30,6 +30,11 @@ const compileTemplate = (templateContent: string): TemplateRenderer => {
   return (objData: JsonObject) => compiled(objData);
 };
 
+/**
+ * Read a supported input file (JSON, YAML, Elm, Markdown)
+ * @param fileId a file identifier
+ * @returns a structure content representing the file
+ */
 export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
   const { fileType, filename } = fileId;
   if (fileType === 'unknown' || fileType === 'invalid') {
@@ -97,6 +102,11 @@ export const readInputFiles = async (
   return Promise.all(files);
 };
 
+/**
+ * Save a JSON object as a JSON or YAML file
+ * @param fileId a file identifier
+ * @param content some JSON or YAML content
+ */
 export const saveObjectFile = async (
   fileId: FileId,
   content: JsonObject

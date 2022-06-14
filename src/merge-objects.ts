@@ -1,4 +1,9 @@
-import { JsonArray, JsonObject, JsonPrimitive, JsonValue } from 'type-fest';
+import type {
+  JsonArray,
+  JsonObject,
+  JsonPrimitive,
+  JsonValue,
+} from 'type-fest';
 import { FunctionInfo, InputContent } from './model';
 
 const isNullOrUndefined = (value: unknown): value is null | undefined =>
@@ -91,6 +96,11 @@ const toJsonObject = (inputContent: InputContent): JsonObject => {
   return { messages: [`invalid file ${inputContent.filename}`] };
 };
 
+/**
+ * Merge several JSON, YAML, elm documents into one
+ * @param inputContents a list of JSON and YAML payload to merge
+ * @returns the merged JsonObject
+ */
 export const mergeObjects = (inputContents: InputContent[]): JsonObject => {
   const jsonContents = inputContents.map(toJsonObject);
   let result: JsonObject = {};

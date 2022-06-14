@@ -371,3 +371,19 @@ development
 [npm](https://www.npmjs.com/) : Typescript scaffolding assistant
 
 ***
+
+### Run client directly
+
+> Run the client with ts-node during development
+
+**Motivation:** Simulate a CLI app in development without the need to install
+it globally
+
+**When to use it:** After compilation
+
+**Run:** `yarn cli`
+
+**From package:** [yarn](https://classic.yarnpkg.com/en/) of
+[npm](https://www.npmjs.com/) : Dependency management
+
+***

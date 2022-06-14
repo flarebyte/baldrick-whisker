@@ -105,5 +105,10 @@ export const parseElmFunction = (
   };
 };
 
+/**
+ * Parse an Elm file content to retrieve the functions
+ * @param content Elm file content
+ * @returns a list of information about each function
+ */
 export const parseElmFunctions = (content: string): FunctionInfo[] =>
   findElmFunctionBlocks(content).map(parseElmFunction).filter(isFunctionInfo);

@@ -83,3 +83,43 @@ Point-Free Style allows to chain functions in a very linear way
 
 More about [Point-Free
 Style](https://en.wikipedia.org/wiki/Tacit_programming)
+
+## Railway oriented programming
+
+Functional approach for composing functions
+
+**Motivation:**
+
+-   Each function will always yield a failure or a success
+-   Composition of happy paths
+-   Failure path short-circuits and forwards any previous errors
+
+More about [Railway oriented
+programming](https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/recipe-part2.html)
+
+## Reactive programming
+
+Declarative programming paradigm concerned with data streams and the
+propagation of change
+
+**Motivation:**
+
+-   Cleaner code, more concise
+-   Easier to scale
+
+More about [Reactive
+programming](https://en.wikipedia.org/wiki/Reactive_programming)
+
+## Functional reactive programming
+
+Programming paradigm for reactive programming using the building blocks of
+functional programming
+
+**Motivation:**
+
+-   Well defined semantic model
+-   The dynamical behavior of a value is specified at declaration time
+-   Stop working on individual events and work with event streams instead
+
+More about [Functional reactive
+programming](https://en.wikipedia.org/wiki/Functional_reactive_programming)

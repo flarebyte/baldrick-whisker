@@ -20,15 +20,16 @@ Usage: baldrick-whisker [options] [command]
 CLI to generate code using templates
 
 Options:
-  - V, --version                                       output the version
+- V, --version                                       output the version
 number
-  - h, --help                                          display help for
+- h, --help                                          display help for
 command
 
 Commands:
-  object <destination> <sources...>                   Convert source files to JSON or YAML
-  render [options] <source> <template> <destination>  Render a template
-  help [command]                                      display help for command
+object <destination> <sources...>                   Convert source files to
+JSON or YAML
+render [options] <source> <template> <destination>  Render a template
+help [command]                                      display help for command
 ```
 
 Convert source files to JSON or YAML
@@ -39,11 +40,11 @@ Usage: baldrick-whisker object [options] <destination> <sources...>
 Convert source files to JSON or YAML
 
 Arguments:
-  destination  the path to the JSON or YAML destination file
-  sources      the path to the input filenames (JSON, YAML, Elm)
+destination  the path to the JSON or YAML destination file
+sources      the path to the input filenames (JSON, YAML, Elm)
 
 Options:
-  - h, --help   display help for command
+- h, --help   display help for command
 ```
 
 Render a template
@@ -54,14 +55,14 @@ Usage: baldrick-whisker render [options] <source> <template> <destination>
 Render a template
 
 Arguments:
-  source                   the path to source file in JSON or YAML
-  template                 the path to the Handlebars template
-  destination              the path to the destination file (elm, ...)
+source                   the path to source file in JSON or YAML
+template                 the path to the Handlebars template
+destination              the path to the destination file (elm, ...)
 
 Options:
-  - -diff                   Only display the difference in the console
-  - cfg, --config <config>  Configuration as a JSON line
-  - h, --help               display help for command
+- -diff                   Only display the difference in the console
+- cfg, --config <config>  Configuration as a JSON line
+- h, --help               display help for command
 ```
 
 ## Documentation and links
@@ -73,6 +74,7 @@ Options:
 -   [Glossary](GLOSSARY.md)
 -   [Diagram for the code base](INTERNAL.md)
 -   [Vocabulary used in the code base](CODE_VOCABULARY.md)
+-   [Architectural Decision Records](DECISIONS.md)
 -   [Contributors](https://github.com/flarebyte/baldrick-whisker/graphs/contributors)
 -   [Dependencies](https://github.com/flarebyte/baldrick-whisker/network/dependencies)
 
