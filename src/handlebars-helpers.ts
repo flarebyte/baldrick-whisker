@@ -9,6 +9,11 @@ const isStringArray = (value: unknown): value is string[] =>
 
 const isString = (value: unknown): value is string => typeof value === 'string';
 
+const isFiniteNumber = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isFinite(value);
+
+const parseNumber = (value: string): number => Number.parseInt(value, 10);
+
 const orOperator = ' OR ';
 type StringCompareStrategy =
   | 'equals'
@@ -96,6 +101,16 @@ const ifSatisfyForString = (
   return found;
 };
 
+const ifSatisfyForNumber = (
+  _flags: IfSatisfyFlags,
+  value: number,
+  expected: string
+): boolean => {
+  const numberExpected = parseNumber(expected);
+  const found = value === numberExpected;
+  return found;
+};
+
 export const ifSatisfyForStringList = (
   flags: IfSatisfyFlags,
   values: string[],
@@ -124,6 +139,10 @@ export const ifSatisfyHelper = (
   }
   if (isString(value)) {
     const result = ifSatisfyForString(currentFlags, value, expected);
+    return currentFlags.isInverted ? !result : result;
+  }
+  if (isFiniteNumber(value)) {
+    const result = ifSatisfyForNumber(currentFlags, value, expected);
     return currentFlags.isInverted ? !result : result;
   }
   return false;

@@ -47,6 +47,8 @@ describe('handlebars-helper', () => {
       ['deep-green', 'deep-blue'],
       'yellow OR violet'
     ),
+    createIfSatisfyHelper('equals', 12, '12'),
+    createIfSatisfyHelper('not equals', 12, '15'),
   ])('should satisfy the conditions %s', (given) => {
     const actual = ifSatisfyHelper(given.flags, given.value, given.expected);
     expect(actual).toBeTruthy();
@@ -59,6 +61,7 @@ describe('handlebars-helper', () => {
     createIfSatisfyHelper('starts-with', 'blue-light', 'bluetooth'),
     createIfSatisfyHelper('contains', 'deep-orange', 'blue'),
     createIfSatisfyHelper('ends-with', ['deep-green', 'deep-blue'], 'BLUE'),
+    createIfSatisfyHelper('equals', 12, '13'),
   ])('should not satisfy the conditions %s', (given) => {
     const actual = ifSatisfyHelper(given.flags, given.value, given.expected);
     expect(actual).toBeFalsy();
