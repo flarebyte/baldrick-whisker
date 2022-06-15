@@ -15,6 +15,7 @@
 * {{#ifSatisfy 'equals' keywords 'green OR mustache'}} Support: if satisfy equals with OR for an array {{/ifSatisfy}}
 * {{#ifSatisfy 'contains' description 'green OR Elm'}} Support: if satisfy contains with OR for a string {{/ifSatisfy}}
 * {{#ifSatisfy 'contains ignore-case' description 'green OR elm'}} Support: if satisfy contains ignore-case with OR for a string {{/ifSatisfy}}
+* {{#ifSatisfy 'equals' keywords.length '5'}} Support: if satisfy equals number {{/ifSatisfy}}
 
 * |{{#listJoin '|' keywords }} {{this}} {{/listJoin}}|
 {{#listJoin ' and newline newline' keywords }}- {{this}}{{/listJoin}}
