@@ -1,3 +1,4 @@
+/* eslint unicorn/no-useless-undefined: 0 */
 import {
   dasherize,
   firstLower,
@@ -10,6 +11,9 @@ import {
 
 describe('text-utils', () => {
   describe('firstUpper', () => {
+    it('should support undefined', () => {
+      expect(firstUpper(undefined)).toStrictEqual('');
+    });
     it('should support empty string', () => {
       expect(firstUpper('')).toStrictEqual('');
     });
@@ -19,6 +23,9 @@ describe('text-utils', () => {
     });
   });
   describe('firstLower', () => {
+    it('should support undefined', () => {
+      expect(firstLower(undefined)).toStrictEqual('');
+    });
     it('should support empty string', () => {
       expect(firstLower('')).toStrictEqual('');
     });
@@ -28,6 +35,9 @@ describe('text-utils', () => {
     });
   });
   describe('upperCamelCase', () => {
+    it('should support undefined', () => {
+      expect(upperCamelCase(undefined)).toStrictEqual('');
+    });
     it('should support empty string', () => {
       expect(upperCamelCase('')).toStrictEqual('');
     });
@@ -38,6 +48,9 @@ describe('text-utils', () => {
     });
   });
   describe('lowerCamelCase', () => {
+    it('should support undefined', () => {
+      expect(lowerCamelCase(undefined)).toStrictEqual('');
+    });
     it('should support empty string', () => {
       expect(lowerCamelCase('')).toStrictEqual('');
     });
@@ -48,6 +61,9 @@ describe('text-utils', () => {
     });
   });
   describe('toTitle', () => {
+    it('should support undefined', () => {
+      expect(toTitle(undefined)).toStrictEqual('');
+    });
     it('should support empty string', () => {
       expect(toTitle('')).toStrictEqual('');
     });
@@ -58,6 +74,9 @@ describe('text-utils', () => {
     });
   });
   describe('dasherize', () => {
+    it('should support undefined', () => {
+      expect(dasherize(undefined)).toStrictEqual('');
+    });
     it('should support empty string', () => {
       expect(dasherize('')).toStrictEqual('');
     });

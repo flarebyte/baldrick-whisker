@@ -10,32 +10,43 @@ const splitBySpace = (text: string): string[] => text.split(' ');
 export const splitOnCaseChange = (text: string): string[] =>
   text.replace(/([\da-z])([A-Z])/g, '$1 $2').split(' ');
 
-export const firstUpper = (text: string) => {
-  return text.slice(0, 1).toUpperCase() + text.slice(1);
+const isNullOrUndefined = (value: unknown): value is null | undefined =>
+  typeof value === 'undefined' || value === null;
+
+export const firstUpper = (text: string | null | undefined) => {
+  return isNullOrUndefined(text)
+    ? ''
+    : text.slice(0, 1).toUpperCase() + text.slice(1);
 };
 
-export const firstLower = (text: string) => {
-  return text.slice(0, 1).toLowerCase() + text.slice(1);
+export const firstLower = (text: string | null | undefined) => {
+  return isNullOrUndefined(text)
+    ? ''
+    : text.slice(0, 1).toLowerCase() + text.slice(1);
 };
 
-export const toTitle = (text: string): string =>
-  firstUpper(splitOnCaseChange(text).map(firstLower).join(' '));
+export const toTitle = (text: string | null | undefined): string =>
+  isNullOrUndefined(text)
+    ? ''
+    : firstUpper(splitOnCaseChange(text).map(firstLower).join(' '));
 
-export const upperCamelCase = (text: string): string => {
-  const splitted = text.includes(' ')
-    ? splitBySpace(text)
-    : splitOnCaseChange(text);
+export const upperCamelCase = (text: string | null | undefined): string => {
+  const textOrEmpty = isNullOrUndefined(text) ? '' : text;
+  const splitted = textOrEmpty.includes(' ')
+    ? splitBySpace(textOrEmpty)
+    : splitOnCaseChange(textOrEmpty);
   const newText = splitted.map(wordToCamel).join('');
   return newText.slice(0, 1).toUpperCase() + newText.slice(1);
 };
 
-export const lowerCamelCase = (text: string): string =>
+export const lowerCamelCase = (text: string | null | undefined): string =>
   firstLower(upperCamelCase(text));
 
-export const dasherize = (text: string): string => {
-  const splitted = text.includes(' ')
-    ? splitBySpace(text)
-    : splitOnCaseChange(text);
+export const dasherize = (text: string | null | undefined): string => {
+  const textOrEmpty = isNullOrUndefined(text) ? '' : text;
+  const splitted = textOrEmpty.includes(' ')
+    ? splitBySpace(textOrEmpty)
+    : splitOnCaseChange(textOrEmpty);
   const newText = splitted.map((w) => w.toLowerCase()).join('-');
   return newText;
 };
