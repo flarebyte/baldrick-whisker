@@ -65,6 +65,82 @@ Options:
 - h, --help               display help for command
 ```
 
+### Template
+
+#### ifSatisfy
+
+> Check if a condition is satisfied before executing the block
+
+```handlebars
+{{#ifSatisfy "equals" keywords "mustache"}}
+  Will display if the word mustache is in the list of keywords
+{{/ifSatisfy}}
+```
+
+```handlebars
+{{#ifSatisfy "not equals" keywords "mustache"}}
+  Will display if the word mustache is not in the list of keywords
+{{/ifSatisfy}}
+```
+
+```handlebars
+{{#ifSatisfy "contains" description "Elm"}}
+  Will display if the word Elm is in the description
+{{/ifSatisfy}}
+```
+
+```handlebars
+{{#ifSatisfy "contains ignore-case" description "Elm OR Python"}}
+  Will display if the words Elm or Python is in the description ignoring the
+  case
+{{/ifSatisfy}}
+```
+
+```handlebars
+{{#ifSatisfy "starts-with ignore-space" description "Code generator"}}
+  Will display if the description starts with Code generator ignoring any spaces
+{{/ifSatisfy}}
+```
+
+```handlebars
+{{#ifSatisfy "not ends-with" description "templates"}}
+  Will display if the description does not ends with templates
+{{/ifSatisfy}}
+```
+
+```handlebars
+{{#ifSatisfy "contains ignore-punctuation" description "Code&generator"}}
+  Will display if the description contains "Code generator" ignoring any
+  punctuation
+{{/ifSatisfy}}
+```
+
+#### listJoin
+
+> Join a list with a separator
+
+```handlebars
+|{{#listJoin "|" keywords}} {{this}} {{/listJoin}}|
+```
+
+```handlebars
+{{#listJoin ', newline' params}}
+* {{paramName}} ==> {{paramType}} ==> {{upperCamelCase
+paramType}}{{/listJoin}}
+{{/each}}
+```
+
+#### String transformers
+
+| Function                   | input      | output     |
+| -------------------------- | ---------- | ---------- |
+| `{{upperFirstChar value}}` | baldrick   | Baldrick   |
+| `{{lowerFirstChar value}}` | Baldrick   | baldrick   |
+| `{{upperCamelCase value}}` | great idea | GreatIdea  |
+| `{{lowerCamelCase value}}` | great idea | greatIdea  |
+| `{{toTitle value}}`        | GreatIdea  | Great idea |
+| `{{dasherize value}}`      | GreatIdea  | great-idea |
+
 ## Documentation and links
 
 -   [Code Maintenance](MAINTENANCE.md)

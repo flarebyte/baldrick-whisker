@@ -11,11 +11,11 @@
 
 * {{#ifSatisfy 'equals' keywords 'mustache'}} Support: if satisfy equals for an array {{/ifSatisfy}}
 {{#ifSatisfy 'equals' keywords 'blue'}}* Support: ❌ KO if satisfy equals for an array {{/ifSatisfy}}
-* {{#ifSatisfy 'contains' description 'Elm'}} Support: if satisfy contains {{/ifSatisfy}}
+* {{#ifSatisfy 'contains' description 'Elm'}} Support: if satisfy contains from: {{description}} {{/ifSatisfy}}
 * {{#ifSatisfy 'equals' keywords 'green OR mustache'}} Support: if satisfy equals with OR for an array {{/ifSatisfy}}
 * {{#ifSatisfy 'contains' description 'green OR Elm'}} Support: if satisfy contains with OR for a string {{/ifSatisfy}}
 * {{#ifSatisfy 'contains ignore-case' description 'green OR elm'}} Support: if satisfy contains ignore-case with OR for a string {{/ifSatisfy}}
-* {{#ifSatisfy 'equals' keywords.length '5'}} Support: if satisfy equals number {{/ifSatisfy}}
+* {{#ifSatisfy 'equals' keywords.length '5'}} Support: if satisfy equals number: {{keywords}} {{/ifSatisfy}}
 
 * |{{#listJoin '|' keywords }} {{this}} {{/listJoin}}|
 {{#listJoin ' and newline newline' keywords }}- {{this}}{{/listJoin}}
