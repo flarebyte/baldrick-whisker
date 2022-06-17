@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 import { HelperOptions } from 'handlebars';
 
 const isStringArray = (value: unknown): value is string[] =>
@@ -148,15 +149,16 @@ export const ifSatisfyHelper = (
   return false;
 };
 
-export const ifSatisfy = (
+export function ifSatisfy(
+  this: any,
   flags: string,
   value: unknown,
   expected: string,
   options: HelperOptions
-) => {
+) {
   const result = ifSatisfyHelper(flags, value, expected);
   return result ? options.fn(this) : options.inverse(this);
-};
+}
 
 const isAnyArray = (value: unknown): value is unknown[] =>
   typeof value === 'object' && value !== null && Array.isArray(value);
@@ -170,11 +172,15 @@ const newLine = ' newline';
 const replaceAllNewLines = replaceAll(newLine, '');
 const countNewLines = (text: string): number => text.split(newLine).length - 1;
 
-export const listJoin = (
+/**
+ * Join a list with a separator
+ */
+export function listJoin(
+  this: any,
   separator: string,
   value: unknown,
   options: HelperOptions
-) => {
+) {
   if (!isAnyArray(value)) {
     return options.inverse(this);
   }
@@ -185,4 +191,4 @@ export const listJoin = (
       ? replaceAllNewLines(separator) + '\n'.repeat(newLinesCount)
       : separator;
   return items.join(realSeparator);
-};
+}
