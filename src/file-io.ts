@@ -82,7 +82,7 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
       renderer: compileTemplate(content),
     };
   }
-  if (fileType === 'markdown') {
+  if (fileType === 'markdown' || fileType === 'bash') {
     return {
       fileType,
       filename,

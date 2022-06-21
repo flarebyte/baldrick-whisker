@@ -64,6 +64,8 @@ export const getFileType = (filename: string): FileType => {
     return 'handlebars';
   } else if (filename.trimEnd().endsWith('.md')) {
     return 'markdown';
+  } else if (filename.trimEnd().endsWith('.sh')) {
+    return 'bash';
   }
   return 'unknown';
 };

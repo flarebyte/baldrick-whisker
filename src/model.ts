@@ -5,6 +5,7 @@ export type FileType =
   | 'json'
   | 'yaml'
   | 'handlebars'
+  | 'bash'
   | 'markdown'
   | 'unknown'
   | 'invalid';
@@ -47,7 +48,7 @@ export type InputContent =
       renderer: TemplateRenderer;
     }
   | {
-      fileType: 'markdown';
+      fileType: 'markdown' | 'bash';
       filename: string;
       content: string;
     }
