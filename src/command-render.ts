@@ -6,7 +6,9 @@ import { getFileIdentifier } from './text-utils.js';
 
 const extractDestContent = (inputContent: InputContent): string => {
   const hasDestContent =
-    inputContent.fileType === 'elm' || inputContent.fileType === 'markdown';
+    inputContent.fileType === 'elm' ||
+    inputContent.fileType === 'markdown' ||
+    inputContent.fileType === 'bash';
   return hasDestContent ? inputContent.content : '';
 };
 
@@ -37,7 +39,7 @@ export const commandRender = async (
           },
         ]
       : [];
-  checkFile(destinationId, ['elm', 'markdown']);
+  checkFile(destinationId, ['elm', 'markdown', 'bash']);
   const diff = !!options['diff'];
   const expectedOutput = diff
     ? extractDestContent(await readInputFile(destinationId))
