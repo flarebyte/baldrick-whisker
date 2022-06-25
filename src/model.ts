@@ -56,3 +56,9 @@ export type InputContent =
       fileType: 'unknown' | 'invalid';
       filename: string;
     };
+
+export interface GithubFile {
+  owner: string;
+  repo: string;
+  path: string;
+}
