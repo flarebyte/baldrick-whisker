@@ -17,12 +17,19 @@ Table of vocabulary found in the code base
 | extract dest content             | 3          | command-render.ts     |
 | command render                   | 2          | command-render.ts     |
 | compile template                 | 2          | file-io.ts            |
+| parse github filename            | 3          | file-io.ts            |
+| read github file                 | 3          | file-io.ts            |
+| read content as string           | 4          | file-io.ts            |
 | read input file                  | 3          | file-io.ts            |
 | read input files                 | 3          | file-io.ts            |
 | save object file                 | 3          | file-io.ts            |
 | save text file                   | 3          | file-io.ts            |
+| if satisfy                       | 2          | handlebars-helpers.ts |
+| list join                        | 2          | handlebars-helpers.ts |
 | is string array                  | 3          | handlebars-helpers.ts |
 | is string                        | 2          | handlebars-helpers.ts |
+| is finite number                 | 3          | handlebars-helpers.ts |
+| parse number                     | 2          | handlebars-helpers.ts |
 | with ignore case                 | 3          | handlebars-helpers.ts |
 | with ignore space                | 3          | handlebars-helpers.ts |
 | with ignore punctuation          | 3          | handlebars-helpers.ts |
@@ -31,13 +38,12 @@ Table of vocabulary found in the code base
 | parse flags                      | 2          | handlebars-helpers.ts |
 | as alternative expected          | 3          | handlebars-helpers.ts |
 | if satisfy for string            | 4          | handlebars-helpers.ts |
+| if satisfy for number            | 4          | handlebars-helpers.ts |
 | if satisfy for string list       | 5          | handlebars-helpers.ts |
 | if satisfy helper                | 3          | handlebars-helpers.ts |
-| if satisfy                       | 2          | handlebars-helpers.ts |
 | is any array                     | 3          | handlebars-helpers.ts |
 | replace all                      | 2          | handlebars-helpers.ts |
 | count new lines                  | 3          | handlebars-helpers.ts |
-| list join                        | 2          | handlebars-helpers.ts |
 | if satisfy flags                 | 3          | handlebars-helpers.ts |
 | string compare strategy          | 3          | handlebars-helpers.ts |
 | is null or undefined             | 4          | merge-objects.ts      |
@@ -54,6 +60,7 @@ Table of vocabulary found in the code base
 | file id                          | 2          | model.ts              |
 | param info                       | 2          | model.ts              |
 | function info                    | 2          | model.ts              |
+| github file                      | 2          | model.ts              |
 | file type                        | 2          | model.ts              |
 | template renderer                | 2          | model.ts              |
 | input content                    | 2          | model.ts              |
@@ -71,6 +78,7 @@ Table of vocabulary found in the code base
 | word to camel                    | 3          | text-utils.ts         |
 | split by space                   | 3          | text-utils.ts         |
 | split on case change             | 4          | text-utils.ts         |
+| is null or undefined             | 4          | text-utils.ts         |
 | first upper                      | 2          | text-utils.ts         |
 | first lower                      | 2          | text-utils.ts         |
 | to title                         | 2          | text-utils.ts         |
@@ -87,18 +95,21 @@ Table showing the popularity of some n-gram in the code base
 
 | n-gram      | Frequency |
 | ----------- | --------- |
-| is          | 18        |
-| file        | 14        |
-| string      | 9         |
-| satisfy     | 9         |
+| is          | 22        |
+| file        | 16        |
+| parse       | 12        |
+| satisfy     | 11        |
+| if          | 10        |
+| string      | 10        |
 | function    | 9         |
 | with        | 8         |
-| parse       | 8         |
+| read        | 8         |
 | merge       | 8         |
-| if          | 8         |
 | ignore      | 7         |
 | get         | 6         |
 | input       | 6         |
+| github      | 6         |
+| for         | 6         |
 | elm         | 6         |
 | object      | 5         |
 | case        | 5         |
@@ -108,15 +119,17 @@ Table showing the popularity of some n-gram in the code base
 | split       | 4         |
 | save        | 4         |
 | replace     | 4         |
-| read        | 4         |
 | first       | 4         |
 | extract     | 4         |
 | command     | 4         |
+| or          | 4         |
+| null        | 4         |
 | json        | 4         |
-| for         | 4         |
+| content     | 4         |
 | by          | 4         |
 | template    | 3         |
 | objects     | 3         |
+| number      | 3         |
 | info        | 3         |
 | compare     | 3         |
 | all         | 3         |
@@ -137,21 +150,21 @@ Table showing the popularity of some n-gram in the code base
 | capitalize  | 2         |
 | as          | 2         |
 | within      | 2         |
+| undefined   | 2         |
 | type        | 2         |
 | to          | 2         |
 | text        | 2         |
 | space       | 2         |
 | param       | 2         |
-| or          | 2         |
 | on          | 2         |
-| null        | 2         |
 | new         | 2         |
 | name        | 2         |
 | key         | 2         |
 | if          | 2         |
 | flags       | 2         |
+| finite      | 2         |
 | dest        | 2         |
-| content     | 2         |
+| as          | 2         |
 | arrow       | 2         |
 | any         | 2         |
 | alternative | 2         |

@@ -65,6 +65,10 @@ Options:
 - h, --help               display help for command
 ```
 
+Please note that a filename can also be github filename such as
+`github:flarebyte:baldrick-whisker:package.json`.
+You can check the `script/cli-test.sh` shell script for some examples.
+
 ### Template
 
 #### ifSatisfy
