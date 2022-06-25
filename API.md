@@ -53,7 +53,7 @@ L113](https://github.com/flarebyte/baldrick-whisker/blob/main/src/parse-elm-func
 a structure content representing the file
 
 See [file-io.ts -
-L38](https://github.com/flarebyte/baldrick-whisker/blob/main/src/file-io.ts#L38)
+L75](https://github.com/flarebyte/baldrick-whisker/blob/main/src/file-io.ts#L75)
 
 ## saveObjectFile
 
@@ -65,4 +65,4 @@ L38](https://github.com/flarebyte/baldrick-whisker/blob/main/src/file-io.ts#L38)
 -   content: `JsonObject`: some JSON or YAML content
 
 See [file-io.ts -
-L110](https://github.com/flarebyte/baldrick-whisker/blob/main/src/file-io.ts#L110)
+L152](https://github.com/flarebyte/baldrick-whisker/blob/main/src/file-io.ts#L152)

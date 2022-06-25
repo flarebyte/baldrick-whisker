@@ -24,14 +24,21 @@ class `command-render.ts`{
 }
 class `file-io.ts`{
   - compileTemplate()
+  - parseGithubFilename()
+  - readGithubFile()
+  - readContentAsString()
   +readInputFile()
   +readInputFiles()
   +saveObjectFile()
   +saveTextFile()
 }
 class `handlebars-helpers.ts`{
+  +ifSatisfy()
+  +listJoin()
   - isStringArray()
   - isString()
+  - isFiniteNumber()
+  - parseNumber()
   - withIgnoreCase()
   - withIgnoreSpace()
   - withIgnorePunctuation()
@@ -40,13 +47,12 @@ class `handlebars-helpers.ts`{
   - parseFlags()
   - asAlternativeExpected()
   - ifSatisfyForString()
+  - ifSatisfyForNumber()
   +ifSatisfyForStringList()
   +ifSatisfyHelper()
-  +ifSatisfy()
   - isAnyArray()
   +replaceAll()
   - countNewLines()
-  +listJoin()
 }
 class `index.ts`
 class `merge-objects.ts`{
@@ -80,6 +86,7 @@ class `text-utils.ts`{
   - wordToCamel()
   - splitBySpace()
   +splitOnCaseChange()
+  - isNullOrUndefined()
   +firstUpper()
   +firstLower()
   +toTitle()
@@ -96,6 +103,7 @@ class `./model.js`{
   +FunctionInfo()
   +TemplateRenderer()
   +InputContent()
+  +GithubFile()
   +FileId()
   +FileType()
 }
@@ -149,6 +157,9 @@ class `handlebars`{
   +HelperOptions()
   +Handlebars()
 }
+class `octokit`{
+  +Octokit()
+}
 class `./parse-elm-function.js`{
   +parseElmFunctions()
 }
@@ -180,6 +191,7 @@ class `./model`{
 `file-io.ts`-->`yaml`
 `file-io.ts`-->`type-fest`
 `file-io.ts`-->`handlebars`
+`file-io.ts`-->`octokit`
 `file-io.ts`-->`./parse-elm-function.js`
 `file-io.ts`-->`./model.js`
 `file-io.ts`-->`./check-file.js`
