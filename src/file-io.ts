@@ -34,8 +34,13 @@ const compileTemplate = (templateContent: string): TemplateRenderer => {
 };
 
 const parseGithubFilename = (filename: string): GithubFile | undefined => {
-  const [owner, repo, path] = filename.split(':', 3);
-  if (owner === undefined || repo === undefined || path === undefined) {
+  const [prefix, owner, repo, path] = filename.split(':', 4);
+  if (
+    owner === undefined ||
+    repo === undefined ||
+    path === undefined ||
+    prefix !== 'github'
+  ) {
     return undefined;
   }
   return { owner, repo, path };
