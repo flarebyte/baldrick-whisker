@@ -30,4 +30,3 @@ if [ ! -f "report/shell-tests/rendered-remote.md" ]; then
 fi
 
 yarn cli render report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/rendered.md --diff
-
