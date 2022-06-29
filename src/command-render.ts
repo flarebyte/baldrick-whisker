@@ -20,6 +20,7 @@ export const commandRender = async (
   destinationPath: string,
   options: { [name: string]: string }
 ) => {
+  const flag = options['drop'] ? 'drop' : undefined;
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
   checkFile(source, ['json', 'yaml']);
@@ -79,7 +80,7 @@ export const commandRender = async (
     if (diff) {
       console.log(rendered);
     } else {
-      await saveTextFile(destinationId, rendered);
+      await saveTextFile(destinationId, rendered, flag);
     }
   }
 };

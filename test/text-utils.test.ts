@@ -1,6 +1,7 @@
 /* eslint unicorn/no-useless-undefined: 0 */
 import {
   dasherize,
+  dropExtension,
   firstLower,
   firstUpper,
   getFileType,
@@ -101,6 +102,18 @@ describe('text-utils', () => {
         'handlebars',
         'handlebars',
       ]);
+    });
+  });
+  describe('dropExtension', () => {
+    it.each([
+      'no-extension-filename',
+      'filename.txt',
+      './path/filename.json',
+      'a:b:c:d:data/core/filename.elm',
+      'a:b:c:d:data/core.ext/filename.elm',
+    ])('should drop the extension for %s', (filename) => {
+      const actual = dropExtension(filename);
+      expect(actual.endsWith('filename')).toBeTruthy();
     });
   });
 });

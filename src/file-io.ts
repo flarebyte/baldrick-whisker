@@ -9,6 +9,7 @@ import { FileId, GithubFile, InputContent, TemplateRenderer } from './model.js';
 import { checkFile } from './check-file.js';
 import {
   dasherize,
+  dropExtension,
   firstLower,
   firstUpper,
   lowerCamelCase,
@@ -151,21 +152,25 @@ export const readInputFiles = async (
  */
 export const saveObjectFile = async (
   fileId: FileId,
-  content: JsonObject
+  content: JsonObject,
+  flag?: 'drop'
 ): Promise<void> => {
   const { filename, fileType } = fileId;
+  const realFilename = flag === 'drop' ? dropExtension(filename) : filename;
   checkFile(fileId, ['json', 'yaml']);
   const stringContent =
     fileType === 'json'
       ? JSON.stringify(content, undefined, 2)
       : YAML.stringify(content);
-  await jetpack.writeAsync(filename, stringContent);
+  await jetpack.writeAsync(realFilename, stringContent);
 };
 
 export const saveTextFile = async (
   fileId: FileId,
-  content: string
+  content: string,
+  flag?: 'drop'
 ): Promise<void> => {
   const { filename } = fileId;
-  await jetpack.writeAsync(filename, content);
+  const realFilename = flag === 'drop' ? dropExtension(filename) : filename;
+  await jetpack.writeAsync(realFilename, content);
 };
