@@ -8,7 +8,8 @@ export const commandObject = async (
   sourcePaths: string[],
   options: { [name: string]: string }
 ) => {
-  const flag = options['drop'] ? 'drop' : undefined;
+  console.log(options);
+  const flag = options['ext'] ? undefined : 'drop';
   const destinationId = getFileIdentifier(destinationPath);
   checkFile(destinationId, ['json', 'yaml']);
   const sourceIds = getFileIdentifiers(sourcePaths);

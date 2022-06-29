@@ -20,7 +20,7 @@ export const commandRender = async (
   destinationPath: string,
   options: { [name: string]: string }
 ) => {
-  const flag = options['drop'] ? 'drop' : undefined;
+  const flag = options['ext'] ? undefined : 'drop';
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
   checkFile(source, ['json', 'yaml']);
