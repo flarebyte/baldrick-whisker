@@ -96,6 +96,7 @@ class `text-utils.ts`{
   +getFileType()
   +getFileIdentifier()
   +getFileIdentifiers()
+  +dropExtension()
 }
 class `version.ts`
 class `./model.js`{
@@ -137,9 +138,13 @@ class `./text-utils.js`{
   +lowerCamelCase()
   +firstUpper()
   +firstLower()
+  +dropExtension()
   +dasherize()
   +getFileIdentifier()
   +getFileIdentifiers()
+}
+class `node:path`{
+  +path()
 }
 class `fs-jetpack`{
   +jetpack()
@@ -182,6 +187,7 @@ class `./model`{
 `command-object.ts`-->`./file-io.js`
 `command-object.ts`-->`./merge-objects.js`
 `command-object.ts`-->`./text-utils.js`
+`command-render.ts`-->`node:path`
 `command-render.ts`-->`./check-file.js`
 `command-render.ts`-->`./file-io.js`
 `command-render.ts`-->`./merge-objects.js`

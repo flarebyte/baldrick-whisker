@@ -149,14 +149,15 @@ export const readInputFiles = async (
  * Save a JSON object as a JSON or YAML file
  * @param fileId a file identifier
  * @param content some JSON or YAML content
+ * @param flags drop if the extension must be dropped
  */
 export const saveObjectFile = async (
   fileId: FileId,
   content: JsonObject,
-  flag?: 'drop'
+  flags?: string
 ): Promise<void> => {
   const { filename, fileType } = fileId;
-  const realFilename = flag === 'drop' ? dropExtension(filename) : filename;
+  const realFilename = flags === 'drop' ? dropExtension(filename) : filename;
   checkFile(fileId, ['json', 'yaml']);
   const stringContent =
     fileType === 'json'
@@ -168,9 +169,9 @@ export const saveObjectFile = async (
 export const saveTextFile = async (
   fileId: FileId,
   content: string,
-  flag?: 'drop'
+  flags?: string
 ): Promise<void> => {
   const { filename } = fileId;
-  const realFilename = flag === 'drop' ? dropExtension(filename) : filename;
+  const realFilename = flags === 'drop' ? dropExtension(filename) : filename;
   await jetpack.writeAsync(realFilename, content);
 };
