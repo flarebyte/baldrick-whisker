@@ -7,6 +7,7 @@ export type FileType =
   | 'handlebars'
   | 'bash'
   | 'markdown'
+  | 'text'
   | 'unknown'
   | 'invalid';
 
@@ -48,7 +49,7 @@ export type InputContent =
       renderer: TemplateRenderer;
     }
   | {
-      fileType: 'markdown' | 'bash';
+      fileType: 'markdown' | 'bash' | 'text';
       filename: string;
       content: string;
     }

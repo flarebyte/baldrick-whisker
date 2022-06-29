@@ -9,6 +9,7 @@ import { FileId, GithubFile, InputContent, TemplateRenderer } from './model.js';
 import { checkFile } from './check-file.js';
 import {
   dasherize,
+  dropExtension,
   firstLower,
   firstUpper,
   lowerCamelCase,
@@ -124,7 +125,7 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
       renderer: compileTemplate(content),
     };
   }
-  if (fileType === 'markdown' || fileType === 'bash') {
+  if (fileType === 'markdown' || fileType === 'bash' || fileType === 'text') {
     return {
       fileType,
       filename,
@@ -148,24 +149,29 @@ export const readInputFiles = async (
  * Save a JSON object as a JSON or YAML file
  * @param fileId a file identifier
  * @param content some JSON or YAML content
+ * @param flags drop if the extension must be dropped
  */
 export const saveObjectFile = async (
   fileId: FileId,
-  content: JsonObject
+  content: JsonObject,
+  flags?: string
 ): Promise<void> => {
   const { filename, fileType } = fileId;
+  const realFilename = flags === 'drop' ? dropExtension(filename) : filename;
   checkFile(fileId, ['json', 'yaml']);
   const stringContent =
     fileType === 'json'
       ? JSON.stringify(content, undefined, 2)
       : YAML.stringify(content);
-  await jetpack.writeAsync(filename, stringContent);
+  await jetpack.writeAsync(realFilename, stringContent);
 };
 
 export const saveTextFile = async (
   fileId: FileId,
-  content: string
+  content: string,
+  flags?: string
 ): Promise<void> => {
   const { filename } = fileId;
-  await jetpack.writeAsync(filename, content);
+  const realFilename = flags === 'drop' ? dropExtension(filename) : filename;
+  await jetpack.writeAsync(realFilename, content);
 };

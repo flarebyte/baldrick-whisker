@@ -5,8 +5,11 @@ import { getFileIdentifier, getFileIdentifiers } from './text-utils.js';
 
 export const commandObject = async (
   destinationPath: string,
-  sourcePaths: string[]
+  sourcePaths: string[],
+  options: { [name: string]: string }
 ) => {
+  console.log(options);
+  const flag = options['ext'] ? undefined : 'drop';
   const destinationId = getFileIdentifier(destinationPath);
   checkFile(destinationId, ['json', 'yaml']);
   const sourceIds = getFileIdentifiers(sourcePaths);
@@ -15,5 +18,5 @@ export const commandObject = async (
     checkFile(source, ['json', 'yaml', 'elm']);
   }
   const merged = mergeObjects(sources);
-  await saveObjectFile(destinationId, merged);
+  await saveObjectFile(destinationId, merged, flag);
 };

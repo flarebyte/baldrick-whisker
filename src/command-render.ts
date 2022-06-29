@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { checkFile } from './check-file.js';
 import { readInputFile, saveTextFile } from './file-io.js';
 import { mergeObjects } from './merge-objects.js';
@@ -8,7 +9,8 @@ const extractDestContent = (inputContent: InputContent): string => {
   const hasDestContent =
     inputContent.fileType === 'elm' ||
     inputContent.fileType === 'markdown' ||
-    inputContent.fileType === 'bash';
+    inputContent.fileType === 'bash' ||
+    inputContent.fileType === 'text';
   return hasDestContent ? inputContent.content : '';
 };
 
@@ -18,6 +20,7 @@ export const commandRender = async (
   destinationPath: string,
   options: { [name: string]: string }
 ) => {
+  const flag = options['ext'] ? undefined : 'drop';
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
   checkFile(source, ['json', 'yaml']);
@@ -56,9 +59,18 @@ export const commandRender = async (
         },
       ]
     : [];
-
+  const localEnv = {
+    pwdBaseName: path.basename(process.cwd()),
+  };
+  const localEnvContent: InputContent = {
+    fileType: 'json',
+    filename: 'inline',
+    content: JSON.stringify(localEnv),
+    json: localEnv,
+  };
   const mergedSource = mergeObjects([
     source,
+    localEnvContent,
     ...configSource,
     ...destinationAsSource,
   ]);
@@ -68,7 +80,7 @@ export const commandRender = async (
     if (diff) {
       console.log(rendered);
     } else {
-      await saveTextFile(destinationId, rendered);
+      await saveTextFile(destinationId, rendered, flag);
     }
   }
 };

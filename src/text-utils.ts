@@ -55,7 +55,10 @@ export const getFileType = (filename: string): FileType => {
     return 'elm';
   } else if (filename.trimEnd().endsWith('.json')) {
     return 'json';
-  } else if (filename.trimEnd().endsWith('.yaml')) {
+  } else if (
+    filename.trimEnd().endsWith('.yaml') ||
+    filename.trimEnd().endsWith('.yml')
+  ) {
     return 'yaml';
   } else if (
     filename.trimEnd().endsWith('.handlebars') ||
@@ -66,6 +69,8 @@ export const getFileType = (filename: string): FileType => {
     return 'markdown';
   } else if (filename.trimEnd().endsWith('.sh')) {
     return 'bash';
+  } else if (filename.trimEnd().endsWith('.txt')) {
+    return 'text';
   }
   return 'unknown';
 };
@@ -77,3 +82,8 @@ export const getFileIdentifier = (filename: string): FileId => ({
 
 export const getFileIdentifiers = (filenames: string[]): FileId[] =>
   filenames.map(getFileIdentifier);
+
+export const dropExtension = (filename: string): string =>
+  filename.includes('.')
+    ? filename.split('.').slice(0, -1).join('.')
+    : filename;

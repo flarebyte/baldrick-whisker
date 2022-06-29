@@ -14,6 +14,7 @@ program
   .description('Convert source files to JSON or YAML')
   .argument('<destination>', 'the path to the JSON or YAML destination file')
   .argument('<sources...>', 'the path to the input filenames (JSON, YAML, Elm)')
+  .option('--no-ext', 'Drop the extension suffix for destination')
   .action(commandObject);
 
 program
@@ -23,6 +24,7 @@ program
   .argument('<template>', 'the path to the Handlebars template')
   .argument('<destination>', 'the path to the destination file (elm, ...)')
   .option('--diff', 'Only display the difference in the console')
+  .option('--no-ext', 'Drop the extension suffix for destination')
   .option('-cfg, --config <config>', 'Configuration as a JSON line')
   .action(commandRender);
 

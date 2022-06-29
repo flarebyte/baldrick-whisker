@@ -88,6 +88,7 @@ Table of vocabulary found in the code base
 | get file type                    | 3          | text-utils.ts         |
 | get file identifier              | 3          | text-utils.ts         |
 | get file identifiers             | 3          | text-utils.ts         |
+| drop extension                   | 2          | text-utils.ts         |
 
 ## Popularity of sequence of words
 
@@ -143,6 +144,7 @@ Table showing the popularity of some n-gram in the code base
 | list        | 2         |
 | from        | 2         |
 | find        | 2         |
+| drop        | 2         |
 | count       | 2         |
 | compile     | 2         |
 | chomp       | 2         |

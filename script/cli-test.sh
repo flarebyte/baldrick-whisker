@@ -29,5 +29,16 @@ if [ ! -f "report/shell-tests/rendered-remote.md" ]; then
     exit 1
 fi
 
-yarn cli render report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/rendered.md --diff
+yarn cli object --no-ext report/shell-tests/no-suffix-dest.json package.json tsconfig.json script/fixture/Example.elm
+if [ ! -f "report/shell-tests/no-suffix-dest" ]; then
+    echo "❌ KO no-suffix-dest"
+    exit 1
+fi
 
+yarn cli render --no-ext report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/no-suffix-rendered.md --config '{ "inline": "Inline works"}'
+if [ ! -f "report/shell-tests/no-suffix-rendered" ]; then
+    echo "❌ KO no-suffix-rendered.md"
+    exit 1
+fi
+
+yarn cli render report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/rendered.md --diff
