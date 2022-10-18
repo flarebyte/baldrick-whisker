@@ -85,7 +85,7 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
     ? parseGithubFilename(filename)
     : false;
 
-  const advancedFilename = githubFile ? githubFile : filename;
+  const advancedFilename = githubFile || filename;
   const content = await readContentAsString(advancedFilename);
   if (content === undefined) {
     return {
