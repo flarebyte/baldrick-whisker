@@ -1,0 +1,14 @@
+---
+testing:
+  style: function a
+  import: ./src/parse-elm-function.ts
+  function: parseElmFunctions
+cases:
+  valid-elm-code:
+    a: snapshot
+    title: should parse a valid elm code
+    params:
+      - from: file
+        filename: spec/fixtures/valid-elm-code.elm
+        parser: Text
+    snapshot: YAML 
