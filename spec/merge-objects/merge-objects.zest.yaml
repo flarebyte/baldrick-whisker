@@ -10,6 +10,7 @@ cases:
     params:
       - from: file
         filename: spec/fixtures/file-content-alpha.yaml
+        parser: YAML
     snapshot: YAML 
   message-for-corrupted:
     a: snapshot
@@ -17,6 +18,7 @@ cases:
     params:
       - from: file
         filename: spec/fixtures/file-content-corrupted.yaml
+        parser: YAML
     snapshot: YAML 
   two-files-without-primary-key:
     a: snapshot
@@ -24,6 +26,7 @@ cases:
     params:
       - from: file
         filename: spec/fixtures/file-content-no-primary.yaml
+        parser: YAML
     snapshot: YAML 
   two-files-with-primary-key:
     a: snapshot
@@ -31,6 +34,7 @@ cases:
     params:
       - from: file
         filename: spec/fixtures/file-content-with-primary.yaml
+        parser: YAML
     snapshot: YAML 
   elm-and-json:
     a: snapshot
@@ -38,6 +42,7 @@ cases:
     params:
       - from: file
         filename: spec/fixtures/file-content-elm-and-json.yaml
+        parser: YAML
     snapshot: YAML 
 
 

@@ -1,0 +1,29 @@
+functions:
+  - functionName: setId
+    params:
+      - paramName: id
+        paramType: Maybe String
+      - paramName: model
+        paramType: Model
+    returned: Model
+  - functionName: setKey
+    params:
+      - paramName: key
+        paramType: Maybe String
+      - paramName: model
+        paramType: Model
+    returned: Model
+    decorator: blue
+singlePrimitive: 8
+secondPrimitive: 2
+anyObject:
+  title: beta-root
+arrayOfString:
+  - quatre
+arrayOfObjs:
+  - primitive: eight
+    arrayOfString:
+      - ten-one
+      - ten-two
+    someObject:
+      label: first
