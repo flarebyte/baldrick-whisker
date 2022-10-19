@@ -10,6 +10,8 @@ import {
   upperCamelCase,
 } from '../src/text-utils';
 
+//TODO: Migrate to zest spec
+
 describe('text-utils', () => {
   describe('firstUpper', () => {
     it('should support undefined', () => {
