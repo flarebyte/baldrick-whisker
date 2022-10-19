@@ -1,36 +1,28 @@
 ---
 testing:
-  style: function a b
-  import: ./src/basic-execution.ts
-  function: basicExecution
+  style: function a b c
+  import: ./src/handlebars-helpers.ts
+  function: ifSatisfyHelper
 cases:
-  basic:
+  equals:
     a: snapshot
-    title: some basic execution on the context
+    title: strings are the same
     params:
-      - from: file
-        filename: spec/fixtures/context.yaml
-        parser: YAML
-        transform:
-          - style: config -> function a
-            import: ./src/build-model.ts
-            function: unsafeParse
-            config:
-              model: context
-      - from: file
-        filename: spec/fixtures/batch-step.yaml
-        parser: YAML
-        transform:
-          - style: config -> function a
-            import: ./src/build-model.ts
-            function: unsafeParse
-            config:
-              model: batchStep
-    result:
-      transform:
-        - style: config -> function a
-          import: baldrick-zest-mess
-          function: findByPath
-          config:
-            path: value.data
+      - from: string
+        value: equals
+      - from: string
+        value: blue
+      - from: string
+        value: blue
+    snapshot: YAML
+  not-equals:
+    a: snapshot
+    title:  strings are different
+    params:
+      - from: string
+        value: equals
+      - from: string
+        value: red
+      - from: string
+        value: blue
     snapshot: YAML

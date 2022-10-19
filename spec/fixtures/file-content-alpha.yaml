@@ -1,0 +1,27 @@
+---
+- fileType: json
+  json:
+    singlePrimitive: 7
+    anyObject:
+      title: alpha-root
+    arrayOfString:
+    - un
+    - deux
+    - trois
+    secondArrayOfString:
+    - un
+    arrayOfObjs:
+    - primitive: eight
+      arrayOfString:
+      - one
+      - two
+      someObject:
+        label: first
+    - primitive: nine
+      arrayOfString:
+      - ten
+      - eleven
+      someObject:
+        label: second
+  content: '{"singlePrimitive":7,"anyObject":{"title":"alpha-root"},"arrayOfString":["un","deux","trois"],"secondArrayOfString":["un"],"arrayOfObjs":[{"primitive":"eight","arrayOfString":["one","two"],"someObject":{"label":"first"}},{"primitive":"nine","arrayOfString":["ten","eleven"],"someObject":{"label":"second"}}]}'
+  filename: file1

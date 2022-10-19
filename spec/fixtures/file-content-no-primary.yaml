@@ -1,0 +1,44 @@
+---
+- fileType: json
+  json:
+    singlePrimitive: 7
+    anyObject:
+      title: alpha-root
+    arrayOfString:
+    - un
+    - deux
+    - trois
+    secondArrayOfString:
+    - un
+    arrayOfObjs:
+    - primitive: eight
+      arrayOfString:
+      - one
+      - two
+      someObject:
+        label: first
+    - primitive: nine
+      arrayOfString:
+      - ten
+      - eleven
+      someObject:
+        label: second
+  content: '{"singlePrimitive":7,"anyObject":{"title":"alpha-root"},"arrayOfString":["un","deux","trois"],"secondArrayOfString":["un"],"arrayOfObjs":[{"primitive":"eight","arrayOfString":["one","two"],"someObject":{"label":"first"}},{"primitive":"nine","arrayOfString":["ten","eleven"],"someObject":{"label":"second"}}]}'
+  filename: file1.json
+- fileType: yaml
+  json:
+    singlePrimitive: 8
+    secondPrimitive: 2
+    anyObject:
+      title: beta-root
+    arrayOfString:
+    - quatre
+    arrayOfObjs:
+    - primitive: eight
+      arrayOfString:
+      - ten-one
+      - ten-two
+      someObject:
+        label: first
+  content: '{"singlePrimitive":8,"secondPrimitive":2,"anyObject":{"title":"beta-root"},"arrayOfString":["quatre"],"arrayOfObjs":[{"primitive":"eight","arrayOfString":["ten-one","ten-two"],"someObject":{"label":"first"}}]}'
+  filename: file2.yaml

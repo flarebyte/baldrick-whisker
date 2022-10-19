@@ -1,0 +1,53 @@
+---
+- fileType: json
+  json:
+    singlePrimitive: 7
+    anyObject:
+      title: alpha-root
+    arrayOfString:
+    - un
+    - deux
+    - trois
+    secondArrayOfString:
+    - un
+    arrayOfObjs:
+    - primitive: eight
+      arrayOfString:
+      - one
+      - two
+      someObject:
+        label: first
+    - primitive: nine
+      arrayOfString:
+      - ten
+      - eleven
+      someObject:
+        label: second
+  content: '{"singlePrimitive":7,"anyObject":{"title":"alpha-root"},"arrayOfString":["un","deux","trois"],"secondArrayOfString":["un"],"arrayOfObjs":[{"primitive":"eight","arrayOfString":["one","two"],"someObject":{"label":"first"}},{"primitive":"nine","arrayOfString":["ten","eleven"],"someObject":{"label":"second"}}]}'
+  filename: file1.json
+- fileType: yaml
+  json:
+    singlePrimitive: 8
+    secondPrimitive: 2
+    anyObject:
+      title: beta-root
+    arrayOfString:
+    - quatre
+    arrayOfObjs:
+      __merging_primary_key: primitive
+      eight:
+        primitive: eight
+        arrayOfString:
+        - ten-one
+        - ten-two
+        someObject:
+          label: first
+      ten:
+        primitive: ten
+        arrayOfString:
+        - ten-one
+        - ten-two
+        someObject:
+          label: third
+  content: '{"singlePrimitive":8,"secondPrimitive":2,"anyObject":{"title":"beta-root"},"arrayOfString":["quatre"],"arrayOfObjs":{"__merging_primary_key":"primitive","eight":{"primitive":"eight","arrayOfString":["ten-one","ten-two"],"someObject":{"label":"first"}},"ten":{"primitive":"ten","arrayOfString":["ten-one","ten-two"],"someObject":{"label":"third"}}}}'
+  filename: file2.yaml
