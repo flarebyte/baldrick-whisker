@@ -15,6 +15,7 @@ program
   .argument('<destination>', 'the path to the JSON or YAML destination file')
   .argument('<sources...>', 'the path to the input filenames (JSON, YAML, Elm)')
   .option('--no-ext', 'Drop the extension suffix for destination')
+  .option('--no-overwrite', 'Do not overwrite an existing file')
   .action(commandObject);
 
 program
@@ -25,6 +26,7 @@ program
   .argument('<destination>', 'the path to the destination file (elm, ...)')
   .option('--diff', 'Only display the difference in the console')
   .option('--no-ext', 'Drop the extension suffix for destination')
+  .option('--no-overwrite', 'Do not overwrite an existing file')
   .option('-cfg, --config <config>', 'Configuration as a JSON line')
   .action(commandRender);
 

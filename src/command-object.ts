@@ -1,5 +1,6 @@
 import { checkFile } from './check-file.js';
 import { readInputFiles, saveObjectFile } from './file-io.js';
+import { optionsToFlag } from './flag-utils.js';
 import { mergeObjects } from './merge-objects.js';
 import { getFileIdentifier, getFileIdentifiers } from './text-utils.js';
 
@@ -8,8 +9,7 @@ export const commandObject = async (
   sourcePaths: string[],
   options: { [name: string]: string }
 ) => {
-  console.log(options);
-  const flag = options['ext'] ? undefined : 'drop';
+  const flag = optionsToFlag(options)
   const destinationId = getFileIdentifier(destinationPath);
   checkFile(destinationId, ['json', 'yaml']);
   const sourceIds = getFileIdentifiers(sourcePaths);

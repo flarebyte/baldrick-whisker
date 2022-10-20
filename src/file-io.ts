@@ -17,6 +17,7 @@ import {
   upperCamelCase,
 } from './text-utils.js';
 import { ifSatisfy, listJoin } from './handlebars-helpers.js';
+import { shouldDropExtension, shouldSkipOverwrite } from './flag-utils.js';
 
 Handlebars.registerHelper('lowerFirstChar', firstLower);
 Handlebars.registerHelper('upperFirstChar', firstUpper);
@@ -154,24 +155,36 @@ export const readInputFiles = async (
 export const saveObjectFile = async (
   fileId: FileId,
   content: JsonObject,
-  flags?: string
+  flags: string
 ): Promise<void> => {
   const { filename, fileType } = fileId;
-  const realFilename = flags === 'drop' ? dropExtension(filename) : filename;
+  const realFilename = shouldDropExtension(flags)
+    ? dropExtension(filename)
+    : filename;
   checkFile(fileId, ['json', 'yaml']);
   const stringContent =
     fileType === 'json'
       ? JSON.stringify(content, undefined, 2)
       : YAML.stringify(content);
-  await jetpack.writeAsync(realFilename, stringContent);
+  const shouldWrite =
+    !shouldSkipOverwrite(flags) || !(await jetpack.existsAsync(realFilename));
+  if (shouldWrite) {
+    await jetpack.writeAsync(realFilename, stringContent);
+  }
 };
 
 export const saveTextFile = async (
   fileId: FileId,
   content: string,
-  flags?: string
+  flags: string
 ): Promise<void> => {
   const { filename } = fileId;
-  const realFilename = flags === 'drop' ? dropExtension(filename) : filename;
-  await jetpack.writeAsync(realFilename, content);
+  const realFilename = shouldDropExtension(flags)
+    ? dropExtension(filename)
+    : filename;
+  const shouldWrite =
+    !shouldSkipOverwrite(flags) || !(await jetpack.existsAsync(realFilename));
+  if (shouldWrite) {
+    await jetpack.writeAsync(realFilename, content);
+  }
 };

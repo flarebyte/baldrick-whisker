@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { checkFile } from './check-file.js';
 import { readInputFile, saveTextFile } from './file-io.js';
+import { optionsToFlag } from './flag-utils.js';
 import { mergeObjects } from './merge-objects.js';
 import { InputContent } from './model.js';
 import { getFileIdentifier } from './text-utils.js';
@@ -20,7 +21,7 @@ export const commandRender = async (
   destinationPath: string,
   options: { [name: string]: string }
 ) => {
-  const flag = options['ext'] ? undefined : 'drop';
+  const flag = optionsToFlag(options)
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
   checkFile(source, ['json', 'yaml']);
