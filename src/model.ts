@@ -1,4 +1,4 @@
-import type { JsonObject } from 'type-fest';
+import { JsonObject } from "./json-model";
 
 export type FileType =
   | 'elm'

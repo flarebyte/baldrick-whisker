@@ -1,9 +1,4 @@
-import type {
-  JsonArray,
-  JsonObject,
-  JsonPrimitive,
-  JsonValue,
-} from 'type-fest';
+import { JsonPrimitive, JsonObject, JsonArray, JsonValue } from './json-model';
 import { FunctionInfo, InputContent } from './model';
 
 const isNullOrUndefined = (value: unknown): value is null | undefined =>
@@ -44,11 +39,11 @@ const mergeArrayValues =
 
 const mergeKey =
   (a: JsonObject, b: JsonObject) =>
-  (key: string): [string, JsonValue | undefined] => {
+  (key: string): [string, JsonValue] => {
     const valueA = a[key];
     const valueB = b[key];
     if (isNullOrUndefined(valueA)) {
-      return [key, valueB];
+      return [key, valueB === undefined ? null : valueB];
     }
     if (isNullOrUndefined(valueB)) {
       return [key, valueA];
@@ -74,7 +69,7 @@ const mergeKey =
     }
     return [key, { ...valueA }];
   };
-const mergeJsonObjectsByKey = (a: JsonObject, b: JsonObject) => {
+const mergeJsonObjectsByKey = (a: JsonObject, b: JsonObject): JsonObject => {
   const keys = [...Object.keys(a), ...Object.keys(b)];
   const keyValueTuples = keys.map(mergeKey(a, b));
   return Object.fromEntries(keyValueTuples);
