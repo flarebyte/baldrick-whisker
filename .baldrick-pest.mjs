@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 /**
- * Run with: zx script/cli-test.mjs
+ * Run with: zx .baldrick-pest.mjs
  */
 
 const assertSuccess = (test, message) => {
@@ -11,7 +11,7 @@ const assertSuccess = (test, message) => {
   }
 };
 
-const testFileName = 'script/run-pest.yaml';
+const testFileName = 'ispec/run.pest.yaml';
 
 const readTestFile = async () => {
   const content = await fs.readFile(testFileName, { encoding: 'utf8' });
