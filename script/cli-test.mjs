@@ -11,11 +11,17 @@ const assertSuccess = (test, message) => {
   }
 };
 
-const clientName = 'baldrick-whisker';
+const testFileName = 'script/run-pest.yaml';
 
-const runCommand = async (command) => {
-  echo(`Starting broth ${command.run} ...`);
-  await $`yarn cli ${command.run}`;
+const readTestFile = async () => {
+  const content = await fs.readFile(testFileName, { encoding: 'utf8' });
+  return YAML.parse(content);
+};
+
+const runCommand = (clientName) => async (command) => {
+  echo(`Starting ${clientName} ${command.run} ...`);
+  const fullCommand = `yarn cli ${command.run}`;
+  await $`${fullCommand}`;
   if (command.expectFile !== undefined) {
     const actualFiles = await glob([command.expectFile]);
     assertSuccess(actualFiles.length === 1, `${clientName} ${command.run}`);
@@ -38,67 +44,13 @@ const runCommand = async (command) => {
 await $`rm -rf report/shell-tests`;
 await $`mkdir -p report/shell-tests`;
 
-const commands = [
-  {
-    run: [
-      'object report/shell-tests/dest.json package.json tsconfig.json script/fixture/Example.elm',
-    ],
-    expectFile: 'report/shell-tests/dest.json',
-  },
-  {
-    run: [
-      'object report/shell-tests/dest.yaml package.json tsconfig.json script/fixture/Example.elm',
-    ],
-    expectFile: 'report/shell-tests/dest.yaml',
-  },
-  {
-    run: [
-      'render report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/rendered.md --config \'{ "inline": "Inline works"}\'',
-    ],
-    expectFile: 'report/shell-tests/rendered.md',
-  },
-  {
-    run: [
-      'render report/shell-tests/dest.yaml script/fixture/example-overwrite.hbs report/shell-tests/rendered.md --config \'{ "inline": "Inline works"}\' --no-overwrite',
-    ],
-    expectFile: 'report/shell-tests/rendered.md',
-    expectFileContent: 'overwrite',
-  },
-  {
-    run: [
-      'object report/shell-tests/dest-remote.json github:flarebyte:baldrick-whisker:package.json github:flarebyte:baldrick-whisker:tsconfig.json github:flarebyte:baldrick-whisker:script/fixture/Example.elm',
-    ],
-    expectFile: 'report/shell-tests/dest-remote.json',
-  },
-  {
-    run: [
-      'render report/shell-tests/dest-remote.json github:flarebyte:baldrick-whisker:script/fixture/example.hbs report/shell-tests/rendered-remote.md --config \'{ "inline": "Inline works"}\'',
-    ],
-    expectFile: 'report/shell-tests/rendered-remote.md',
-  },
+const {
+  testing: { name },
+  cases,
+} = await readTestFile();
+console.log(`Testing ${name}`);
 
-  {
-    run: [
-      'object --no-ext report/shell-tests/no-suffix-dest.json package.json tsconfig.json script/fixture/Example.elm',
-    ],
-    expectFile: 'report/shell-tests/no-suffix-dest',
-  },
-
-  {
-    run: [
-      'render --no-ext report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/no-suffix-rendered.md --config \'{ "inline": "Inline works"}\'',
-    ],
-    expectFile: 'report/shell-tests/no-suffix-rendered',
-  },
-
-  {
-    run: [
-      'render report/shell-tests/dest.yaml script/fixture/example.hbs report/shell-tests/rendered.md --diff',
-    ],
-  },
-];
-
-const commandPromises = commands.map(runCommand);
+const commandPromises = cases.map(runCommand(name));
 for await (const command of commandPromises) {
   command;
 }
