@@ -11,4 +11,5 @@ export const optionsToFlag = (options: { [name: string]: string }): string => {
 
 export const shouldDropExtension = (flags: string) => flags.includes('drop');
 
-export const shouldSkipOverwrite = (flags: string) => flags.includes('skip-overwrite');
+export const shouldSkipOverwrite = (flags: string) =>
+  flags.includes('skip-overwrite');

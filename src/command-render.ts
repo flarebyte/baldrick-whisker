@@ -21,7 +21,7 @@ export const commandRender = async (
   destinationPath: string,
   options: { [name: string]: string }
 ) => {
-  const flag = optionsToFlag(options)
+  const flag = optionsToFlag(options);
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
   checkFile(source, ['json', 'yaml']);

@@ -43,7 +43,7 @@ const mergeKey =
     const valueA = a[key];
     const valueB = b[key];
     if (isNullOrUndefined(valueA)) {
-      return [key, valueB === undefined ? null : valueB];
+      return [key, valueB === undefined ? null : valueB]; // eslint-disable-line unicorn/no-null
     }
     if (isNullOrUndefined(valueB)) {
       return [key, valueA];

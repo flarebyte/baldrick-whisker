@@ -9,7 +9,7 @@ export const commandObject = async (
   sourcePaths: string[],
   options: { [name: string]: string }
 ) => {
-  const flag = optionsToFlag(options)
+  const flag = optionsToFlag(options);
   const destinationId = getFileIdentifier(destinationPath);
   checkFile(destinationId, ['json', 'yaml']);
   const sourceIds = getFileIdentifiers(sourcePaths);
