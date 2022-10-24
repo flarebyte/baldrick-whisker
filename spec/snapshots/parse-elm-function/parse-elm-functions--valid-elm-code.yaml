@@ -1,0 +1,14 @@
+- functionName: setId
+  params:
+    - paramName: id
+      paramType: Maybe String
+    - paramName: model
+      paramType: Model
+  returned: Model
+- functionName: setKey
+  params:
+    - paramName: key
+      paramType: String
+    - paramName: model
+      paramType: Model
+  returned: Model

@@ -1,0 +1,26 @@
+singlePrimitive: 8
+anyObject:
+  title: beta-root
+arrayOfString:
+  - un
+  - deux
+  - trois
+  - quatre
+secondArrayOfString:
+  - un
+arrayOfObjs:
+  - primitive: eight
+    arrayOfString:
+      - one
+      - two
+      - ten-one
+      - ten-two
+    someObject:
+      label: first
+  - primitive: nine
+    arrayOfString:
+      - ten
+      - eleven
+    someObject:
+      label: second
+secondPrimitive: 2

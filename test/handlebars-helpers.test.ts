@@ -1,4 +1,5 @@
-import { ifSatisfyHelper } from '../src/handlebars-helpers';
+//TODO: Migrate to zest spec
+import { ifSatisfyHelper } from '../src/handlebars-helpers.js';
 
 interface TestToSatisfy {
   flags: string;
@@ -13,7 +14,7 @@ const createIfSatisfyHelper = (
 ): TestToSatisfy => ({ flags, value, expected });
 
 describe('handlebars-helper', () => {
-  it.each([
+  test.each([
     createIfSatisfyHelper('equals', 'blue', 'blue'),
     createIfSatisfyHelper('not equals', 'red', 'blue'),
     createIfSatisfyHelper('equals', 'blue', 'red OR blue OR green'),
@@ -53,7 +54,7 @@ describe('handlebars-helper', () => {
     const actual = ifSatisfyHelper(given.flags, given.value, given.expected);
     expect(actual).toBeTruthy();
   });
-  it.each([
+  test.each([
     createIfSatisfyHelper('equals', 'orange', 'blue'),
     createIfSatisfyHelper('equals', 'Blue', 'blue'),
     createIfSatisfyHelper('equals', 'orange', 'red OR blue OR green'),

@@ -1,0 +1,28 @@
+---
+testing:
+  style: function a b c
+  import: ./src/handlebars-helpers.ts
+  function: ifSatisfyHelper
+cases:
+  equals:
+    a: snapshot
+    title: strings are the same
+    params:
+      - from: string
+        value: equals
+      - from: string
+        value: blue
+      - from: string
+        value: blue
+    snapshot: YAML
+  not-equals:
+    a: snapshot
+    title:  strings are different
+    params:
+      - from: string
+        value: equals
+      - from: string
+        value: red
+      - from: string
+        value: blue
+    snapshot: YAML

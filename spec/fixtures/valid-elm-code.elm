@@ -1,4 +1,3 @@
-export const elmCodeFixture = `
 module Bubblegum.Entity.Attribute exposing
     ( Model, setId, setKey, setValues, setFacets
     , findAttributeByKey, findAttributeFirstValueByKey, replaceAttributeByKey, deleteAttributeByKey
@@ -69,5 +68,3 @@ setId id model =
 setKey : String -> Model -> Model
 setKey key model =
     { model | key = key }
-
-`;

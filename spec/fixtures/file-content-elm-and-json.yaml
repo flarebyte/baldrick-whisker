@@ -1,0 +1,40 @@
+---
+- fileType: elm
+  content: "{-| a elm file content -}"
+  functionInfos:
+  - functionName: setId
+    params:
+    - paramName: id
+      paramType: Maybe String
+    - paramName: model
+      paramType: Model
+    returned: Model
+  - functionName: setKey
+    params:
+    - paramName: key
+      paramType: Maybe String
+    - paramName: model
+      paramType: Model
+    returned: Model
+  filename: file1.elm
+- fileType: yaml
+  json:
+    singlePrimitive: 8
+    secondPrimitive: 2
+    anyObject:
+      title: beta-root
+    arrayOfString:
+    - quatre
+    arrayOfObjs:
+    - primitive: eight
+      arrayOfString:
+      - ten-one
+      - ten-two
+      someObject:
+        label: first
+    functions:
+      __merging_primary_key: functionName
+      setKey:
+        decorator: blue
+  content: '{"singlePrimitive":8,"secondPrimitive":2,"anyObject":{"title":"beta-root"},"arrayOfString":["quatre"],"arrayOfObjs":[{"primitive":"eight","arrayOfString":["ten-one","ten-two"],"someObject":{"label":"first"}}],"functions":{"__merging_primary_key":"functionName","setKey":{"decorator":"blue"}}}'
+  filename: file2.yaml

@@ -1,0 +1,48 @@
+---
+testing:
+  style: function a
+  import: ./src/merge-objects.ts
+  function: mergeObjects
+cases:
+  not-modify-existing:
+    a: snapshot
+    title: should not modify an existing object
+    params:
+      - from: file
+        filename: spec/fixtures/file-content-alpha.yaml
+        parser: YAML
+    snapshot: YAML 
+  message-for-corrupted:
+    a: snapshot
+    title: should include a message for a corrupted file
+    params:
+      - from: file
+        filename: spec/fixtures/file-content-corrupted.yaml
+        parser: YAML
+    snapshot: YAML 
+  two-files-without-primary-key:
+    a: snapshot
+    title: should merge two files without primary key
+    params:
+      - from: file
+        filename: spec/fixtures/file-content-no-primary.yaml
+        parser: YAML
+    snapshot: YAML 
+  two-files-with-primary-key:
+    a: snapshot
+    title: should merge two files with a primary key
+    params:
+      - from: file
+        filename: spec/fixtures/file-content-with-primary.yaml
+        parser: YAML
+    snapshot: YAML 
+  elm-and-json:
+    a: snapshot
+    title: should merge a elm file with a json file
+    params:
+      - from: file
+        filename: spec/fixtures/file-content-elm-and-json.yaml
+        parser: YAML
+    snapshot: YAML 
+
+
