@@ -1,0 +1,12 @@
+---
+title: baldrick-whisker
+description: Acceptance testing of baldrick-whisker CLI application
+cases:
+  general-help:
+    title: Display help for a help-command
+    steps:
+      - title: run help help-command
+        run: yarn cli object report/shell-tests/dest.json package.json tsconfig.json pest-spec/fixture/Example.elm
+        expect:
+          snapshot: help.txt
+ 
