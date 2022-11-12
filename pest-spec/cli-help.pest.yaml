@@ -1,0 +1,25 @@
+---
+title: baldrick-whisker help
+description: Acceptance testing of baldrick-whisker CLI application
+cases:
+  general-help:
+    title: Display help for a help-command
+    steps:
+      - title: run help help-command
+        run: yarn cli --help
+        expect:
+          snapshot: help.txt
+  command-object:
+    title: Display help for command object
+    steps:
+      - title: Help for object
+        run: yarn cli object --help
+        expect:
+          snapshot: object-help.txt
+  command-render:
+    title: Display help for command render
+    steps:
+      - title: Help for render
+        run: yarn cli render --help
+        expect:
+          snapshot: object-render.txt
