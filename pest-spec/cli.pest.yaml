@@ -24,3 +24,14 @@ cases:
         run: cat report/shell-tests/dest.yaml
         expect:
           snapshot: dest.yaml
+  render-yaml:
+    title: Render yaml with handlebars
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/rendered.md
+      - title: Render yaml with handlebars
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/rendered.md
+      - title: save destination
+        run: cat report/shell-tests/rendered.md
+        expect:
+          snapshot: rendered.md
