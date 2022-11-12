@@ -2,8 +2,6 @@
 
 > {{description}}
 
-* trigger: {{inline}}
-{{#if inline}}
 * [{{author.name}}]({{author.url}})
 {{#each keywords}}
 * {{@index}}: {{this}}
@@ -33,7 +31,6 @@
 * {{@key}}: {{this}}
 {{/each}}
 
-{{/if}}
 {{#ifSatisfy 'contains ignore-case' output 'setKey'}}
 * Support: if satisfy contains ignore-case output
 {{/ifSatisfy}}

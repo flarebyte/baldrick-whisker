@@ -1,0 +1,50 @@
+---
+title: baldrick-whisker
+description: Acceptance testing of baldrick-whisker CLI application
+cases:
+  object-elm-json:
+    title: Merge object including an Elm file
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/dest.json
+      - title: merge Json and Elm to Json
+        run: yarn cli object report/shell-tests/dest.json package.json tsconfig.json pest-spec/fixtures/Example.elm
+      - title: save destination
+        run: cat report/shell-tests/dest.json
+        expect:
+          snapshot: dest.json
+  object-elm-yaml:
+    title: Merge object elm as Yaml
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/dest.yaml
+      - title: merge Json and Elm to Yaml
+        run: yarn cli object report/shell-tests/dest.yaml package.json tsconfig.json pest-spec/fixtures/Example.elm
+      - title: save destination
+        run: cat report/shell-tests/dest.yaml
+        expect:
+          snapshot: dest.yaml
+  render-yaml:
+    title: Render yaml with handlebars
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/rendered.md
+      - title: Render yaml with handlebars
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/rendered.md
+      - title: save destination
+        run: cat report/shell-tests/rendered.md
+        expect:
+          snapshot: rendered.md
+      - title: Render handlebars without overwrite
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example-overwrite.hbs report/shell-tests/rendered.md --no-overwrite
+      - title: save destination without overwrite
+        run: wc -l report/shell-tests/rendered.md
+        expect:
+          snapshot: over-rendered.md
+  render-diff:
+    title: Render yaml with handlebars
+    steps:
+      - title: Render yaml with handlebars
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/rendered.md --diff
+        expect:
+          snapshot: diff.txt
