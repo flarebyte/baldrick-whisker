@@ -41,3 +41,10 @@ cases:
         run: wc -l report/shell-tests/rendered.md
         expect:
           snapshot: over-rendered.md
+  render-diff:
+    title: Render yaml with handlebars
+    steps:
+      - title: Render yaml with handlebars
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/rendered.md --diff
+        expect:
+          snapshot: diff.txt
