@@ -35,3 +35,9 @@ cases:
         run: cat report/shell-tests/rendered.md
         expect:
           snapshot: rendered.md
+      - title: Render handlebars without overwrite
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example-overwrite.hbs report/shell-tests/rendered.md --no-overwrite
+      - title: save destination without overwrite
+        run: wc -l report/shell-tests/rendered.md
+        expect:
+          snapshot: over-rendered.md
