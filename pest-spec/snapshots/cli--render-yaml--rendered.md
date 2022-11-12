@@ -2,4 +2,103 @@
 
 > Code generator for Elm and Typescript using templates
 
-* trigger: 
+* [olih](https://github.com/olih)
+* 0: template
+* 1: mustache
+* 2: handlebars
+* 3: elm
+* 4: typescript
+
+*  Support: if satisfy equals for an array 
+
+*  Support: if satisfy contains from: Code generator for Elm and Typescript using templates 
+*  Support: if satisfy equals with OR for an array 
+*  Support: if satisfy contains with OR for a string 
+*  Support: if satisfy contains ignore-case with OR for a string 
+*  Support: if satisfy equals number: template,mustache,handlebars,elm,typescript 
+
+* | template | mustache | handlebars | elm | typescript |
+- template and
+
+- mustache and
+
+- handlebars and
+
+- elm and
+
+- typescript
+
+## setId
+Set id
+* class SetId
+* set-id.ts
+* id ==> Maybe String ==> MaybeString,
+* model ==> Model ==> Model
+## setKey
+Set key
+* class SetKey
+* set-key.ts
+* key ==> String ==> String,
+* model ==> Model ==> Model
+## setFacets
+Set facets
+* class SetFacets
+* set-facets.ts
+* facets ==> List String ==> ListString,
+* model ==> Model ==> Model
+## setValues
+Set values
+* class SetValues
+* set-values.ts
+* values ==> List String ==> ListString,
+* model ==> Model ==> Model
+## findAttributeByKey
+Find attribute by key
+* class FindAttributeByKey
+* find-attribute-by-key.ts
+* key ==> String ==> String,
+* attributes ==> List Model ==> ListModel
+## deleteAttributeByKey
+Delete attribute by key
+* class DeleteAttributeByKey
+* delete-attribute-by-key.ts
+* key ==> String ==> String,
+* attributes ==> List Model ==> ListModel
+## findAttributeFirstValueByKey
+Find attribute first value by key
+* class FindAttributeFirstValueByKey
+* find-attribute-first-value-by-key.ts
+* key ==> String ==> String,
+* attributes ==> List Model ==> ListModel
+## findOutcomeByKey
+Find outcome by key
+* class FindOutcomeByKey
+* find-outcome-by-key.ts
+* key ==> String ==> String,
+* attributes ==> List Model ==> ListModel
+## createTuple
+Create tuple
+* class CreateTuple
+* create-tuple.ts
+* a ==> a ==> A,
+* b ==> a ==> A
+## findOutcomeByKeyTuple
+Find outcome by key tuple
+* class FindOutcomeByKeyTuple
+* find-outcome-by-key-tuple.ts
+* tuple ==> ( String, String ) ==> (String,String),
+* attributes ==> List Model ==> ListModel
+## replaceAttributeByKey
+Replace attribute by key
+* class ReplaceAttributeByKey
+* replace-attribute-by-key.ts
+* key ==> String ==> String,
+* values ==> List String ==> ListString,
+* attributes ==> List Model ==> ListModel
+
+* commander: ^9.4.1
+* fs-jetpack: ^5.0.0
+* handlebars: ^4.7.7
+* octokit: ^2.0.9
+* yaml: ^2.1.3
+
