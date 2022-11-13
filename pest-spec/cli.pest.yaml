@@ -24,6 +24,17 @@ cases:
         run: cat report/shell-tests/dest.yaml
         expect:
           snapshot: dest.yaml
+  object-elm-no-ext:
+    title: Merge object elm as Yaml without extension
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/no-suffix-dest
+      - title: merge Json and Elm to Yaml removing file extension
+        run: yarn cli object --no-ext report/shell-tests/no-suffix-dest.json package.json tsconfig.json pest-spec/fixtures/Example.elm
+      - title: save destination
+        run: cat report/shell-tests/no-suffix-dest
+        expect:
+          snapshot: no-suffix-dest.json
   render-yaml:
     title: Render yaml with handlebars
     steps:
@@ -48,3 +59,14 @@ cases:
         run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/rendered.md --diff
         expect:
           snapshot: diff.txt
+  render-md-no-ext:
+    title: Render yaml with handlebars without extension
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/no-suffix-rendered
+      - title: Render handlebars without extension
+        run: yarn cli render --no-ext report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/no-suffix-rendered.md
+      - title: save destination
+        run: cat report/shell-tests/no-suffix-rendered
+        expect:
+          snapshot: no-suffix-rendered.txt
