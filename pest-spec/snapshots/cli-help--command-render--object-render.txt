@@ -1,0 +1,18 @@
+yarn run v1.22.19
+$ node --loader ts-node/esm src/cli.mts render --help
+(Use `node --trace-warnings ...` to show where the warning was created)
+Usage: baldrick-whisker render [options] <source> <template> <destination>
+
+Render a template
+
+Arguments:
+  source                   the path to source file in JSON or YAML
+  template                 the path to the Handlebars template
+  destination              the path to the destination file (elm, ...)
+
+Options:
+  --diff                   Only display the difference in the console
+  --no-ext                 Drop the extension suffix for destination
+  --no-overwrite           Do not overwrite an existing file
+  -cfg, --config <config>  Configuration as a JSON line
+  -h, --help               display help for command

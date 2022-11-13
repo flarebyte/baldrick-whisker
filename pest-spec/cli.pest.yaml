@@ -57,6 +57,16 @@ cases:
     steps:
       - title: Render yaml with handlebars
         run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/example.hbs report/shell-tests/rendered.md --diff
+      - title: Remove changing time from output
+        run: sed /Done/d
+        stdin:
+          step: 0
+          receiving: stdout + stderr
+      - title: Remove changing warning from output
+        run: sed /ExperimentalWarning/d
+        stdin:
+          step: 1
+          receiving: stdout + stderr
         expect:
           snapshot: diff.txt
   render-md-no-ext:

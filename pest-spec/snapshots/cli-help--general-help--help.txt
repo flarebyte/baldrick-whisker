@@ -1,0 +1,15 @@
+yarn run v1.22.19
+$ node --loader ts-node/esm src/cli.mts --help
+(Use `node --trace-warnings ...` to show where the warning was created)
+Usage: baldrick-whisker [options] [command]
+
+CLI to generate code using templates
+
+Options:
+  -V, --version                                       output the version number
+  -h, --help                                          display help for command
+
+Commands:
+  object [options] <destination> <sources...>         Convert source files to JSON or YAML
+  render [options] <source> <template> <destination>  Render a template
+  help [command]                                      display help for command
