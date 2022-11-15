@@ -7,15 +7,10 @@ cases:
     steps:
       - title: run help help-command
         run: yarn cli --help
-      - title: Remove changing time from output
-        run: sed /Done/d
+      - title: Remove changing info from output
+        run: sed -f pest-spec/scripts/cleaning.sed
         stdin:
           step: 0
-          receiving: stdout + stderr
-      - title: Remove changing warning from output
-        run: sed /ExperimentalWarning/d
-        stdin:
-          step: 1
           receiving: stdout + stderr
         expect:
           snapshot: help.txt
@@ -24,15 +19,10 @@ cases:
     steps:
       - title: Help for object
         run: yarn cli object --help
-      - title: Remove changing time from output
-        run: sed /Done/d
+      - title: Remove changing info from output
+        run: sed -f pest-spec/scripts/cleaning.sed
         stdin:
           step: 0
-          receiving: stdout + stderr
-      - title: Remove changing warning from output
-        run: sed /ExperimentalWarning/d
-        stdin:
-          step: 1
           receiving: stdout + stderr
         expect:
           snapshot: object-help.txt
@@ -41,15 +31,10 @@ cases:
     steps:
       - title: Help for render
         run: yarn cli render --help
-      - title: Remove changing time from output
-        run: sed /Done/d
+      - title: Remove changing info from output
+        run: sed -f pest-spec/scripts/cleaning.sed
         stdin:
           step: 0
-          receiving: stdout + stderr
-      - title: Remove changing warning from output
-        run: sed /ExperimentalWarning/d
-        stdin:
-          step: 1
           receiving: stdout + stderr
         expect:
           snapshot: object-render.txt
