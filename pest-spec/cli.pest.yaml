@@ -75,3 +75,25 @@ cases:
         run: cat report/shell-tests/no-suffix-rendered
         expect:
           snapshot: no-suffix-rendered.txt
+  render-json-template:
+    title: Render json handlebars
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/json-rendered.json
+      - title: Render yaml with json handlebars
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/json-example.hbs report/shell-tests/json-rendered.json
+      - title: save destination
+        run: cat report/shell-tests/json-rendered.json
+        expect:
+          snapshot: rendered.json
+  render-yaml-template:
+    title: Render yaml handlebars
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/yaml-rendered.yaml
+      - title: Render yaml with yaml handlebars
+        run: yarn cli render report/shell-tests/dest.yaml pest-spec/fixtures/yaml-example.hbs report/shell-tests/yaml-rendered.yaml
+      - title: save destination
+        run: cat report/shell-tests/yaml-rendered.yaml
+        expect:
+          snapshot: rendered.yaml

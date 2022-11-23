@@ -43,7 +43,7 @@ export const commandRender = async (
           },
         ]
       : [];
-  checkFile(destinationId, ['elm', 'markdown', 'bash']);
+  checkFile(destinationId, ['elm', 'markdown', 'bash', 'json', 'yaml']);
   const diff = !!options['diff'];
   const expectedOutput = diff
     ? extractDestContent(await readInputFile(destinationId))
