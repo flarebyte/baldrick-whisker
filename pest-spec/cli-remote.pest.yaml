@@ -8,7 +8,7 @@ cases:
       - title: reset
         run: rm --force report/shell-tests/dest-remote.json
       - title: merge Json and Elm to Json
-        run: yarn cli object report/shell-tests/dest-remote.json github:flarebyte:baldrick-whisker:package.json github:flarebyte:baldrick-whisker:tsconfig.json github:flarebyte:baldrick-whisker:pest-spec/fixtures/Example.elm
+        run: yarn cli object report/shell-tests/dest-remote.json github:flarebyte:baldrick-whisker:pest-spec/fixtures/package.json github:flarebyte:baldrick-whisker:pest-spec/fixtures/tsconfig.json github:flarebyte:baldrick-whisker:pest-spec/fixtures/Example.elm
       - title: save destination
         run: cat report/shell-tests/dest-remote.json
         expect:
