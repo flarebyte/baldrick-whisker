@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { checkFile } from './check-file.js';
+import { checkOutputIsCompatible, checkFile } from './check-file.js';
 import { readInputFile, saveTextFile } from './file-io.js';
 import { optionsToFlag } from './flag-utils.js';
 import { mergeObjects } from './merge-objects.js';
@@ -43,7 +43,7 @@ export const commandRender = async (
           },
         ]
       : [];
-  checkFile(destinationId, ['elm', 'markdown', 'bash']);
+  checkFile(destinationId, ['elm', 'markdown', 'bash', 'json', 'yaml']);
   const diff = !!options['diff'];
   const expectedOutput = diff
     ? extractDestContent(await readInputFile(destinationId))
@@ -78,10 +78,11 @@ export const commandRender = async (
   const isRenderable = template.fileType === 'handlebars';
   if (isRenderable) {
     const rendered = template.renderer(mergedSource);
+    const formatted = checkOutputIsCompatible(rendered, destinationId);
     if (diff) {
-      console.log(rendered);
+      console.log(formatted);
     } else {
-      await saveTextFile(destinationId, rendered, flag);
+      await saveTextFile(destinationId, formatted, flag);
     }
   }
 };

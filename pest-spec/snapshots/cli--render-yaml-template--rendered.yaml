@@ -1,0 +1,6 @@
+name: the-baldrick-whisker
+description: Code generator for Elm and Typescript using templates
+keywords:
+  - template
+  - mustache
+license: MIT
