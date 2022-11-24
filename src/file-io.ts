@@ -188,3 +188,41 @@ export const saveTextFile = async (
     await jetpack.writeAsync(realFilename, content);
   }
 };
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return String(error);
+}
+
+export const formatContent = (
+  content: string,
+  destinationId: FileId
+):
+  | { status: 'success'; value: string }
+  | { status: 'failure'; error: string } => {
+  if (destinationId.fileType === 'json') {
+    try {
+      const parsed = JSON.parse(content);
+      return { status: 'success', value: JSON.stringify(parsed, null, 2) };
+    } catch (error) {
+      return {
+        status: 'failure',
+        error:
+          'Rendered JSON cannot be parsed (424805): ' + getErrorMessage(error),
+      };
+    }
+  }
+  if (destinationId.fileType === 'yaml') {
+    try {
+      const parsed = YAML.parse(content);
+      return { status: 'success', value: YAML.stringify(parsed) };
+    } catch (error) {
+      return {
+        status: 'failure',
+        error:
+          'Rendered YAML cannot be parsed (719207): ' + getErrorMessage(error),
+      };
+    }
+  }
+  return { status: 'success', value: content };
+};
