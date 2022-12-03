@@ -71,6 +71,8 @@ export const getFileType = (filename: string): FileType => {
     return 'bash';
   } else if (filename.trimEnd().endsWith('.txt')) {
     return 'text';
+  } else if (filename.trimEnd().endsWith('.csv')) {
+    return 'csv';
   }
   return 'unknown';
 };

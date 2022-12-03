@@ -103,7 +103,7 @@ cases:
       - title: reset
         run: rm --force report/shell-tests/rendered-csv.md
       - title: Render CSV with handlebars
-        run: yarn cli render report/shell-tests/example.csv pest-spec/fixtures/example-csv.hbs report/shell-tests/rendered-csv.md
+        run: yarn cli render pest-spec/fixtures/example.csv pest-spec/fixtures/example-csv.hbs report/shell-tests/rendered-csv.md
       - title: save destination
         run: cat report/shell-tests/rendered-csv.md
         expect:
