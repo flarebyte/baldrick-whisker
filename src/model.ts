@@ -8,6 +8,7 @@ export type FileType =
   | 'bash'
   | 'markdown'
   | 'text'
+  | 'csv'
   | 'unknown'
   | 'invalid';
 
@@ -41,6 +42,12 @@ export type InputContent =
       filename: string;
       content: string;
       json: JsonObject;
+    }
+    | {
+      fileType: 'csv';
+      filename: string;
+      content: string;
+      csv: Record<string, string>[];
     }
   | {
       fileType: 'handlebars';
