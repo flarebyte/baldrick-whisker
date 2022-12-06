@@ -11,6 +11,7 @@ import { checkFile } from './check-file.js';
 import {
   dasherize,
   dropExtension,
+  filenameAsKey,
   firstLower,
   firstUpper,
   lowerCamelCase,
@@ -165,11 +166,15 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
         content,
       };
     case 'csv':
+      const keyFilename = filenameAsKey(filename)
+      const json = {
+        [keyFilename]: parseCsv(content)
+      }
       return {
         fileType,
         filename,
         content,
-        csv: parseCsv(content),
+        json,
       };
   }
 };

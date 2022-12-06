@@ -89,3 +89,6 @@ export const dropExtension = (filename: string): string =>
   filename.includes('.')
     ? filename.split('.').slice(0, -1).join('.')
     : filename;
+
+export const filenameAsKey = (filename: string): string =>
+  filename.toLowerCase().replaceAll('/', '-').replaceAll('.', '-');

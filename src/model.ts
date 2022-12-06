@@ -43,11 +43,11 @@ export type InputContent =
       content: string;
       json: JsonObject;
     }
-    | {
+  | {
       fileType: 'csv';
       filename: string;
       content: string;
-      csv: Record<string, string>[];
+      json: JsonObject;
     }
   | {
       fileType: 'handlebars';
