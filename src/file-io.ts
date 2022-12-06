@@ -1,5 +1,6 @@
 import jetpack from 'fs-jetpack';
 import YAML from 'yaml';
+import CSV from 'papaparse';
 import type { JsonObject } from 'type-fest';
 import Handlebars from 'handlebars';
 import { Octokit } from 'octokit';
@@ -10,6 +11,7 @@ import { checkFile } from './check-file.js';
 import {
   dasherize,
   dropExtension,
+  filenameAsKey,
   firstLower,
   firstUpper,
   lowerCamelCase,
@@ -48,6 +50,28 @@ const parseGithubFilename = (filename: string): GithubFile | undefined => {
   return { owner, repo, path };
 };
 
+const prepareCsv = (content: string): string =>
+  content
+    .split('\n')
+    .filter((line) => line.length > 2)
+    .join('\n');
+
+const parseCsv = (content: string): Record<string, string>[] => {
+  const parsed = CSV.parse<Record<string, string>>(prepareCsv(content), {
+    header: true,
+  });
+  const { data, errors } = parsed;
+  if (errors.length > 0) {
+    const errMessage = errors
+      .map((err) => `Row ${err.row}: ${err.message}`)
+      .join('\n');
+    throw new Error(`Parsing CSV failed with ${errMessage}`);
+  }
+  if (data.length === 0) {
+    throw new Error('Length of csv data should be more than zero');
+  }
+  return data;
+};
 const readGithubFile = async (ghFile: GithubFile): Promise<string> => {
   const { owner, repo, path } = ghFile;
   const { data } = await octokit.rest.repos.getContent({
@@ -94,49 +118,66 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
       filename,
     };
   }
-  if (fileType === 'elm') {
-    return {
-      fileType,
-      filename,
-      content,
-      functionInfos: parseElmFunctions(content),
-    };
+  switch (fileType) {
+    case 'elm':
+      return {
+        fileType,
+        filename,
+        content,
+        functionInfos: parseElmFunctions(content),
+      };
+    case 'json':
+      return {
+        fileType,
+        filename,
+        content,
+        json: JSON.parse(content),
+      };
+    case 'yaml':
+      return {
+        fileType,
+        filename,
+        content,
+        json: YAML.parse(content),
+      };
+    case 'handlebars':
+      return {
+        fileType,
+        filename,
+        content,
+        renderer: compileTemplate(content),
+      };
+    case 'markdown':
+      return {
+        fileType,
+        filename,
+        content,
+      };
+    case 'bash':
+      return {
+        fileType,
+        filename,
+        content,
+      };
+    case 'text':
+      return {
+        fileType,
+        filename,
+        content,
+      };
+    case 'csv': {
+      const keyFilename = filenameAsKey(filename);
+      const json = {
+        [keyFilename]: parseCsv(content),
+      };
+      return {
+        fileType,
+        filename,
+        content,
+        json,
+      };
+    }
   }
-  if (fileType === 'json') {
-    return {
-      fileType,
-      filename,
-      content,
-      json: JSON.parse(content),
-    };
-  }
-  if (fileType === 'yaml') {
-    return {
-      fileType,
-      filename,
-      content,
-      json: YAML.parse(content),
-    };
-  }
-  if (fileType === 'handlebars') {
-    return {
-      fileType,
-      filename,
-      content,
-      renderer: compileTemplate(content),
-    };
-  }
-  if (fileType === 'markdown' || fileType === 'bash' || fileType === 'text') {
-    return {
-      fileType,
-      filename,
-      content,
-    };
-  }
-  return {
-    fileType,
-    filename,
-  };
 };
 
 export const readInputFiles = async (
@@ -203,6 +244,7 @@ export const formatContent = (
   if (destinationId.fileType === 'json') {
     try {
       const parsed = JSON.parse(content);
+      // eslint-disable-next-line unicorn/no-null
       return { status: 'success', value: JSON.stringify(parsed, null, 2) };
     } catch (error) {
       return {

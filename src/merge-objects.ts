@@ -84,7 +84,7 @@ const toJsonObject = (inputContent: InputContent): JsonObject => {
     const { functionInfos } = inputContent;
     return fromFunctionInfos(functionInfos);
   }
-  if (fileType === 'json' || fileType === 'yaml') {
+  if (fileType === 'json' || fileType === 'yaml' || fileType === 'csv') {
     const { json } = inputContent;
     return json;
   }

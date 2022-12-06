@@ -24,7 +24,7 @@ export const commandRender = async (
   const flag = optionsToFlag(options);
   const sourceId = getFileIdentifier(sourcePath);
   const source = await readInputFile(sourceId);
-  checkFile(source, ['json', 'yaml']);
+  checkFile(source, ['json', 'yaml', 'csv']);
   const templateId = getFileIdentifier(templatePath);
   const template = await readInputFile(templateId);
   checkFile(template, ['handlebars']);

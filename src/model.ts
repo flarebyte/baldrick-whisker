@@ -8,6 +8,7 @@ export type FileType =
   | 'bash'
   | 'markdown'
   | 'text'
+  | 'csv'
   | 'unknown'
   | 'invalid';
 
@@ -38,6 +39,12 @@ export type InputContent =
     }
   | {
       fileType: 'json' | 'yaml';
+      filename: string;
+      content: string;
+      json: JsonObject;
+    }
+  | {
+      fileType: 'csv';
       filename: string;
       content: string;
       json: JsonObject;
