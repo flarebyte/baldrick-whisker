@@ -165,17 +165,18 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
         filename,
         content,
       };
-    case 'csv':
-      const keyFilename = filenameAsKey(filename)
+    case 'csv': {
+      const keyFilename = filenameAsKey(filename);
       const json = {
-        [keyFilename]: parseCsv(content)
-      }
+        [keyFilename]: parseCsv(content),
+      };
       return {
         fileType,
         filename,
         content,
         json,
       };
+    }
   }
 };
 
@@ -243,6 +244,7 @@ export const formatContent = (
   if (destinationId.fileType === 'json') {
     try {
       const parsed = JSON.parse(content);
+      // eslint-disable-next-line unicorn/no-null
       return { status: 'success', value: JSON.stringify(parsed, null, 2) };
     } catch (error) {
       return {
