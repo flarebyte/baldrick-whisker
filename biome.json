@@ -16,7 +16,7 @@
     "includes": [
       "src/**",
       "spec/**",
-      "pest-spec/**",
+      "pest-spec/*.pest.yaml",
       "test/**",
       ".github/**",
       ".vscode/**",
