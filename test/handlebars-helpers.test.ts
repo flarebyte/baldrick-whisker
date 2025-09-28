@@ -1,4 +1,4 @@
-//TODO: Migrate to zest spec
+//TODO: Migrate to node:test
 import { ifSatisfyHelper } from '../src/handlebars-helpers.js';
 
 interface TestToSatisfy {
