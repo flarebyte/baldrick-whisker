@@ -1,9 +1,15 @@
+/**
+ * Implements the `render` command.
+ * - Merges source data with optional inline config and local env.
+ * - Optionally reads destination content to support a diff mode.
+ * - Renders a Handlebars template and validates output for JSON/YAML.
+ */
 import path from 'node:path';
-import { checkOutputIsCompatible, checkFile } from './check-file.js';
+import { checkFile, checkOutputIsCompatible } from './check-file.js';
 import { readInputFile, saveTextFile } from './file-io.js';
 import { optionsToFlag } from './flag-utils.js';
 import { mergeObjects } from './merge-objects.js';
-import { InputContent } from './model.js';
+import type { InputContent } from './model.js';
 import { getFileIdentifier } from './text-utils.js';
 
 const extractDestContent = (inputContent: InputContent): string => {
@@ -19,7 +25,7 @@ export const commandRender = async (
   sourcePath: string,
   templatePath: string,
   destinationPath: string,
-  options: { [name: string]: string }
+  options: { config?: string; diff?: string } & { [name: string]: string },
 ) => {
   const flag = optionsToFlag(options);
   const sourceId = getFileIdentifier(sourcePath);
@@ -31,7 +37,7 @@ export const commandRender = async (
 
   const destinationId = getFileIdentifier(destinationPath);
 
-  const configText = options['config'];
+  const configText = options.config;
   const configSource: InputContent[] =
     typeof configText === 'string'
       ? [
@@ -44,7 +50,7 @@ export const commandRender = async (
         ]
       : [];
   checkFile(destinationId, ['elm', 'markdown', 'bash', 'json', 'yaml']);
-  const diff = !!options['diff'];
+  const diff = !!options.diff;
   const expectedOutput = diff
     ? extractDestContent(await readInputFile(destinationId))
     : '';

@@ -3,15 +3,25 @@
 > Guide for the implementation, including detailed design, priorities,
 > coding conventions, and testing
 
+Highlights:
+
 ## Code structure
 
 -   **src**: Typescript source code
 
--   **test**: Jest unit tests
+-   **src**: Typescript source code
 
--   **script**: Folder for bash, python or ts-node scripts
+-   **spec**: [baldrick-zest unit regression
+    tests](https://github.com/flarebyte/baldrick-zest-engine)
+
+-   **pest-spec**: [baldrick-pest acceptance
+    tests](https://github.com/flarebyte/baldrick-pest)
+
+-   **script**: Folder for bash, python, zx or ts-node scripts
 
 -   **dist**: Temporary folder for building distribution code
+
+-   **temp**: Temporary folder used by some of the tooling (tests...)
 
 -   **report**: Temporary folder for reporting; usually for continuous
     integration

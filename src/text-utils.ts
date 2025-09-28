@@ -1,4 +1,10 @@
-import { FileId, FileType } from './model';
+/**
+ * Text and filename utilities.
+ * - Case conversions (first upper/lower, camelCase, dasherize, title).
+ * - File type detection and identifier helpers.
+ * - Filename normalization helpers.
+ */
+import type { FileId, FileType } from './model.js';
 
 const capitalizeWord = (text: string): string =>
   text.length > 0 ? text[0]?.toUpperCase() + text.slice(1).toLowerCase() : '';

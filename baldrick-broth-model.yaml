@@ -1,0 +1,76 @@
+project:
+  title: Code generator for Elm and Typescript using templates
+  description: Code generator for Elm and Typescript using templates
+  version: 0.11.0
+  keywords:
+    - CLI
+    - template
+    - mustache
+    - handlebars
+    - elm
+    - typescript
+readme:
+  summary: >
+    baldrick-whisker is an ESM-only CLI that reads JSON, YAML, CSV and Elm
+    sources, merges them into a single object, and renders Handlebars templates
+    for Elm/Markdown/JSON/YAML outputs. Ships with rich helpers and supports
+    GitHub file URIs. Requires Node.js >= 22.
+  quickstart:
+    intro: Install globally or run with npx, then try the object and render commands.
+    steps:
+      - yarn global add baldrick-whisker
+      - baldrick-whisker --help
+      - npx baldrick-whisker object out.yaml a.json b.yaml spec/fixtures/Example.elm
+      - npx baldrick-whisker render out.yaml pest-spec/fixtures/example.hbs rendered.md
+    code: |
+      # or run without installing
+      npx baldrick-whisker --help
+  cliExamples:
+    - title: Merge JSON + Elm to YAML
+      command: npx baldrick-whisker object report/out.yaml package.json pest-spec/fixtures/Example.elm
+    - title: Render Handlebars template
+      command: npx baldrick-whisker render report/out.yaml pest-spec/fixtures/example.hbs report/rendered.md
+    - title: Show diff instead of writing
+      command: npx baldrick-whisker render --diff report/out.yaml pest-spec/fixtures/example.hbs report/rendered.md
+    - title: Drop extension on destination
+      command: npx baldrick-whisker object --no-ext report/out.json package.json
+  links:
+    - "[Usage](USAGE.md)"
+    - "[API](API.md)"
+    - "[Code Maintenance](MAINTENANCE.md)"
+    - "[Contributing](CONTRIBUTING.md)"
+    - "[Glossary](GLOSSARY.md)"
+    - "[Vocabulary](CODE_VOCABULARY.md)"
+    - "[Design](INTERNAL.md)"
+    - "[ADR](DECISIONS.md)"
+  configuration:
+    files:
+      - name: GitHub URIs
+        description: Use github:owner:repo:path as a filename (raw content is fetched)
+        example: github:flarebyte:baldrick-whisker:package.json
+  architecture:
+    overview:
+      - file-io reads/writes files, compiles Handlebars, and registers helpers.
+      - merge-objects normalizes InputContent and merges primitives/objects/arrays.
+      - handlebars-helpers provides ifSatisfy, listJoin and string transformers.
+      - cli wiring via Commander exposes object and render commands.
+  tags:
+    - image-hero
+github:
+  account: flarebyte
+  name: baldrick-whisker
+copyright:
+  holder: Flarebyte.com
+  startYear: 2022
+license: MIT
+author:
+  name: Olivier Huin
+  url: https://github.com/olih
+implementation:
+  tags:
+    - cli
+    - pest
+    - zod
+    - railway
+    - commander
+workflow-version: 0.3.0

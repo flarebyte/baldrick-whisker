@@ -1,5 +1,16 @@
-import { JsonPrimitive, JsonObject, JsonArray, JsonValue } from './json-model';
-import { FunctionInfo, InputContent } from './model';
+/**
+ * Object merging engine.
+ * - Normalizes diverse InputContent into JsonObject.
+ * - Merges primitives, objects and arrays with support for array item decoration
+ *   via a configurable primary key stored alongside metadata.
+ */
+import type {
+  JsonArray,
+  JsonObject,
+  JsonPrimitive,
+  JsonValue,
+} from './json-model.js';
+import type { FunctionInfo, InputContent } from './model.js';
 
 const isNullOrUndefined = (value: unknown): value is null | undefined =>
   typeof value === 'undefined' || value === null;
@@ -56,7 +67,8 @@ const mergeKey =
         return [key, [...valueA, ...valueB]];
       }
       if (isObject(valueB)) {
-        const maybePrimaryKey = valueB['__merging_primary_key'];
+        const maybePrimaryKey = (valueB as { __merging_primary_key?: unknown })
+          .__merging_primary_key;
         const primaryKey = isString(maybePrimaryKey) ? maybePrimaryKey : 'name';
         const arrayOfObjects = valueA.map(mergeArrayValues(primaryKey, valueB));
         return [key, arrayOfObjects];
@@ -67,7 +79,7 @@ const mergeKey =
         ? [key, { ...valueA, ...valueB }]
         : [key, { ...valueA }];
     }
-    return [key, { ...valueA }];
+    return [key, valueA];
   };
 const mergeJsonObjectsByKey = (a: JsonObject, b: JsonObject): JsonObject => {
   const keys = [...Object.keys(a), ...Object.keys(b)];

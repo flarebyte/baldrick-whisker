@@ -1,3 +1,8 @@
+/**
+ * Commander-based CLI wiring.
+ * - Registers commands for merging objects and rendering templates.
+ * - Exposes a `runClient` function used by the CLI entry.
+ */
 import { Command } from 'commander';
 import { commandObject } from './command-object.js';
 import { commandRender } from './command-render.js';

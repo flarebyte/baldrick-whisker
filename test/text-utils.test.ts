@@ -1,4 +1,7 @@
 /* eslint unicorn/no-useless-undefined: 0 */
+
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
 import {
   dasherize,
   dropExtension,
@@ -8,95 +11,95 @@ import {
   lowerCamelCase,
   toTitle,
   upperCamelCase,
-} from '../src/text-utils';
+} from '../src/text-utils.js';
 
-//TODO: Migrate to zest spec
+//TODO: Migrate to node.test
 
 describe('text-utils', () => {
   describe('firstUpper', () => {
     it('should support undefined', () => {
-      expect(firstUpper(undefined)).toStrictEqual('');
+      assert.strictEqual(firstUpper(undefined), '');
     });
     it('should support empty string', () => {
-      expect(firstUpper('')).toStrictEqual('');
+      assert.strictEqual(firstUpper(''), '');
     });
     it('should convert first char to uppercase', () => {
-      expect(firstUpper('lower')).toStrictEqual('Lower');
-      expect(firstUpper('Upper')).toStrictEqual('Upper');
+      assert.strictEqual(firstUpper('lower'), 'Lower');
+      assert.strictEqual(firstUpper('Upper'), 'Upper');
     });
   });
   describe('firstLower', () => {
     it('should support undefined', () => {
-      expect(firstLower(undefined)).toStrictEqual('');
+      assert.strictEqual(firstLower(undefined), '');
     });
     it('should support empty string', () => {
-      expect(firstLower('')).toStrictEqual('');
+      assert.strictEqual(firstLower(''), '');
     });
     it('should convert first char to uppercase', () => {
-      expect(firstLower('lower')).toStrictEqual('lower');
-      expect(firstLower('Upper')).toStrictEqual('upper');
+      assert.strictEqual(firstLower('lower'), 'lower');
+      assert.strictEqual(firstLower('Upper'), 'upper');
     });
   });
   describe('upperCamelCase', () => {
     it('should support undefined', () => {
-      expect(upperCamelCase(undefined)).toStrictEqual('');
+      assert.strictEqual(upperCamelCase(undefined), '');
     });
     it('should support empty string', () => {
-      expect(upperCamelCase('')).toStrictEqual('');
+      assert.strictEqual(upperCamelCase(''), '');
     });
     it('should convert to upper camel case', () => {
-      expect(upperCamelCase('lower word')).toStrictEqual('LowerWord');
-      expect(upperCamelCase('Upper word')).toStrictEqual('UpperWord');
-      expect(upperCamelCase('lowerWord')).toStrictEqual('LowerWord');
+      assert.strictEqual(upperCamelCase('lower word'), 'LowerWord');
+      assert.strictEqual(upperCamelCase('Upper word'), 'UpperWord');
+      assert.strictEqual(upperCamelCase('lowerWord'), 'LowerWord');
     });
   });
   describe('lowerCamelCase', () => {
     it('should support undefined', () => {
-      expect(lowerCamelCase(undefined)).toStrictEqual('');
+      assert.strictEqual(lowerCamelCase(undefined), '');
     });
     it('should support empty string', () => {
-      expect(lowerCamelCase('')).toStrictEqual('');
+      assert.strictEqual(lowerCamelCase(''), '');
     });
     it('should convert to lower camel case', () => {
-      expect(lowerCamelCase('lower word')).toStrictEqual('lowerWord');
-      expect(lowerCamelCase('Upper word')).toStrictEqual('upperWord');
-      expect(lowerCamelCase('lowerWord')).toStrictEqual('lowerWord');
+      assert.strictEqual(lowerCamelCase('lower word'), 'lowerWord');
+      assert.strictEqual(lowerCamelCase('Upper word'), 'upperWord');
+      assert.strictEqual(lowerCamelCase('lowerWord'), 'lowerWord');
     });
   });
   describe('toTitle', () => {
     it('should support undefined', () => {
-      expect(toTitle(undefined)).toStrictEqual('');
+      assert.strictEqual(toTitle(undefined), '');
     });
     it('should support empty string', () => {
-      expect(toTitle('')).toStrictEqual('');
+      assert.strictEqual(toTitle(''), '');
     });
     it('should convert to title', () => {
-      expect(toTitle('lower word')).toStrictEqual('Lower word');
-      expect(toTitle('Upper word')).toStrictEqual('Upper word');
-      expect(toTitle('lowerWord')).toStrictEqual('Lower word');
+      assert.strictEqual(toTitle('lower word'), 'Lower word');
+      assert.strictEqual(toTitle('Upper word'), 'Upper word');
+      assert.strictEqual(toTitle('lowerWord'), 'Lower word');
     });
   });
   describe('dasherize', () => {
     it('should support undefined', () => {
-      expect(dasherize(undefined)).toStrictEqual('');
+      assert.strictEqual(dasherize(undefined), '');
     });
     it('should support empty string', () => {
-      expect(dasherize('')).toStrictEqual('');
+      assert.strictEqual(dasherize(''), '');
     });
     it('should convert to words with dash', () => {
-      expect(dasherize('lower word')).toStrictEqual('lower-word');
-      expect(dasherize('Upper word')).toStrictEqual('upper-word');
-      expect(dasherize('lowerWord')).toStrictEqual('lower-word');
+      assert.strictEqual(dasherize('lower word'), 'lower-word');
+      assert.strictEqual(dasherize('Upper word'), 'upper-word');
+      assert.strictEqual(dasherize('lowerWord'), 'lower-word');
     });
   });
   describe('getFileType', () => {
     it('should support empty string', () => {
       const extensions = ['json', 'yaml', 'elm', 'md', 'hbs', 'handlebars'];
       const actual = extensions.map((ext) =>
-        getFileType(`/a/b/filename.${ext}`)
+        getFileType(`/a/b/filename.${ext}`),
       );
-      expect(actual).toHaveLength(extensions.length);
-      expect(actual).toStrictEqual([
+      assert.strictEqual(actual.length, extensions.length);
+      assert.deepStrictEqual(actual, [
         'json',
         'yaml',
         'elm',
@@ -107,15 +110,18 @@ describe('text-utils', () => {
     });
   });
   describe('dropExtension', () => {
-    it.each([
-      'no-extension-filename',
-      'filename.txt',
-      './path/filename.json',
-      'a:b:c:d:data/core/filename.elm',
-      'a:b:c:d:data/core.ext/filename.elm',
-    ])('should drop the extension for %s', (filename) => {
-      const actual = dropExtension(filename);
-      expect(actual.endsWith('filename')).toBeTruthy();
+    it('should drop the extension for various filenames', () => {
+      const cases = [
+        'no-extension-filename',
+        'filename.txt',
+        './path/filename.json',
+        'a:b:c:d:data/core/filename.elm',
+        'a:b:c:d:data/core.ext/filename.elm',
+      ];
+      for (const filename of cases) {
+        const actual = dropExtension(filename);
+        assert.ok(actual.endsWith('filename'));
+      }
     });
   });
 });

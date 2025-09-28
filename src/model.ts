@@ -1,4 +1,9 @@
-import { JsonObject } from './json-model';
+/**
+ * Shared domain types for files, templates and parsed code.
+ * - Describes supported file kinds and identifiers.
+ * - Structures for Elm function metadata and template rendering.
+ */
+import type { JsonObject } from './json-model.js';
 
 export type FileType =
   | 'elm'
