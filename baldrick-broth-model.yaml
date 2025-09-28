@@ -1,0 +1,41 @@
+project:
+  title: Build automation tool and task runner
+  description: Take your developer workflow to the next level with a custom CLI
+    with relevant documentation for running your task
+  version: 0.10.0
+  keywords:
+    - CLI
+    - template
+    - mustache
+    - handlebars
+    - elm
+    - typescript
+readme:
+  highlights:
+    - todo
+  links:
+    - "[Usage](USAGE.md)"
+    - "[Agent Notes](AGENTS_PROJECT.md)"
+  related:
+    - "[todo](https://github.com/todo) todo"
+  tags:
+    - image-hero
+    - image-demo
+github:
+  account: flarebyte
+  name: baldrick-whisker
+copyright:
+  holder: Flarebyte.com
+  startYear: 2022
+license: MIT
+author:
+  name: Olivier Huin
+  url: https://github.com/olih
+implementation:
+  tags:
+    - cli
+    - pest
+    - zod
+    - railway
+    - commander
+workflow-version: 0.3.0
