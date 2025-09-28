@@ -1,8 +1,14 @@
 {
   "name": "baldrick-whisker",
   "description": "Code generator for Elm and Typescript using templates",
-  "keywords": ["template", "mustache", "handlebars", "elm", "typescript"],
-  "version": "0.8.0",
+  "keywords": [
+    "template",
+    "mustache",
+    "handlebars",
+    "elm",
+    "typescript"
+  ],
+  "version": "0.9.0",
   "author": {
     "name": "olih",
     "url": "https://github.com/olih"
@@ -26,7 +32,10 @@
     }
   },
   "main": "./dist/src/index.mjs",
-  "files": ["dist/src", "src"],
+  "files": [
+    "dist/src",
+    "src"
+  ],
   "bin": {
     "baldrick-whisker": "dist/src/cli.mjs"
   },
