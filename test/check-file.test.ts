@@ -1,5 +1,5 @@
-import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
 import { checkFile, checkOutputIsCompatible } from '../src/check-file.js';
 
 describe('check-file', () => {
@@ -22,8 +22,10 @@ describe('check-file', () => {
   });
 
   it('checkOutputIsCompatible returns formatted content when valid', () => {
-    const out = checkOutputIsCompatible('{"x":1}', { filename: 'a.json', fileType: 'json' });
-    assert.match(out, /\"x\": 1/);
+    const out = checkOutputIsCompatible('{"x":1}', {
+      filename: 'a.json',
+      fileType: 'json',
+    });
+    assert.match(out, /"x": 1/);
   });
 });
-

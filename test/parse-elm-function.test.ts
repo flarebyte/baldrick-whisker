@@ -1,6 +1,6 @@
-import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { describe, it } from 'node:test';
 import { parseElmFunctions } from '../src/parse-elm-function.js';
 
 describe('parse-elm-function', () => {
@@ -13,4 +13,3 @@ describe('parse-elm-function', () => {
     assert.ok(Array.isArray(first.params));
   });
 });
-

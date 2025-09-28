@@ -28,6 +28,13 @@
     "maxSize": 3000000,
     "ignoreUnknown": false
   },
+  "overrides": [
+    {
+      "includes": ["pest-spec/snapshots/**", "report/**"],
+      "linter": { "enabled": false },
+      "formatter": { "enabled": false }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "single",

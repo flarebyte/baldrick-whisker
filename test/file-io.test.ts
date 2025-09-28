@@ -1,11 +1,16 @@
-import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, writeFile, readFile, rm, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { readInputFile, saveObjectFile, saveTextFile, formatContent } from '../src/file-io.js';
-import { getFileIdentifier } from '../src/text-utils.js';
+import { beforeEach, describe, it } from 'node:test';
+import {
+  formatContent,
+  readInputFile,
+  saveObjectFile,
+  saveTextFile,
+} from '../src/file-io.js';
 import type { FileId, InputContent } from '../src/model.js';
+import { getFileIdentifier } from '../src/text-utils.js';
 
 const tmp = async () => await mkdtemp(path.join(os.tmpdir(), 'whisker-'));
 
@@ -23,19 +28,29 @@ describe('file-io', () => {
     const json = await readInputFile(getFileIdentifier(jsonPath));
     const yaml = await readInputFile(getFileIdentifier(yamlPath));
     assert.equal(json.fileType, 'json');
-    assert.equal((json as Extract<InputContent,{fileType:'json'}>).json.a, 1);
+    assert.equal(
+      (json as Extract<InputContent, { fileType: 'json' }>).json.a,
+      1,
+    );
     assert.equal(yaml.fileType, 'yaml');
-    assert.equal((yaml as Extract<InputContent,{fileType:'yaml'}>).json.b, 2);
+    assert.equal(
+      (yaml as Extract<InputContent, { fileType: 'yaml' }>).json.b,
+      2,
+    );
   });
 
   it('reads CSV and maps rows under filename key', async () => {
     const csvPath = path.join(tempDir, 'rows.csv');
     await writeFile(csvPath, 'name,age\nAlice,30\nBob,25\n', 'utf8');
-    const csv = await readInputFile(getFileIdentifier(csvPath));
+    const csv = (await readInputFile(getFileIdentifier(csvPath))) as Extract<
+      InputContent,
+      { fileType: 'csv' }
+    >;
     assert.equal(csv.fileType, 'csv');
-    const keys = Object.keys((csv as any).json);
+    const keys = Object.keys(csv.json);
     assert.equal(keys.length, 1);
-    assert.equal(((csv as any).json[keys[0]] as any[]).length, 2);
+    const vals = csv.json[keys[0]] as Array<Record<string, string>>;
+    assert.equal(vals.length, 2);
   });
 
   it('compiles Handlebars and renders content', async () => {
@@ -43,7 +58,7 @@ describe('file-io', () => {
     await writeFile(hbsPath, 'Hello {{name}}', 'utf8');
     const tmpl = await readInputFile(getFileIdentifier(hbsPath));
     assert.equal(tmpl.fileType, 'handlebars');
-    const out = tmpl.renderer({ name: 'World' } as any);
+    const out = tmpl.renderer({ name: 'World' } as Record<string, unknown>);
     assert.equal(out, 'Hello World');
   });
 
@@ -62,29 +77,45 @@ describe('file-io', () => {
   });
 
   it('saves JSON and YAML with flags', async () => {
-    const fileJson = { filename: path.join(tempDir, 'result.json'), fileType: 'json' } as const;
-    await saveObjectFile(fileJson, { a: 1 } as any, '');
+    const fileJson = {
+      filename: path.join(tempDir, 'result.json'),
+      fileType: 'json',
+    } as const;
+    await saveObjectFile(fileJson, { a: 1 } as Record<string, unknown>, '');
     const txt1 = await readFile(fileJson.filename, 'utf8');
-    assert.match(txt1, /\"a\": 1/);
+    assert.match(txt1, /"a": 1/);
 
-    const fileYaml = { filename: path.join(tempDir, 'result.yaml'), fileType: 'yaml' } as const;
-    await saveObjectFile(fileYaml, { b: 2 } as any, 'drop');
+    const fileYaml = {
+      filename: path.join(tempDir, 'result.yaml'),
+      fileType: 'yaml',
+    } as const;
+    await saveObjectFile(fileYaml, { b: 2 } as Record<string, unknown>, 'drop');
     const dropped = path.join(tempDir, 'result');
     const txt2 = await readFile(dropped, 'utf8');
     assert.match(txt2, /b: 2/);
   });
 
   it('skips overwrite when flag is present', async () => {
-    const f = { filename: path.join(tempDir, 'keep.json'), fileType: 'json' } as const;
+    const f = {
+      filename: path.join(tempDir, 'keep.json'),
+      fileType: 'json',
+    } as const;
     await writeFile(f.filename, JSON.stringify({ old: true }, null, 2), 'utf8');
     const before = await readFile(f.filename, 'utf8');
-    await saveObjectFile(f, { new: true } as any, 'skip-overwrite');
+    await saveObjectFile(
+      f,
+      { new: true } as Record<string, unknown>,
+      'skip-overwrite',
+    );
     const after = await readFile(f.filename, 'utf8');
     assert.equal(after, before);
   });
 
   it('writes text output honoring drop flag', async () => {
-    const f = { filename: path.join(tempDir, 'out.txt'), fileType: 'text' } as const;
+    const f = {
+      filename: path.join(tempDir, 'out.txt'),
+      fileType: 'text',
+    } as const;
     await saveTextFile(f, 'hello', 'drop');
     const p = path.join(tempDir, 'out');
     const content = await readFile(p, 'utf8');
@@ -92,9 +123,15 @@ describe('file-io', () => {
   });
 
   it('returns unknown/invalid for unsupported or missing files', async () => {
-    const unknown = await readInputFile({ filename: 'x.bin', fileType: 'unknown' });
+    const unknown = await readInputFile({
+      filename: 'x.bin',
+      fileType: 'unknown',
+    });
     assert.equal(unknown.fileType, 'unknown');
-    const invalid = await readInputFile({ filename: path.join(tempDir, 'missing.json'), fileType: 'json' });
+    const invalid = await readInputFile({
+      filename: path.join(tempDir, 'missing.json'),
+      fileType: 'json',
+    });
     assert.equal(invalid.fileType, 'invalid');
   });
 });

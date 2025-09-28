@@ -1,11 +1,11 @@
-import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
 import { runClient } from '../src/client.js';
 
 describe('index exports and client', () => {
   it('loads public API module', async () => {
-    const mod = await import('../src/index.js');
-    assert.ok(typeof (mod as any).mergeObjects === 'function');
+    const mod = (await import('../src/index.js')) as Record<string, unknown>;
+    assert.equal(typeof mod.mergeObjects, 'function');
   });
   it('runs client without crashing', async () => {
     const oldArgv = process.argv;
