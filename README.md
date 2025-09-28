@@ -21,10 +21,6 @@ GitHub file URIs. Requires Node.js >= 22.
 
 ![Hero image for baldrick-whisker](baldrick-whisker-hero-512.jpeg)
 
-Highlights:
-
-![Example of baldrick-whisker usage](baldrick-whisker-usage.gif "cli")
-
 ## CLI Examples
 
 Merge JSON + Elm to YAML:

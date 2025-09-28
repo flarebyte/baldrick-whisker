@@ -56,7 +56,6 @@ readme:
       - cli wiring via Commander exposes object and render commands.
   tags:
     - image-hero
-    - image-demo
 github:
   account: flarebyte
   name: baldrick-whisker
