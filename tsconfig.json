@@ -6,12 +6,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "es2024",
-      "ESNext.Array",
-      "ESNext.Collection",
-      "ESNext.Iterator"
-    ],
+    "lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Iterator"],
     "module": "nodenext",
     "moduleDetection": "force",
     "moduleResolution": "node16",
@@ -34,5 +29,7 @@
     "compilerOptions": {},
     "files": true,
     "transpileOnly": true
-  }
+  },
+  "include": ["src"],
+  "exclude": ["dist", "test", "spec", "pest-spec"]
 }
