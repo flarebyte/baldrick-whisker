@@ -59,6 +59,8 @@
       "test/**",
       "pest-spec/**",
       "spec/**",
+      "src/model.ts",
+      "src/json-model.ts",
       "**/*.d.ts"
     ]
   },
