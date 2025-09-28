@@ -141,6 +141,7 @@ Tip: Browse all “baldrick-\*” packages
     -   Run: `npx baldrick-broth@latest test all` (lint, unit, pest, coverage).
     -   Ensure coverage runs via `yarn test:cov`; lcov is written to
         `coverage/lcov.info` (ignored).
+    -   Completion cue (macOS): announce end of a task with `say done` or `say "your message done"`.
 -   Don’t commit generated artifacts
     -   `dist/`, `coverage/`, and other build outputs should remain untracked.
 -   Small, focused changes
