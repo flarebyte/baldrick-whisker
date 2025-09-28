@@ -1,4 +1,4 @@
-import { FunctionInfo, ParamInfo } from './model.js';
+import type { FunctionInfo, ParamInfo } from './model.js';
 
 const isFunctionInfo = (value: unknown): value is FunctionInfo =>
   typeof value === 'object' && value !== null;
@@ -73,7 +73,7 @@ const findElmFunctionBlocks = (content: string): [string, string][] => {
 };
 
 export const parseElmFunction = (
-  twoLines: [string, string]
+  twoLines: [string, string],
 ): FunctionInfo | false => {
   const [signatureLine, parametersLine] = twoLines;
   const hasEqual = parametersLine.trim().endsWith('=');
@@ -82,7 +82,7 @@ export const parseElmFunction = (
     return false;
   }
   const [name, ...parameters] = trimStrings(
-    chompLast(parametersLine).split(' ')
+    chompLast(parametersLine).split(' '),
   );
   const [signatureName, signature] = trimStrings(signatureLine.split(':', 2));
   if (!name || name !== signatureName || !signature || !parameters) {

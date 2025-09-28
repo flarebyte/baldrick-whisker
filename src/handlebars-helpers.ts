@@ -1,5 +1,5 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { HelperOptions } from 'handlebars';
+import type { HelperOptions } from 'handlebars';
 
 const isStringArray = (value: unknown): value is string[] =>
   typeof value === 'object' &&
@@ -41,7 +41,7 @@ const withIgnorePunctuation = (flags: IfSatisfyFlags, text: string): string =>
 const withAllIgnore = (flags: IfSatisfyFlags, text: string): string =>
   withIgnorePunctuation(
     flags,
-    withIgnoreSpace(flags, withIgnoreCase(flags, text))
+    withIgnoreSpace(flags, withIgnoreCase(flags, text)),
   );
 
 const stringCompare =
@@ -93,11 +93,11 @@ const asAlternativeExpected = (expected: string): string[] =>
 const ifSatisfyForString = (
   flags: IfSatisfyFlags,
   value: string,
-  expected: string
+  expected: string,
 ): boolean => {
   const anyExpected = asAlternativeExpected(expected);
   const found = anyExpected.some((expectedOption: string) =>
-    stringCompare(flags)(value, expectedOption)
+    stringCompare(flags)(value, expectedOption),
   );
   return found;
 };
@@ -105,7 +105,7 @@ const ifSatisfyForString = (
 const ifSatisfyForNumber = (
   _flags: IfSatisfyFlags,
   value: number,
-  expected: string
+  expected: string,
 ): boolean => {
   const numberExpected = parseNumber(expected);
   const found = value === numberExpected;
@@ -115,14 +115,14 @@ const ifSatisfyForNumber = (
 export const ifSatisfyForStringList = (
   flags: IfSatisfyFlags,
   values: string[],
-  expected: string
+  expected: string,
 ): boolean => {
   const anyExpected = asAlternativeExpected(expected);
   const compare = (expectedOption: string) => (value: string) =>
     stringCompare(flags)(value, expectedOption);
 
   const found = anyExpected.some((expectedOption) =>
-    values.some(compare(expectedOption))
+    values.some(compare(expectedOption)),
   );
   return found;
 };
@@ -130,7 +130,7 @@ export const ifSatisfyForStringList = (
 export const ifSatisfyHelper = (
   flags: string,
   value: unknown,
-  expected: string
+  expected: string,
 ): boolean => {
   const currentFlags = parseFlags(flags);
 
@@ -150,11 +150,11 @@ export const ifSatisfyHelper = (
 };
 
 export function ifSatisfy(
-  this: any,
+  this: unknown,
   flags: string,
   value: unknown,
   expected: string,
-  options: HelperOptions
+  options: HelperOptions,
 ) {
   const result = ifSatisfyHelper(flags, value, expected);
   return result ? options.fn(this) : options.inverse(this);
@@ -176,10 +176,10 @@ const countNewLines = (text: string): number => text.split(newLine).length - 1;
  * Join a list with a separator
  */
 export function listJoin(
-  this: any,
+  this: unknown,
   separator: string,
   value: unknown,
-  options: HelperOptions
+  options: HelperOptions,
 ) {
   if (!isAnyArray(value)) {
     return options.inverse(this);

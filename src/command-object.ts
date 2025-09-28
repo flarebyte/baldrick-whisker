@@ -7,7 +7,7 @@ import { getFileIdentifier, getFileIdentifiers } from './text-utils.js';
 export const commandObject = async (
   destinationPath: string,
   sourcePaths: string[],
-  options: { [name: string]: string }
+  options: { [name: string]: string },
 ) => {
   const flag = optionsToFlag(options);
   const destinationId = getFileIdentifier(destinationPath);

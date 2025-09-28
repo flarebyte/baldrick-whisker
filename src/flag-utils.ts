@@ -1,9 +1,11 @@
-export const optionsToFlag = (options: { [name: string]: string }): string => {
+export const optionsToFlag = (
+  options: { ext?: string; overwrite?: string } & { [name: string]: string },
+): string => {
   const flags = [];
-  if (!options['ext']) {
+  if (!options.ext) {
     flags.push('drop');
   }
-  if (!options['overwrite']) {
+  if (!options.overwrite) {
     flags.push('skip-overwrite');
   }
   return flags.join(' ');

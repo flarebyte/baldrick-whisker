@@ -1,13 +1,19 @@
 import jetpack from 'fs-jetpack';
-import YAML from 'yaml';
-import CSV from 'papaparse';
-import type { JsonObject } from 'type-fest';
 import Handlebars from 'handlebars';
 import { Octokit } from 'octokit';
-import { parseElmFunctions } from './parse-elm-function.js';
-
-import { FileId, GithubFile, InputContent, TemplateRenderer } from './model.js';
+import CSV from 'papaparse';
+import type { JsonObject } from 'type-fest';
+import YAML from 'yaml';
 import { checkFile } from './check-file.js';
+import { shouldDropExtension, shouldSkipOverwrite } from './flag-utils.js';
+import { ifSatisfy, listJoin } from './handlebars-helpers.js';
+import type {
+  FileId,
+  GithubFile,
+  InputContent,
+  TemplateRenderer,
+} from './model.js';
+import { parseElmFunctions } from './parse-elm-function.js';
 import {
   dasherize,
   dropExtension,
@@ -18,8 +24,6 @@ import {
   toTitle,
   upperCamelCase,
 } from './text-utils.js';
-import { ifSatisfy, listJoin } from './handlebars-helpers.js';
-import { shouldDropExtension, shouldSkipOverwrite } from './flag-utils.js';
 
 Handlebars.registerHelper('lowerFirstChar', firstLower);
 Handlebars.registerHelper('upperFirstChar', firstUpper);
@@ -86,7 +90,7 @@ const readGithubFile = async (ghFile: GithubFile): Promise<string> => {
 };
 
 const readContentAsString = async (
-  filename: string | GithubFile
+  filename: string | GithubFile,
 ): Promise<string | undefined> => {
   return await (typeof filename === 'string'
     ? jetpack.readAsync(filename, 'utf8')
@@ -181,7 +185,7 @@ export const readInputFile = async (fileId: FileId): Promise<InputContent> => {
 };
 
 export const readInputFiles = async (
-  fileIds: FileId[]
+  fileIds: FileId[],
 ): Promise<InputContent[]> => {
   const files = fileIds.map(readInputFile);
   return Promise.all(files);
@@ -196,7 +200,7 @@ export const readInputFiles = async (
 export const saveObjectFile = async (
   fileId: FileId,
   content: JsonObject,
-  flags: string
+  flags: string,
 ): Promise<void> => {
   const { filename, fileType } = fileId;
   const realFilename = shouldDropExtension(flags)
@@ -217,7 +221,7 @@ export const saveObjectFile = async (
 export const saveTextFile = async (
   fileId: FileId,
   content: string,
-  flags: string
+  flags: string,
 ): Promise<void> => {
   const { filename } = fileId;
   const realFilename = shouldDropExtension(flags)
@@ -237,7 +241,7 @@ function getErrorMessage(error: unknown): string {
 
 export const formatContent = (
   content: string,
-  destinationId: FileId
+  destinationId: FileId,
 ):
   | { status: 'success'; value: string }
   | { status: 'failure'; error: string } => {
@@ -249,8 +253,7 @@ export const formatContent = (
     } catch (error) {
       return {
         status: 'failure',
-        error:
-          'Rendered JSON cannot be parsed (424805): ' + getErrorMessage(error),
+        error: `Rendered JSON cannot be parsed (424805): ${getErrorMessage(error)}`,
       };
     }
   }
@@ -261,8 +264,7 @@ export const formatContent = (
     } catch (error) {
       return {
         status: 'failure',
-        error:
-          'Rendered YAML cannot be parsed (719207): ' + getErrorMessage(error),
+        error: `Rendered YAML cannot be parsed (719207): ${getErrorMessage(error)}`,
       };
     }
   }

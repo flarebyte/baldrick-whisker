@@ -1,4 +1,4 @@
-import { JsonObject } from './json-model';
+import type { JsonObject } from './json-model.js';
 
 export type FileType =
   | 'elm'
