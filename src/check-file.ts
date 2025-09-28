@@ -1,3 +1,8 @@
+/**
+ * Validation helpers for input/output files.
+ * - Ensures files passed to commands match supported FileType sets.
+ * - Validates and formats rendered content for JSON/YAML destinations.
+ */
 import { formatContent } from './file-io.js';
 import type { FileId, FileType } from './model.js';
 

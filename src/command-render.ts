@@ -1,3 +1,9 @@
+/**
+ * Implements the `render` command.
+ * - Merges source data with optional inline config and local env.
+ * - Optionally reads destination content to support a diff mode.
+ * - Renders a Handlebars template and validates output for JSON/YAML.
+ */
 import path from 'node:path';
 import { checkFile, checkOutputIsCompatible } from './check-file.js';
 import { readInputFile, saveTextFile } from './file-io.js';

@@ -1,3 +1,8 @@
+/**
+ * CLI flag helpers.
+ * - Translates Commander option bags into internal flag strings.
+ * - Utility predicates to interpret those flags when writing files.
+ */
 export const optionsToFlag = (
   options: { ext?: string; overwrite?: string } & { [name: string]: string },
 ): string => {

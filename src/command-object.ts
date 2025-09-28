@@ -1,3 +1,8 @@
+/**
+ * Implements the `object` command.
+ * - Reads multiple input files (JSON/YAML/CSV/ELM) and merges them into one object.
+ * - Applies output flags (drop extension, skip overwrite) and saves to JSON/YAML.
+ */
 import { checkFile } from './check-file.js';
 import { readInputFiles, saveObjectFile } from './file-io.js';
 import { optionsToFlag } from './flag-utils.js';

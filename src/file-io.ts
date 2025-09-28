@@ -1,3 +1,10 @@
+/**
+ * File IO utilities and adapters.
+ * - Reads JSON, YAML, CSV, Elm, Markdown, Text, and Handlebars template files.
+ * - Supports GitHub file reads via Octokit using a github:owner:repo:path URI.
+ * - Compiles Handlebars templates and registers custom helpers.
+ * - Saves JSON/YAML/Text output and provides content formatting helpers.
+ */
 import jetpack from 'fs-jetpack';
 import Handlebars from 'handlebars';
 import { Octokit } from 'octokit';

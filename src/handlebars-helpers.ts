@@ -1,4 +1,10 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
+/**
+ * Custom Handlebars helpers and string utilities.
+ * - ifSatisfy: conditional rendering based on flexible string/number comparisons.
+ * - listJoin: joins rendered block items with a separator, preserving newlines.
+ * - Utility predicates and transformers to support the helpers.
+ */
 import type { HelperOptions } from 'handlebars';
 
 const isStringArray = (value: unknown): value is string[] =>

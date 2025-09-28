@@ -1,4 +1,7 @@
-//Strongly inspired by https://github.com/sindresorhus/type-fest
+/**
+ * Lightweight JSON type definitions used across the project.
+ * Strongly inspired by https://github.com/sindresorhus/type-fest
+ */
 export type JsonObject = {
   [Key in string]: JsonValue;
 };

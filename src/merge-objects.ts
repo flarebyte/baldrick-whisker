@@ -1,3 +1,9 @@
+/**
+ * Object merging engine.
+ * - Normalizes diverse InputContent into JsonObject.
+ * - Merges primitives, objects and arrays with support for array item decoration
+ *   via a configurable primary key stored alongside metadata.
+ */
 import type {
   JsonArray,
   JsonObject,

@@ -1,3 +1,8 @@
+/**
+ * Parses Elm function signatures to structured metadata.
+ * - Extracts function name, parameters and return types from Elm source.
+ * - Provides utilities for converting multiple signatures at once.
+ */
 import type { FunctionInfo, ParamInfo } from './model.js';
 
 const isFunctionInfo = (value: unknown): value is FunctionInfo =>
