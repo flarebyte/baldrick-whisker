@@ -1,0 +1,66 @@
+---
+title: baldrick-whisker
+description: "Acceptance tests using local override for github: URIs"
+cases:
+  object-local-json:
+    title: Map github repo to local and read JSON
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/local-dest.json
+      - title: ensure report folder exists
+        run: mkdir -p report/shell-tests
+      - title: "merge local JSON via github: URI"
+        run: BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn cli object report/shell-tests/local-dest.json github:flarebyte:baldrick-whisker:pest-spec/fixtures/package.json
+      - title: save destination
+        run: cat report/shell-tests/local-dest.json
+        expect:
+          snapshot: local-dest.json
+  render-local-md:
+    title: Render using locally mapped JSON source
+    steps:
+      - title: reset
+        run: rm --force report/shell-tests/local-rendered.md
+      - title: ensure report folder exists
+        run: mkdir -p report/shell-tests
+      - title: create local JSON via github mapping
+        run: BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn cli object report/shell-tests/local-dest.json github:flarebyte:baldrick-whisker:pest-spec/fixtures/package.json
+      - title: render using local JSON and template
+        run: BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn cli render report/shell-tests/local-dest.json pest-spec/fixtures/example.hbs report/shell-tests/local-rendered.md
+      - title: save destination
+        run: cat report/shell-tests/local-rendered.md
+        expect:
+          snapshot: local-rendered.md
+  object-local-missing:
+    title: Error when mapped file does not exist
+    steps:
+      - title: run object with missing path (capture error)
+        run: bash pest-spec/scripts/run-capture.sh "BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn -s cli object report/shell-tests/should-not-exist.json github:flarebyte:baldrick-whisker:does/not/exist.yaml"
+      - title: sanitize error output
+        run: sed -E -f pest-spec/scripts/sanitize-paths.sed
+        stdin:
+          step: 0
+          receiving: stdout
+      - title: keep first line
+        run: head -n 1
+        stdin:
+          step: 1
+          receiving: stdout
+        expect:
+          snapshot: error-missing.txt
+  object-local-traversal:
+    title: Error when path escapes mapping root
+    steps:
+      - title: run object with traversal (capture error)
+        run: bash pest-spec/scripts/run-capture.sh "BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn -s cli object report/shell-tests/should-not-exist.json github:flarebyte:baldrick-whisker:../baldrick-broth-model.yaml"
+      - title: sanitize error output
+        run: sed -E -f pest-spec/scripts/sanitize-paths.sed
+        stdin:
+          step: 0
+          receiving: stdout
+      - title: keep first line
+        run: head -n 1
+        stdin:
+          step: 1
+          receiving: stdout
+        expect:
+          snapshot: error-traversal.txt

@@ -13,7 +13,9 @@ import type { JsonObject } from 'type-fest';
 import YAML from 'yaml';
 import { checkFile } from './check-file.js';
 import { shouldDropExtension, shouldSkipOverwrite } from './flag-utils.js';
+import { resolveGithubUri } from './github-resolver.js';
 import { ifSatisfy, listJoin } from './handlebars-helpers.js';
+import { loadLocalGithubConfig } from './local-config.js';
 import type {
   FileId,
   GithubFile,
@@ -83,7 +85,7 @@ const parseCsv = (content: string): Record<string, string>[] => {
   }
   return data;
 };
-const readGithubFile = async (ghFile: GithubFile): Promise<string> => {
+const readGithubFileRemote = async (ghFile: GithubFile): Promise<string> => {
   const { owner, repo, path } = ghFile;
   const { data } = await octokit.rest.repos.getContent({
     mediaType: {
@@ -99,9 +101,15 @@ const readGithubFile = async (ghFile: GithubFile): Promise<string> => {
 const readContentAsString = async (
   filename: string | GithubFile,
 ): Promise<string | undefined> => {
-  return await (typeof filename === 'string'
-    ? jetpack.readAsync(filename, 'utf8')
-    : readGithubFile(filename));
+  if (typeof filename === 'string') {
+    return await jetpack.readAsync(filename, 'utf8');
+  }
+  const cfg = await loadLocalGithubConfig();
+  const resolved = await resolveGithubUri(filename, cfg);
+  if (resolved.type === 'local') {
+    return await jetpack.readAsync(resolved.path, 'utf8');
+  }
+  return await readGithubFileRemote(filename);
 };
 
 /**

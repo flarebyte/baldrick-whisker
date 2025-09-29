@@ -1,7 +1,7 @@
 {
   "name": "baldrick-whisker",
   "description": "Code generator for Elm and Typescript using templates",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "author": {
     "name": "Olivier Huin",
     "url": "https://github.com/olih"
@@ -22,7 +22,7 @@
   },
   "bugs": "https://github.com/flarebyte/baldrick-whisker/issues",
   "bin": {
-    "baldrick-whisker": "dist/src/cli.mjs"
+    "baldrick-whisker": "dist/cli.mjs"
   },
   "type": "module",
   "exports": {

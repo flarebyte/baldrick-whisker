@@ -44,12 +44,20 @@ export async function runClient() {
   } catch (error) {
     const code = (error as { code?: string } | undefined)?.code;
     // Treat help/version exits as normal flow
-    if (code === 'commander.helpDisplayed' || code === 'commander.version') {
+    if (
+      code === 'commander.help' ||
+      code === 'commander.helpDisplayed' ||
+      code === 'commander.version'
+    ) {
       console.log(`✓ Done. Version ${version}`);
       return;
     }
     console.log('baldrick-decision will exit with error code 1');
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(`Error: ${error.message}`);
+    } else {
+      console.error(String(error));
+    }
     process.exit(1); // eslint-disable-line  unicorn/no-process-exit
   }
 }

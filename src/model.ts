@@ -75,3 +75,14 @@ export interface GithubFile {
   repo: string;
   path: string;
 }
+
+export interface LocalGithubMapping {
+  repo: string;
+  root: string;
+}
+
+export interface LocalGithubConfig {
+  github?: {
+    mappings?: LocalGithubMapping[];
+  };
+}

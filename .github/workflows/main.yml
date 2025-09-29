@@ -42,6 +42,8 @@ jobs:
           fi
       - name: Build
         run: yarn build
+      - name: Release readiness check
+        run: npx baldrick-dev-ts@latest release check
       - name: Verify build entrypoints exist
         run: >
           set -e

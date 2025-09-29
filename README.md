@@ -21,6 +21,8 @@ GitHub file URIs. Requires Node.js >= 22.
 
 ![Hero image for baldrick-whisker](baldrick-whisker-hero-512.jpeg)
 
+Highlights:
+
 ## CLI Examples
 
 Merge JSON + Elm to YAML:
@@ -69,6 +71,7 @@ Install globally or run with npx, then try the object and render commands.
 Config files:
 
 -   \`\`:
+-   \`\`:
 
 ## Architecture
 
@@ -78,6 +81,20 @@ Config files:
 -   handlebars-helpers provides ifSatisfy, listJoin and string
     transformers.
 -   cli wiring via Commander exposes object and render commands.
+
+## FAQ
+
+Q: How do I point whisker to a custom config file?
+
+A: Set BALDRICK\_WHISKER\_CONFIG to the YAML file location. The loader will use
+it instead of the default \~/.baldrick-whisker/config.yaml.
+
+## Troubleshooting
+
+-   →
+-   →
+-   →
+-   →
 
 ## Documentation and links
 

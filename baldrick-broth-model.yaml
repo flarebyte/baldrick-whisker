@@ -1,7 +1,7 @@
 project:
   title: Code generator for Elm and Typescript using templates
   description: Code generator for Elm and Typescript using templates
-  version: 0.12.0
+  version: 0.13.0
   keywords:
     - CLI
     - template
@@ -45,9 +45,50 @@ readme:
     - "[ADR](DECISIONS.md)"
   configuration:
     files:
+      - name: "Local overrides for github: URIs"
+        description: |
+          Map a GitHub repo key (owner:repo) to a local folder so paths like
+          `github:owner:repo:path/to/file` are read from your filesystem instead of GitHub.
+          Useful for working with local clones of shared data/templates.
+        example: |
+          # ~/.baldrick-whisker/config.yaml (or set BALDRICK_WHISKER_CONFIG to a file)
+          github:
+            mappings:
+              - repo: flarebyte:baldrick-reserve
+                root: /Users/you/src/flarebyte/baldrick-reserve
+          
+          # CLI usage
+          BALDRICK_WHISKER_CONFIG=/path/to/config.yaml \
+            npx baldrick-whisker object out.yaml \
+            github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml
       - name: GitHub URIs
         description: Use github:owner:repo:path as a filename (raw content is fetched)
         example: github:flarebyte:baldrick-whisker:package.json
+  troubleshooting:
+    - title: Mapped local file not found
+      details: >
+        Ensure the repo mapping points to the correct absolute folder and that the
+        path part of the github: URI exists under that folder. Example error:
+        "Mapped local file not found".
+    - title: Path escapes mapping root
+      details: >
+        The resolver blocks traversal outside the mapped root (e.g. using ..).
+        Update the path, or move the file within the mapped root. Example error:
+        "Resolved path escapes mapping root".
+    - title: Env override precedence
+      details: >
+        Set BALDRICK_WHISKER_CONFIG to point to a specific YAML config file.
+        This overrides the default ~/.baldrick-whisker/config.yaml.
+    - title: Windows paths
+      details: >
+        Forward slashes are supported in github: URIs. On Windows, ensure the
+        mapping root uses a valid absolute path (e.g. C:\\path\\to\\repo).
+        The path segment of the URI is joined with the mapping root safely.
+  faq:
+    - q: How do I point whisker to a custom config file?
+      a: >
+        Set BALDRICK_WHISKER_CONFIG to the YAML file location. The loader will
+        use it instead of the default ~/.baldrick-whisker/config.yaml.
   architecture:
     overview:
       - file-io reads/writes files, compiles Handlebars, and registers helpers.

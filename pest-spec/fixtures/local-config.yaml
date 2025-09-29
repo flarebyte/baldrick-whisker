@@ -1,0 +1,5 @@
+github:
+  mappings:
+    - repo: flarebyte:baldrick-whisker
+      root: REPLACEME
+
