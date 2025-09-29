@@ -3,7 +3,8 @@
 This scratch doc proposes how `github:` file references (e.g., `github:owner:repo:path/to/file`) can resolve to local filesystem paths when a mapping exists, otherwise they are fetched from GitHub as today.
 
 ## Understanding
-- Use a single user config at `~/.baldrick-whisker/config.yaml` that maps `owner:repo` to a local root directory.
+- Default config lives at `~/.baldrick-whisker/config.yaml` and maps `owner:repo` to a local root directory.
+- Also supports `BALDRICK_WHISKER_CONFIG` env var to point to an alternate config file (used by tests/CI). Precedence: env var > home.
 - When a mapping exists, resolve `github:owner:repo:path` to `path.join(root, path)` and read from the local filesystem instead of using Octokit.
 - If no mapping exists, fetch the file from GitHub as today.
 - If a mapping exists but the local file is missing, fail with a clear error (no fallback for now).
@@ -26,14 +27,14 @@ github:
 ## TODO
 
 ### Design
-- [ ] Config location: only `~/.baldrick-whisker/config.yaml` (no env/project overrides initially).
+- [ ] Config discovery: `BALDRICK_WHISKER_CONFIG` env var (if set) else `~/.baldrick-whisker/config.yaml`.
 - [ ] Schema: `github.mappings[].repo` (format `owner:repo`) and `root` (absolute path).
 - [ ] Default behavior: unmapped repos fetch remotely; mapped repos must exist locally.
 - [ ] Enforce strict path safety (reject traversal outside `root`).
 
 ### Implementation
 - [ ] Config loader
-  - [ ] Load `~/.baldrick-whisker/config.yaml` if it exists; parse YAML.
+  - [ ] Load from `BALDRICK_WHISKER_CONFIG` if set; otherwise load `~/.baldrick-whisker/config.yaml` if it exists; parse YAML.
   - [ ] Validate minimal schema; provide clear error messages.
   - [ ] Optionally cache in-memory; provide a reload for tests.
 - [ ] URI resolver
@@ -48,23 +49,25 @@ github:
 
 ### Testing
 - [ ] Unit tests
-  - [ ] Config loader: present/absent file, minimal schema validation.
+  - [ ] Config loader: env override path vs absent; minimal schema validation.
   - [ ] Resolver: mapped/unmapped, path normalization, traversal protection.
 - [ ] Pest acceptance tests
-  - [ ] In test setup, create `~/.baldrick-whisker/config.yaml` pointing to a local fixture root (within the repo workspace).
+  - [ ] Create a temporary config in the workspace (e.g., `temp/config.yaml`) pointing to a local fixture root.
+  - [ ] Run CLI with `BALDRICK_WHISKER_CONFIG=$PWD/temp/config.yaml` so tests never touch the user home.
   - [ ] Use `github:` URIs that resolve into existing fixture files and assert local reads are used.
 - [ ] Cross-platform
   - [ ] Normalize path handling for macOS/Linux/Windows.
 
 ### Docs
-- [ ] README/USAGE: document local overrides for `github:` and the single config location.
+- [ ] README/USAGE: document local overrides for `github:` and config discovery (env var + home). README is updated via baldrick-broth-model.yaml.
 - [ ] Provide config example and troubleshooting for missing file/wrong mapping.
 
 ### CI
-- [ ] Add CI step that writes `~/.baldrick-whisker/config.yaml` for the job user before running acceptance tests that rely on local mapping.
+- [ ] Add CI step that writes a temp config file inside the workspace and sets `BALDRICK_WHISKER_CONFIG` for the job before running acceptance tests that rely on local mapping.
 - [ ] Keep existing remote-path tests intact (no changes needed).
 
 ### Rollout
 - [ ] Implement behind a minor version bump; update changelog.
 - [ ] Update README and release notes.
-- [ ] Validate via `npx baldrick-dev-ts@latest release check` and CI.
+- [ ] Validate via `npx baldrick-broth@latest test all`. Note: `baldrick-dev-ts release check` only validates version; no need to add it here.
+
