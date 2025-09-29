@@ -44,7 +44,11 @@ export async function runClient() {
   } catch (error) {
     const code = (error as { code?: string } | undefined)?.code;
     // Treat help/version exits as normal flow
-    if (code === 'commander.helpDisplayed' || code === 'commander.version') {
+    if (
+      code === 'commander.help' ||
+      code === 'commander.helpDisplayed' ||
+      code === 'commander.version'
+    ) {
       console.log(`✓ Done. Version ${version}`);
       return;
     }
