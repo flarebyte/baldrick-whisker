@@ -51,10 +51,25 @@ github:
 - [ ] Unit tests
   - [ ] Config loader: env override path vs absent; minimal schema validation.
   - [ ] Resolver: mapped/unmapped, path normalization, traversal protection.
-- [ ] Pest acceptance tests
-  - [ ] Create a temporary config in the workspace (e.g., `temp/config.yaml`) pointing to a local fixture root.
-  - [ ] Run CLI with `BALDRICK_WHISKER_CONFIG=$PWD/temp/config.yaml` so tests never touch the user home.
-  - [ ] Use `github:` URIs that resolve into existing fixture files and assert local reads are used.
+- [ ] Pest acceptance tests (self-contained)
+  - [ ] In the spec, create a temporary config file inside the workspace (e.g., `temp/config.yaml`).
+  - [ ] In the spec, set `BALDRICK_WHISKER_CONFIG=$PWD/temp/config.yaml` for steps that run the CLI.
+  - [ ] Use `github:` URIs that resolve into local fixtures and assert local reads.
+  - [ ] Example snippet:
+    - Create config file
+      - run: |
+          mkdir -p temp
+          cat > temp/whisker-config.yaml <<'YAML'
+          github:
+            mappings:
+              - repo: flarebyte:baldrick-reserve
+                root: $PWD/pest-spec/fixtures/local-reserve
+          YAML
+    - Use env override
+      - env:
+          BALDRICK_WHISKER_CONFIG: $PWD/temp/whisker-config.yaml
+        run: |
+          yarn cli object out.yaml github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml
 - [ ] Cross-platform
   - [ ] Normalize path handling for macOS/Linux/Windows.
 
@@ -63,11 +78,10 @@ github:
 - [ ] Provide config example and troubleshooting for missing file/wrong mapping.
 
 ### CI
-- [ ] Add CI step that writes a temp config file inside the workspace and sets `BALDRICK_WHISKER_CONFIG` for the job before running acceptance tests that rely on local mapping.
+- [ ] No CI changes required. CI runs pest specs which create and use their own temp config via `BALDRICK_WHISKER_CONFIG`.
 - [ ] Keep existing remote-path tests intact (no changes needed).
 
 ### Rollout
 - [ ] Implement behind a minor version bump; update changelog.
 - [ ] Update README and release notes.
 - [ ] Validate via `npx baldrick-broth@latest test all`. Note: `baldrick-dev-ts release check` only validates version; no need to add it here.
-
