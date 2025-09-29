@@ -12,16 +12,16 @@ import CSV from 'papaparse';
 import type { JsonObject } from 'type-fest';
 import YAML from 'yaml';
 import { checkFile } from './check-file.js';
-import { shouldDropExtension, shouldSkipOverwrite } from './flag-utils.js';
+import { resolveGithubUri } from './github-resolver.js';
 import { ifSatisfy, listJoin } from './handlebars-helpers.js';
+import { shouldDropExtension, shouldSkipOverwrite } from './flag-utils.js';
+import { loadLocalGithubConfig } from './local-config.js';
 import type {
   FileId,
   GithubFile,
   InputContent,
   TemplateRenderer,
 } from './model.js';
-import { loadLocalGithubConfig } from './local-config.js';
-import { resolveGithubUri } from './github-resolver.js';
 import { parseElmFunctions } from './parse-elm-function.js';
 import {
   dasherize,

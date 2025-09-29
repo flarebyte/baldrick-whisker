@@ -33,4 +33,3 @@ export const resolveGithubUri = async (
   }
   return { type: 'local', path: candidate };
 };
-

@@ -10,6 +10,7 @@ let cachedPath: string | undefined;
 const defaultConfig: LocalGithubConfig = {};
 
 const discoverConfigPath = (): string => {
+  // biome-ignore lint/complexity/useLiteralKeys: environment access via index
   const envPath = process.env['BALDRICK_WHISKER_CONFIG'];
   if (envPath && envPath.trim() !== '') {
     return path.resolve(envPath);
@@ -56,9 +57,12 @@ export const reloadLocalGithubConfig = async (): Promise<LocalGithubConfig> => {
 
 const validateConfig = (input: unknown): LocalGithubConfig => {
   const cfg = (input ?? {}) as Record<string, unknown>;
+  // biome-ignore lint/complexity/useLiteralKeys: dynamic keys validated at runtime
   const github = (cfg['github'] ?? {}) as Record<string, unknown>;
+  // biome-ignore lint/complexity/useLiteralKeys: dynamic keys validated at runtime
   const mappings = (github['mappings'] ?? []) as Array<Record<string, unknown>>;
   const validMappings = mappings
+    // biome-ignore lint/complexity/useLiteralKeys: dynamic keys validated at runtime
     .map((m) => ({ repo: m['repo'], root: m['root'] }))
     .filter((m) => typeof m.repo === 'string' && typeof m.root === 'string')
     .map((m) => ({ repo: String(m.repo), root: String(m.root) }));
