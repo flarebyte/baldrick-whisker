@@ -30,3 +30,37 @@ cases:
         run: cat report/shell-tests/local-rendered.md
         expect:
           snapshot: local-rendered.md
+  object-local-missing:
+    title: Error when mapped file does not exist
+    steps:
+      - title: run object with missing path (capture error)
+        run: bash pest-spec/scripts/run-capture.sh "BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn -s cli object report/shell-tests/should-not-exist.json github:flarebyte:baldrick-whisker:does/not/exist.yaml"
+      - title: sanitize error output
+        run: sed -E -f pest-spec/scripts/sanitize-paths.sed
+        stdin:
+          step: 0
+          receiving: stdout
+      - title: keep first line
+        run: head -n 1
+        stdin:
+          step: 1
+          receiving: stdout
+        expect:
+          snapshot: error-missing.txt
+  object-local-traversal:
+    title: Error when path escapes mapping root
+    steps:
+      - title: run object with traversal (capture error)
+        run: bash pest-spec/scripts/run-capture.sh "BALDRICK_WHISKER_CONFIG=pest-spec/fixtures/local-config-here.yaml yarn -s cli object report/shell-tests/should-not-exist.json github:flarebyte:baldrick-whisker:../baldrick-broth-model.yaml"
+      - title: sanitize error output
+        run: sed -E -f pest-spec/scripts/sanitize-paths.sed
+        stdin:
+          step: 0
+          receiving: stdout
+      - title: keep first line
+        run: head -n 1
+        stdin:
+          step: 1
+          receiving: stdout
+        expect:
+          snapshot: error-traversal.txt
