@@ -1,0 +1,1 @@
+baldrick-decision will exit with error code 1
