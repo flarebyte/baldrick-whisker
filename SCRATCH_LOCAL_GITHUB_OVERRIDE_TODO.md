@@ -95,8 +95,8 @@ github:
                 BALDRICK\_WHISKER\_CONFIG: $PWD/temp/whisker-config.yaml
                 run: |
                 yarn cli object out.yaml github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml
--   [ ] Cross-platform
-    -   [ ] Normalize path handling for macOS/Linux/Windows.
+-   [x] Cross-platform
+    -   [x] Normalize path handling for macOS/Linux/Windows.
 
 ### Manual sanity (yarn cli)
 
@@ -121,7 +121,7 @@ github:
     -   Keep mapping but reference a non-existent path:
         `github:flarebyte:baldrick-reserve:does/not/exist.yaml`.
     -   Expect: non-zero exit, actionable error mentioning missing local path.
--   [ ] Env override precedence over home
+-   [x] Env override precedence over home
     -   Create home config with mapping A and temp config with mapping B
         (different root).
     -   Export `BALDRICK_WHISKER_CONFIG` to temp config and run the object
@@ -159,10 +159,10 @@ github:
 
 ### Docs
 
--   [ ] README/USAGE: document local overrides for `github:` and config
+-   [x] README/USAGE: document local overrides for `github:` and config
     discovery (env var + home). README is updated via
     baldrick-broth-model.yaml.
--   [ ] Provide config example and troubleshooting for missing file/wrong
+-   [x] Provide config example and troubleshooting for missing file/wrong
     mapping.
 
 ### CI
@@ -174,7 +174,7 @@ github:
 ### Rollout
 
 -   [x] Implement behind a minor version bump; update changelog.
--   [ ] Update README and release notes.
+-   [x] Update README and release notes.
 -   [x] Validate via `npx baldrick-broth@latest test all`. Note:
     `baldrick-dev-ts release check` only validates version; no need to add
     it here.
