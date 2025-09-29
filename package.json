@@ -22,7 +22,7 @@
   },
   "bugs": "https://github.com/flarebyte/baldrick-whisker/issues",
   "bin": {
-    "baldrick-whisker": "dist/src/cli.mjs"
+    "baldrick-whisker": "dist/cli.mjs"
   },
   "type": "module",
   "exports": {
