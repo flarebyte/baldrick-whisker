@@ -53,7 +53,11 @@ export async function runClient() {
       return;
     }
     console.log('baldrick-decision will exit with error code 1');
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(`Error: ${error.message}`);
+    } else {
+      console.error(String(error));
+    }
     process.exit(1); // eslint-disable-line  unicorn/no-process-exit
   }
 }
