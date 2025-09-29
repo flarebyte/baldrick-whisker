@@ -27,34 +27,33 @@ github:
 ## TODO
 
 ### Design
-- [ ] Config discovery: `BALDRICK_WHISKER_CONFIG` env var (if set) else `~/.baldrick-whisker/config.yaml`.
-- [ ] Schema: `github.mappings[].repo` (format `owner:repo`) and `root` (absolute path).
-- [ ] Default behavior: unmapped repos fetch remotely; mapped repos must exist locally.
-- [ ] Enforce strict path safety (reject traversal outside `root`).
+- [x] Config discovery: `BALDRICK_WHISKER_CONFIG` env var (if set) else `~/.baldrick-whisker/config.yaml`.
+- [x] Schema: `github.mappings[].repo` (format `owner:repo`) and `root` (absolute path).
+- [x] Default behavior: unmapped repos fetch remotely; mapped repos must exist locally.
+- [x] Enforce strict path safety (reject traversal outside `root`).
 
 ### Implementation
-- [ ] Config loader
-  - [ ] Load from `BALDRICK_WHISKER_CONFIG` if set; otherwise load `~/.baldrick-whisker/config.yaml` if it exists; parse YAML.
-  - [ ] Validate minimal schema; provide clear error messages.
-  - [ ] Optionally cache in-memory; provide a reload for tests.
-- [ ] URI resolver
-  - [ ] Implement `resolveGithubUri(uri, config)` returning `{ type: 'local'|'remote', path | owner/repo/path }`.
-  - [ ] Normalize paths and guard against `..` traversal/escaping root.
-- [ ] File IO wiring
-  - [ ] Before Octokit fetch, call resolver.
-  - [ ] If `local`: read file from FS; if `remote`: use existing fetch logic.
-- [ ] Error handling
-  - [ ] Mapped repo but local file missing: throw with message suggesting fixing mapping or file path.
-  - [ ] Unmapped repo: proceed with remote fetch.
+- [x] Config loader
+  - [x] Load from `BALDRICK_WHISKER_CONFIG` if set; otherwise load `~/.baldrick-whisker/config.yaml` if it exists; parse YAML.
+  - [x] Validate minimal schema; provide clear error messages.
+  - [x] Optionally cache in-memory; provide a reload for tests.
+- [x] URI resolver
+  - [x] Implement `resolveGithubUri(uri, config)` returning `{ type: 'local'|'remote', path | owner/repo/path }`.
+  - [x] Normalize paths and guard against `..` traversal/escaping root.
+- [x] File IO wiring
+  - [x] Before Octokit fetch, call resolver.
+  - [x] If `local`: read file from FS; if `remote`: use existing fetch logic.
+- [x] Error handling
+  - [x] Mapped repo but local file missing: throw with message suggesting fixing mapping or file path.
+  - [x] Unmapped repo: proceed with remote fetch.
 
 ### Testing
-- [ ] Unit tests
-  - [ ] Config loader: env override path vs absent; minimal schema validation.
-  - [ ] Resolver: mapped/unmapped, path normalization, traversal protection.
-- [ ] Pest acceptance tests (self-contained)
-  - [ ] In the spec, create a temporary config file inside the workspace (e.g., `temp/config.yaml`).
-  - [ ] In the spec, set `BALDRICK_WHISKER_CONFIG=$PWD/temp/config.yaml` for steps that run the CLI.
-  - [ ] Use `github:` URIs that resolve into local fixtures and assert local reads.
+- [x] Unit tests
+  - [x] Config loader: env override path vs absent; minimal schema validation.
+  - [x] Resolver: mapped/unmapped, path normalization, traversal protection.
+- [x] Pest acceptance tests (self-contained)
+  - [x] Use a fixture config inside the repo (`pest-spec/fixtures/local-config-here.yaml`) and set `BALDRICK_WHISKER_CONFIG` per step.
+  - [x] Use `github:` URIs that resolve into local fixtures and assert local reads.
   - [ ] Example snippet:
     - Create config file
       - run: |
@@ -74,44 +73,44 @@ github:
   - [ ] Normalize path handling for macOS/Linux/Windows.
 
 ### Manual sanity (yarn cli)
-- [ ] Mapped read succeeds
+- [x] Mapped read succeeds
   - Setup config: write `~/.baldrick-whisker/config.yaml` or a temp file and export `BALDRICK_WHISKER_CONFIG` to point to a local clone/fixture.
   - Run: `yarn cli object report/out.yaml github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml`
   - Expect: exit 0, `report/out.yaml` created and contains YAML from the local file.
-- [ ] Mapped render succeeds
+- [x] Mapped render succeeds
   - Run: `yarn cli render report/out.yaml pest-spec/fixtures/example.hbs report/rendered.md`
   - Expect: `report/rendered.md` created; uses data from mapped local YAML.
-- [ ] Unmapped repo falls back to remote (network required)
+- [x] Unmapped repo falls back to remote (network required)
   - Unset mapping for `flarebyte:baldrick-reserve` (or comment it out) and unset `BALDRICK_WHISKER_CONFIG`.
   - Run: `yarn cli object report/out.yaml github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml`
   - Expect: exits 0 and fetches from GitHub.
-- [ ] Mapped but file missing -> clear error
+- [x] Mapped but file missing -> clear error
   - Keep mapping but reference a non-existent path: `github:flarebyte:baldrick-reserve:does/not/exist.yaml`.
   - Expect: non-zero exit, actionable error mentioning missing local path.
 - [ ] Env override precedence over home
   - Create home config with mapping A and temp config with mapping B (different root).
   - Export `BALDRICK_WHISKER_CONFIG` to temp config and run the object command.
   - Expect: it uses mapping B.
-- [ ] Path traversal blocked
+- [x] Path traversal blocked
   - Run with `github:flarebyte:baldrick-reserve:../../etc/passwd`.
   - Expect: non-zero exit, error explaining path escapes mapping root.
 
 ### Automated (pest) scenarios
-- [ ] Mapped read (object)
+- [x] Mapped read (object)
   - Spec creates temp config mapping `flarebyte:baldrick-reserve` to `pest-spec/fixtures/local-reserve`.
   - Run: `yarn cli object report/out.yaml github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml` with env override.
   - Assert snapshot of `report/out.yaml` matches fixture.
-- [ ] Mapped read (render)
+- [x] Mapped read (render)
   - Use same config; run render with the YAML as a source and a simple template.
   - Assert snapshot of rendered output.
-- [ ] Mapped but missing file -> error
+- [x] Mapped but missing file -> error
   - Reference a non-existent path under the mapped repo.
   - Assert non-zero exit and error text contains “not found” and the resolved local path.
-- [ ] Env override in spec
+- [x] Env override in spec
   - Ensure the env var is set per-step so tests do not depend on user home.
-- [ ] Traversal blocked
+- [x] Traversal blocked
   - Attempt `github:flarebyte:baldrick-reserve:../../hack.txt` and assert error about escaping root.
-- [ ] Do not test remote fetch in pest
+- [x] Do not test remote fetch in pest
   - Avoid network dependency; remote fetch behavior is covered by manual sanity if desired.
 
 ### Docs
@@ -119,10 +118,10 @@ github:
 - [ ] Provide config example and troubleshooting for missing file/wrong mapping.
 
 ### CI
-- [ ] No CI changes required. CI runs pest specs which create and use their own temp config via `BALDRICK_WHISKER_CONFIG`.
-- [ ] Keep existing remote-path tests intact (no changes needed).
+- [x] No CI changes required. CI runs pest specs which create and use their own temp config via `BALDRICK_WHISKER_CONFIG`.
+- [x] Keep existing remote-path tests intact (no changes needed).
 
 ### Rollout
-- [ ] Implement behind a minor version bump; update changelog.
+- [x] Implement behind a minor version bump; update changelog.
 - [ ] Update README and release notes.
-- [ ] Validate via `npx baldrick-broth@latest test all`. Note: `baldrick-dev-ts release check` only validates version; no need to add it here.
+- [x] Validate via `npx baldrick-broth@latest test all`. Note: `baldrick-dev-ts release check` only validates version; no need to add it here.
