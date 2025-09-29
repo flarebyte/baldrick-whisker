@@ -82,6 +82,20 @@ Config files:
     transformers.
 -   cli wiring via Commander exposes object and render commands.
 
+## FAQ
+
+Q: How do I point whisker to a custom config file?
+
+A: Set BALDRICK\_WHISKER\_CONFIG to the YAML file location. The loader will use
+it instead of the default \~/.baldrick-whisker/config.yaml.
+
+## Troubleshooting
+
+-   →
+-   →
+-   →
+-   →
+
 ## Documentation and links
 
 -   [Code Maintenance :wrench:](MAINTENANCE.md)
