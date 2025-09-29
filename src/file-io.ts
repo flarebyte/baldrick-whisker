@@ -20,6 +20,8 @@ import type {
   InputContent,
   TemplateRenderer,
 } from './model.js';
+import { loadLocalGithubConfig } from './local-config.js';
+import { resolveGithubUri } from './github-resolver.js';
 import { parseElmFunctions } from './parse-elm-function.js';
 import {
   dasherize,
@@ -83,7 +85,7 @@ const parseCsv = (content: string): Record<string, string>[] => {
   }
   return data;
 };
-const readGithubFile = async (ghFile: GithubFile): Promise<string> => {
+const readGithubFileRemote = async (ghFile: GithubFile): Promise<string> => {
   const { owner, repo, path } = ghFile;
   const { data } = await octokit.rest.repos.getContent({
     mediaType: {
@@ -99,9 +101,15 @@ const readGithubFile = async (ghFile: GithubFile): Promise<string> => {
 const readContentAsString = async (
   filename: string | GithubFile,
 ): Promise<string | undefined> => {
-  return await (typeof filename === 'string'
-    ? jetpack.readAsync(filename, 'utf8')
-    : readGithubFile(filename));
+  if (typeof filename === 'string') {
+    return await jetpack.readAsync(filename, 'utf8');
+  }
+  const cfg = await loadLocalGithubConfig();
+  const resolved = await resolveGithubUri(filename, cfg);
+  if (resolved.type === 'local') {
+    return await jetpack.readAsync(resolved.path, 'utf8');
+  }
+  return await readGithubFileRemote(filename);
 };
 
 /**
