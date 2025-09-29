@@ -65,7 +65,7 @@
     ]
   },
   "dependencies": {
-    "commander": "^9.4.1",
+    "commander": "^14.0.1",
     "fs-jetpack": "^5.1.0",
     "handlebars": "^4.7.8",
     "octokit": "^5.0.3",

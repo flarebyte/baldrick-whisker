@@ -32,14 +32,22 @@ program
   .option('--diff', 'Only display the difference in the console')
   .option('--no-ext', 'Drop the extension suffix for destination')
   .option('--no-overwrite', 'Do not overwrite an existing file')
-  .option('-cfg, --config <config>', 'Configuration as a JSON line')
+  .option('-c, --config <config>', 'Configuration as a JSON line')
   .action(commandRender);
 
 export async function runClient() {
   try {
-    program.parseAsync();
+    // Prevent Commander from calling process.exit on --help/--version
+    program.exitOverride();
+    await program.parseAsync();
     console.log(`✓ Done. Version ${version}`);
   } catch (error) {
+    const code = (error as { code?: string } | undefined)?.code;
+    // Treat help/version exits as normal flow
+    if (code === 'commander.helpDisplayed' || code === 'commander.version') {
+      console.log(`✓ Done. Version ${version}`);
+      return;
+    }
     console.log('baldrick-decision will exit with error code 1');
     console.error(error);
     process.exit(1); // eslint-disable-line  unicorn/no-process-exit
