@@ -45,6 +45,22 @@ readme:
     - "[ADR](DECISIONS.md)"
   configuration:
     files:
+      - name: "Local overrides for github: URIs"
+        description: |
+          Map a GitHub repo key (owner:repo) to a local folder so paths like
+          `github:owner:repo:path/to/file` are read from your filesystem instead of GitHub.
+          Useful for working with local clones of shared data/templates.
+        example: |
+          # ~/.baldrick-whisker/config.yaml (or set BALDRICK_WHISKER_CONFIG to a file)
+          github:
+            mappings:
+              - repo: flarebyte:baldrick-reserve
+                root: /Users/you/src/flarebyte/baldrick-reserve
+          
+          # CLI usage
+          BALDRICK_WHISKER_CONFIG=/path/to/config.yaml \
+            npx baldrick-whisker object out.yaml \
+            github:flarebyte:baldrick-reserve:data/ts/baldrick-broth.yaml
       - name: GitHub URIs
         description: Use github:owner:repo:path as a filename (raw content is fetched)
         example: github:flarebyte:baldrick-whisker:package.json
