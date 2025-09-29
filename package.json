@@ -67,7 +67,7 @@
   "dependencies": {
     "commander": "^9.4.1",
     "fs-jetpack": "^5.1.0",
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.8",
     "octokit": "^2.0.10",
     "papaparse": "^5.5.3",
     "yaml": "^2.8.1"
